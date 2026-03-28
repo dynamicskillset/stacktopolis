@@ -1,24 +1,21 @@
-import { Shield } from 'lucide-react'
+import { useGame } from './hooks/useGame'
+import TitleScreen from './components/screens/TitleScreen'
+import GameScreen from './components/screens/GameScreen'
+import GameOverScreen from './components/screens/GameOverScreen'
 
 function App() {
-  return (
-    <div className="min-h-screen bg-terminal-bg flex flex-col items-center justify-center p-8">
-      <div className="text-center">
-        <Shield className="w-16 h-16 text-amber-glow mx-auto mb-6" />
-        <h1 className="font-mono text-4xl font-bold text-amber-glow tracking-wider mb-4">
-          STACKTOPOLIS
-        </h1>
-        <p className="font-serif text-lg text-terminal-muted italic">
-          A satirical survival game about digital sovereignty
-        </p>
-        <div className="mt-8 flex gap-6 justify-center text-sm text-terminal-muted">
-          <span className="text-risk-jurisdiction">Jurisdiction</span>
-          <span className="text-risk-continuity">Continuity</span>
-          <span className="text-risk-surveillance">Surveillance</span>
-        </div>
-      </div>
-    </div>
-  )
+  const { state, actions } = useGame()
+
+  switch (state.screen) {
+    case 'title':
+      return <TitleScreen onStartGame={actions.startGame} />
+    case 'playing':
+      return <GameScreen state={state} actions={actions} />
+    case 'gameOver':
+      return <GameOverScreen state={state} onPlayAgain={actions.restartGame} />
+    default:
+      return <TitleScreen onStartGame={actions.startGame} />
+  }
 }
 
 export default App
