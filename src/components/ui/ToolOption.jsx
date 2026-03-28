@@ -11,10 +11,12 @@ const riskLabels = [
 ]
 
 function CostValue({ value, label }) {
+  if (value === 0) return null
   const isGain = value < 0
+  const absVal = Math.abs(value)
   return (
     <span className={`font-mono text-xs ${isGain ? 'text-green-glow' : 'text-danger'}`}>
-      {isGain ? value : `+${value}`} {label}
+      {isGain ? `+${absVal}` : `-${absVal}`} {label}
     </span>
   )
 }
