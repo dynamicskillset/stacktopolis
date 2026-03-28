@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Lora", serif;
+
+  --color-terminal-bg: #0a0e14;
+  --color-terminal-surface: #111820;
+  --color-terminal-border: #1e2a38;
+  --color-terminal-muted: #3a4a5c;
+  --color-terminal-text: #c5cdd8;
+
+  --color-amber-glow: #ffb000;
+  --color-amber-dim: #7a5500;
+  --color-amber-soft: #3d2b00;
+
+  --color-green-glow: #00ff88;
+  --color-green-dim: #007a42;
+  --color-green-soft: #003d21;
+
+  --color-risk-jurisdiction: #ef4444;
+  --color-risk-continuity: #f59e0b;
+  --color-risk-surveillance: #3b82f6;
+
+  --color-danger: #ff2244;
+
+  --animate-ticker-scroll: ticker-scroll 60s linear infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-pulse-glow-fast: pulse-glow 1s ease-in-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-breaking-in: breaking-in 0.3s ease-out forwards;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-slide-up: slide-up 0.4s ease-out forwards;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes breaking-in {
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+html {
+  background-color: var(--color-terminal-bg);
+  color: var(--color-terminal-text);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
