@@ -3,6 +3,7 @@ import { Shield, Trophy } from 'lucide-react'
 import { DIFFICULTIES } from '../../state/initialState'
 import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
+import Skyline from '../city/Skyline'
 
 function HighScoreTable({ scores }) {
   if (!scores || scores.length === 0) return null
@@ -15,7 +16,7 @@ function HighScoreTable({ scores }) {
           High Scores
         </h2>
       </div>
-      <div className="bg-terminal-surface border border-terminal-border rounded overflow-hidden">
+      <div className="bg-terminal-surface/90 border border-terminal-border rounded overflow-hidden backdrop-blur-sm">
         {scores.slice(0, 5).map((score, i) => (
           <div
             key={i}
@@ -38,14 +39,51 @@ function HighScoreTable({ scores }) {
   )
 }
 
+/* Decorative isometric diamond plots — a small preview of the city grid */
+function IsometricPreview() {
+  const diamonds = [
+    { cx: 60, cy: 40 },
+    { cx: 120, cy: 40 },
+    { cx: 90, cy: 58 },
+    { cx: 150, cy: 58 },
+  ]
+  const halfW = 28
+  const halfH = 16
+
+  return (
+    <svg
+      viewBox="0 0 210 100"
+      width="210"
+      height="100"
+      className="mx-auto mb-6 opacity-30"
+      aria-hidden="true"
+    >
+      {diamonds.map(({ cx, cy }, i) => (
+        <polygon
+          key={i}
+          points={`${cx},${cy - halfH} ${cx + halfW},${cy} ${cx},${cy + halfH} ${cx - halfW},${cy}`}
+          fill="none"
+          stroke="var(--color-amber-glow, #ffb000)"
+          strokeWidth="1"
+          opacity={0.5 + i * 0.1}
+        />
+      ))}
+    </svg>
+  )
+}
+
 const DIFFICULTY_KEYS = ['easy', 'normal', 'hard']
 
 export default function TitleScreen({ onStartGame, highScores }) {
   const [selectedDifficulty, setSelectedDifficulty] = useState('normal')
 
   return (
-    <div className="min-h-screen bg-terminal-bg flex flex-col items-center justify-center p-8 animate-fade-in">
-      <div className="flex flex-col items-center text-center flex-1 justify-center">
+    <div className="min-h-screen relative flex flex-col items-center justify-center p-8 animate-fade-in crt-scanlines"
+      style={{ backgroundColor: '#0a0e14' }}
+    >
+      <Skyline dangerLevel={0} />
+
+      <div className="flex flex-col items-center text-center flex-1 justify-center relative z-10">
         <Shield className="w-20 h-20 text-amber-glow mb-8" />
 
         <h1 className="font-mono text-5xl font-bold text-amber-glow tracking-widest mb-4">
@@ -62,6 +100,8 @@ export default function TitleScreen({ onStartGame, highScores }) {
           <span className="text-risk-surveillance">Surveillance</span>
         </div>
 
+        <IsometricPreview />
+
         <p className="font-serif text-terminal-text max-w-md text-center mb-10 leading-relaxed">
           You are the CTO of a small European charity. Build your tech stack.
           Survive the disasters. How many quarters can you last?
@@ -75,7 +115,7 @@ export default function TitleScreen({ onStartGame, highScores }) {
               <button
                 key={key}
                 onClick={() => setSelectedDifficulty(key)}
-                className={`px-4 py-2 font-mono text-sm uppercase tracking-wider rounded transition-colors ${
+                className={`px-4 py-2 min-h-[44px] font-mono text-sm uppercase tracking-wider rounded transition-colors ${
                   isSelected
                     ? 'bg-amber-glow text-terminal-bg'
                     : 'bg-terminal-surface text-terminal-muted border border-terminal-border hover:text-terminal-text'
@@ -101,7 +141,9 @@ export default function TitleScreen({ onStartGame, highScores }) {
         <HighScoreTable scores={highScores} />
       </div>
 
-      <Attribution />
+      <div className="relative z-10">
+        <Attribution />
+      </div>
     </div>
   )
 }

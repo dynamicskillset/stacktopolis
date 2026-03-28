@@ -88,6 +88,33 @@ export const ADVISOR_LINES = {
     'Well, well. Not everything is on fire. How novel.',
   ],
 
+  manageJurisdiction: [
+    'Jurisdiction is your biggest problem. Migrating a US tool would help. If you can afford it.',
+    'That jurisdiction exposure is getting uncomfortable. Consider swapping a US provider.',
+    'Your data is spread across more jurisdictions than a spy novel. Time to consolidate.',
+    'Jurisdiction risk this high means one subpoena away from a very bad day.',
+  ],
+
+  manageContinuity: [
+    'Continuity risk is climbing. A backup drill would give you some breathing room.',
+    'If your biggest provider goes down tomorrow, how many tools do you lose? Run a backup drill.',
+    'Continuity at this level means one outage away from carrier pigeons. Test your recovery plan.',
+    'All those eggs in one basket? A backup drill reduces continuity by 8 points.',
+  ],
+
+  manageSurveillance: [
+    'Surveillance debt is your top concern. An audit would shine a light on what is being collected.',
+    'Your tools are collecting more data than a nosy neighbour. Time for a privacy audit.',
+    'That surveillance number makes compliance officers nervous. An audit reduces it by 8 points.',
+    'Your beneficiaries\' data is having quite the adventure. A data practices audit would help.',
+  ],
+
+  manageBalanced: [
+    'Risks are fairly balanced. No fires to put out, but do not get complacent.',
+    'Nothing screaming at you right now. Save your resources, or do some preventative maintenance.',
+    'All risks under control. A rare moment of calm. Enjoy it while it lasts.',
+  ],
+
   quarterMilestone: [
     'Quarter 5. You\'ve survived longer than most Privacy Shield agreements.',
     'Quarter 10. You\'ve outlasted three prime ministers and a data protection framework.',

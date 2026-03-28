@@ -2,8 +2,8 @@ import { calculateScore, awardTitle } from '../../utils/scoring'
 import { GAME_OVER_MESSAGES } from '../../data/gameOverMessages'
 import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
-import RiskMetre from '../ui/RiskMetre'
-import { Shield, RefreshCw, Eye } from 'lucide-react'
+import GaugeDial from '../city/GaugeDial'
+import Skyline from '../city/Skyline'
 
 export default function GameOverScreen({ state, onPlayAgain }) {
   const score = calculateScore(state)
@@ -11,8 +11,12 @@ export default function GameOverScreen({ state, onPlayAgain }) {
   const gameOverMessage = GAME_OVER_MESSAGES[state.gameOverCause] || GAME_OVER_MESSAGES.budget
 
   return (
-    <div className="min-h-screen bg-terminal-bg flex items-center justify-center p-4 animate-fade-in">
-      <div className="w-full max-w-2xl bg-terminal-surface border border-terminal-border rounded p-8">
+    <div className="min-h-screen relative flex items-center justify-center p-4 animate-fade-in crt-scanlines"
+      style={{ backgroundColor: '#0a0e14' }}
+    >
+      <Skyline dangerLevel={100} />
+
+      <div className="w-full max-w-2xl bg-terminal-surface/95 border border-terminal-border rounded p-8 relative z-10 backdrop-blur-sm">
         {/* Newspaper masthead */}
         <div
           className="flex items-baseline justify-between mb-2 animate-slide-up"
@@ -84,32 +88,31 @@ export default function GameOverScreen({ state, onPlayAgain }) {
 
         <div className="border-t border-terminal-border mb-6" />
 
-        {/* Risk breakdown */}
+        {/* Risk breakdown — gauge dials */}
         <div
-          className="space-y-3 mb-8 animate-slide-up"
+          className="mb-8 animate-slide-up"
           style={{ animationDelay: '300ms' }}
         >
-          <h3 className="font-mono text-xs uppercase tracking-wider text-terminal-muted mb-2">
+          <h3 className="font-mono text-xs uppercase tracking-wider text-terminal-muted mb-4 text-center">
             Risk Assessment
           </h3>
-          <RiskMetre
-            label="Jurisdiction"
-            value={state.jurisdiction}
-            colour="jurisdiction"
-            icon={Shield}
-          />
-          <RiskMetre
-            label="Continuity"
-            value={state.continuity}
-            colour="continuity"
-            icon={RefreshCw}
-          />
-          <RiskMetre
-            label="Surveillance"
-            value={state.surveillance}
-            colour="surveillance"
-            icon={Eye}
-          />
+          <div className="flex justify-center gap-8">
+            <GaugeDial
+              label="Jurisdiction"
+              value={state.jurisdiction}
+              colour="var(--color-risk-jurisdiction)"
+            />
+            <GaugeDial
+              label="Continuity"
+              value={state.continuity}
+              colour="var(--color-risk-continuity)"
+            />
+            <GaugeDial
+              label="Surveillance"
+              value={state.surveillance}
+              colour="var(--color-risk-surveillance)"
+            />
+          </div>
         </div>
 
         {/* Play again */}

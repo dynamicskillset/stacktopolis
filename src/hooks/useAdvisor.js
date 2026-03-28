@@ -59,7 +59,7 @@ export function useAdvisor(state) {
 
     // 4. Event just acknowledged (phase changed to 'manage')
     if (state.phase === 'manage' && prev.phase === 'event') {
-      // Check if things got better or worse to decide positive vs generic
+      // Check if things got better or worse
       const gotBetter = (
         state.budget > prev.budget + 5 ||
         state.morale > prev.morale + 5 ||
@@ -67,8 +67,20 @@ export function useAdvisor(state) {
       )
       if (gotBetter) {
         setLine(getAdvisorLine('positiveEvent'))
+        return
+      }
+
+      // Give contextual manage advice based on highest risk
+      if (maxRisk >= 40) {
+        const risks = [
+          { lens: 'Jurisdiction', value: state.jurisdiction, category: 'manageJurisdiction' },
+          { lens: 'Continuity', value: state.continuity, category: 'manageContinuity' },
+          { lens: 'Surveillance', value: state.surveillance, category: 'manageSurveillance' },
+        ]
+        const highest = risks.sort((a, b) => b.value - a.value)[0]
+        setLine(getAdvisorLine(highest.category))
       } else {
-        setLine(getAdvisorLine('eventReaction'))
+        setLine(getAdvisorLine('manageBalanced'))
       }
       return
     }
