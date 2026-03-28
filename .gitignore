@@ -1,0 +1,7 @@
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE.md
+
+node_modules/
+.DS_Store
