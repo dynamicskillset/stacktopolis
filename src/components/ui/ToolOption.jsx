@@ -25,7 +25,10 @@ export default function ToolOption({ option, onSelect, needIcon: Icon }) {
   return (
     <div
       onClick={() => onSelect(option)}
-      className="bg-terminal-surface border border-terminal-border rounded p-4 cursor-pointer transition-all duration-200 hover:border-amber-glow hover:shadow-[0_0_8px_var(--color-amber-dim)]"
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(option) } }}
+      role="button"
+      tabIndex={0}
+      className="bg-terminal-surface border border-terminal-border rounded p-4 cursor-pointer transition-all duration-200 hover:border-amber-glow hover:shadow-[0_0_8px_var(--color-amber-dim)] focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2"
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex items-center gap-2">

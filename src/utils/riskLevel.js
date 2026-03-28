@@ -7,7 +7,7 @@ export function riskLevel(value) {
 }
 
 export function toolRiskLevel(tool) {
-  const combined = (tool.jurisdictionCost || 0) + (tool.continuityCost || 0) + (tool.surveillanceCost || 0)
+  const combined = (tool.jurisdiction || 0) + (tool.continuity || 0) + (tool.surveillance || 0)
   if (combined > 35) return 'danger'
   if (combined > 15) return 'warning'
   return 'safe'

@@ -1,10 +1,10 @@
-import * as Icons from 'lucide-react'
+import { getIcon } from '../../utils/iconMap'
 import ToolOption from '../ui/ToolOption'
 
 export default function BuildPhase({ need, onSelectTool }) {
   if (!need) return null
 
-  const NeedIcon = Icons[need.icon] || Icons.Box
+  const NeedIcon = getIcon(need.icon)
 
   return (
     <div className="animate-fade-in space-y-5">

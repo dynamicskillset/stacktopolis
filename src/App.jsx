@@ -27,7 +27,7 @@ function App() {
     if (state.screen !== 'gameOver') {
       scoreSaved.current = false
     }
-  }, [state.screen, state, addScore])
+  }, [state.screen, state.gameOverCause, state.quarter, state.jurisdiction, state.continuity, state.surveillance, state.stack, addScore])
 
   switch (state.screen) {
     case 'title':

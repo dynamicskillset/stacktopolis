@@ -3,7 +3,7 @@ import { GAME_OVER_MESSAGES } from '../../data/gameOverMessages'
 import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
 import RiskMetre from '../ui/RiskMetre'
-import { Globe, RefreshCw, Eye } from 'lucide-react'
+import { Shield, RefreshCw, Eye } from 'lucide-react'
 
 export default function GameOverScreen({ state, onPlayAgain }) {
   const score = calculateScore(state)
@@ -96,7 +96,7 @@ export default function GameOverScreen({ state, onPlayAgain }) {
             label="Jurisdiction"
             value={state.jurisdiction}
             colour="jurisdiction"
-            icon={Globe}
+            icon={Shield}
           />
           <RiskMetre
             label="Continuity"

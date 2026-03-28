@@ -4,7 +4,7 @@ const variants = {
   secondary:
     'bg-terminal-surface text-terminal-text border border-terminal-border hover:border-terminal-muted',
   danger:
-    'bg-danger text-white hover:shadow-[0_0_12px_var(--color-danger)] hover:brightness-110',
+    'bg-danger text-terminal-bg hover:shadow-[0_0_12px_var(--color-danger)] hover:brightness-110',
 }
 
 export default function Button({ children, onClick, variant = 'primary', disabled, className = '' }) {

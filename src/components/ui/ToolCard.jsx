@@ -1,4 +1,4 @@
-import * as Icons from 'lucide-react'
+import { getIcon } from '../../utils/iconMap'
 
 const borderColours = {
   safe: 'border-l-green-glow',
@@ -13,12 +13,15 @@ const regionStyles = {
 }
 
 export default function ToolCard({ tool, onClick, selected, riskLevel = 'safe' }) {
-  const IconComponent = Icons[tool.icon] || Icons.Box
+  const IconComponent = getIcon(tool.icon)
 
   return (
     <div
       onClick={onClick}
-      className={`bg-terminal-surface border border-terminal-border ${borderColours[riskLevel]} border-l-4 rounded p-3 transition-all duration-200 hover:bg-terminal-border/30 ${onClick ? 'cursor-pointer' : ''} ${selected ? 'ring-2 ring-amber-glow' : ''}`}
+      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      className={`bg-terminal-surface border border-terminal-border ${borderColours[riskLevel]} border-l-4 rounded p-3 transition-all duration-200 hover:bg-terminal-border/30 focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2 ${onClick ? 'cursor-pointer' : ''} ${selected ? 'ring-2 ring-amber-glow' : ''}`}
     >
       <div className="flex items-center gap-3">
         <IconComponent className="w-5 h-5 text-terminal-muted shrink-0" />
