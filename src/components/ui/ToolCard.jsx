@@ -14,17 +14,15 @@ const regionStyles = {
 
 export default function ToolCard({ tool, onClick, selected, riskLevel = 'safe' }) {
   const IconComponent = getIcon(tool.icon)
+  const Tag = onClick ? 'button' : 'div'
 
   return (
-    <div
+    <Tag
       onClick={onClick}
-      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      className={`bg-terminal-surface border border-terminal-border ${borderColours[riskLevel]} border-l-4 rounded p-3 transition-all duration-200 hover:bg-terminal-border/30 focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2 ${onClick ? 'cursor-pointer' : ''} ${selected ? 'ring-2 ring-amber-glow' : ''}`}
+      className={`w-full text-left bg-terminal-surface border border-terminal-border ${borderColours[riskLevel]} border-l-4 rounded p-3 transition-all duration-200 hover:bg-terminal-border/30 focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2 ${onClick ? 'cursor-pointer' : ''} ${selected ? 'ring-2 ring-amber-glow' : ''}`}
     >
       <div className="flex items-center gap-3">
-        <IconComponent className="w-5 h-5 text-terminal-muted shrink-0" />
+        <IconComponent className="w-5 h-5 text-terminal-muted shrink-0" aria-hidden="true" />
         <div className="min-w-0 flex-1">
           <div className="font-mono text-sm font-semibold text-terminal-text truncate">
             {tool.name}
@@ -37,6 +35,6 @@ export default function ToolCard({ tool, onClick, selected, riskLevel = 'safe' }
           </div>
         </div>
       </div>
-    </div>
+    </Tag>
   )
 }

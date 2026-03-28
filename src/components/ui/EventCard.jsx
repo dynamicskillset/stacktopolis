@@ -17,11 +17,13 @@ export default function EventCard({ event, onAcknowledge }) {
 
   return (
     <div className={`animate-slide-up bg-terminal-surface border-2 ${severityBorders[severity]} rounded-lg p-6 max-w-lg w-full`}>
-      <div className={`font-mono text-xs uppercase tracking-widest mb-3 ${severityAccents[severity]}`}>
-        {severity} event
+      <div className={`border-t-[3px] border-double ${severityBorders[severity]} pt-3 mb-3`}>
+        <div className={`font-mono text-xs uppercase tracking-widest mb-3 ${severityAccents[severity]}`}>
+          {severity} event
+        </div>
       </div>
 
-      <h2 className="font-mono uppercase font-bold text-xl text-terminal-text tracking-wide mb-3">
+      <h2 className="font-mono uppercase font-bold text-2xl text-terminal-text tracking-wide mb-3">
         {headline}
       </h2>
 

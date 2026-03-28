@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Shield, Trophy } from 'lucide-react'
+import { DIFFICULTIES } from '../../state/initialState'
 import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
 
@@ -36,7 +38,11 @@ function HighScoreTable({ scores }) {
   )
 }
 
+const DIFFICULTY_KEYS = ['easy', 'normal', 'hard']
+
 export default function TitleScreen({ onStartGame, highScores }) {
+  const [selectedDifficulty, setSelectedDifficulty] = useState('normal')
+
   return (
     <div className="min-h-screen bg-terminal-bg flex flex-col items-center justify-center p-8 animate-fade-in">
       <div className="flex flex-col items-center text-center flex-1 justify-center">
@@ -61,8 +67,32 @@ export default function TitleScreen({ onStartGame, highScores }) {
           Survive the disasters. How many quarters can you last?
         </p>
 
+        <div className="flex gap-2 mb-3">
+          {DIFFICULTY_KEYS.map((key) => {
+            const diff = DIFFICULTIES[key]
+            const isSelected = key === selectedDifficulty
+            return (
+              <button
+                key={key}
+                onClick={() => setSelectedDifficulty(key)}
+                className={`px-4 py-2 font-mono text-sm uppercase tracking-wider rounded transition-colors ${
+                  isSelected
+                    ? 'bg-amber-glow text-terminal-bg'
+                    : 'bg-terminal-surface text-terminal-muted border border-terminal-border hover:text-terminal-text'
+                }`}
+              >
+                {diff.label}
+              </button>
+            )
+          })}
+        </div>
+
+        <p className="font-serif text-sm text-terminal-muted italic mb-8">
+          {DIFFICULTIES[selectedDifficulty].description}
+        </p>
+
         <Button
-          onClick={onStartGame}
+          onClick={() => onStartGame(selectedDifficulty)}
           className="px-8 py-3 text-base"
         >
           New Game

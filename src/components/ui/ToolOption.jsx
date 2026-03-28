@@ -4,6 +4,12 @@ const regionStyles = {
   self: 'bg-blue-900/40 text-risk-surveillance',
 }
 
+const regionBorderStyles = {
+  us: 'border-t-4 border-t-risk-jurisdiction',
+  eu: 'border-t-4 border-t-green-500',
+  self: 'border-t-4 border-t-risk-surveillance',
+}
+
 const riskLabels = [
   { key: 'jurisdiction', label: 'JUR', colour: 'text-risk-jurisdiction' },
   { key: 'continuity', label: 'CON', colour: 'text-risk-continuity' },
@@ -21,18 +27,19 @@ function CostValue({ value, label }) {
   )
 }
 
-export default function ToolOption({ option, onSelect, needIcon: Icon }) {
+export default function ToolOption({ option, onSelect, needIcon: Icon, stack = [] }) {
+  const existingCount = stack.filter(t => t.provider === option.provider).length
+  const hasSynergy = existingCount > 0
+  const lockInContinuity = existingCount * 5
+
   return (
-    <div
+    <button
       onClick={() => onSelect(option)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(option) } }}
-      role="button"
-      tabIndex={0}
-      className="bg-terminal-surface border border-terminal-border rounded p-4 cursor-pointer transition-all duration-200 hover:border-amber-glow hover:shadow-[0_0_8px_var(--color-amber-dim)] focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2"
+      className={`w-full text-left bg-terminal-surface border border-terminal-border rounded p-4 cursor-pointer transition-all duration-200 hover:border-amber-glow hover:shadow-[0_0_8px_var(--color-amber-dim)] focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2 ${regionBorderStyles[option.region] || regionBorderStyles.us}`}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex items-center gap-2">
-          {Icon && <Icon className="w-5 h-5 text-terminal-muted shrink-0" />}
+          {Icon && <Icon className="w-5 h-5 text-terminal-muted shrink-0" aria-hidden="true" />}
           <div>
             <div className="font-mono text-sm font-semibold text-terminal-text">{option.name}</div>
             <span className="text-xs text-terminal-muted">{option.provider}</span>
@@ -42,6 +49,13 @@ export default function ToolOption({ option, onSelect, needIcon: Icon }) {
           {option.region}
         </span>
       </div>
+
+      {hasSynergy && (
+        <div className="flex items-center gap-2 mb-2 px-2 py-1.5 rounded border border-amber-500/40 bg-amber-950/30">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-400">Lock-in</span>
+          <span className="font-mono text-[10px] text-amber-300/80">&minus;3 budget, +{lockInContinuity} continuity</span>
+        </div>
+      )}
 
       {option.tagline && (
         <p className="font-serif italic text-sm text-terminal-muted mb-3">{option.tagline}</p>
@@ -60,6 +74,6 @@ export default function ToolOption({ option, onSelect, needIcon: Icon }) {
         <CostValue value={option.budgetCost} label="budget" />
         <CostValue value={option.moraleCost} label="morale" />
       </div>
-    </div>
+    </button>
   )
 }

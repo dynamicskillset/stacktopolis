@@ -1,7 +1,7 @@
 const severityStyles = {
   minor: 'bg-terminal-surface text-terminal-text',
   major: 'bg-amber-glow text-terminal-bg',
-  critical: 'bg-danger text-white',
+  critical: 'bg-danger text-terminal-bg',
 }
 
 export default function BreakingBanner({ visible, severity = 'major' }) {
@@ -10,6 +10,8 @@ export default function BreakingBanner({ visible, severity = 'major' }) {
   return (
     <div
       className={`relative w-full overflow-hidden origin-top animate-breaking-in ${severityStyles[severity]}`}
+      role="status"
+      aria-live="assertive"
     >
       <div className="font-mono font-bold text-center uppercase tracking-[0.3em] text-lg py-3">
         Breaking News

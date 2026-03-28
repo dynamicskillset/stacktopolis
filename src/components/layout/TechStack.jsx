@@ -12,13 +12,18 @@ export default function TechStack({ stack, onToolSelect }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-      {stack.map((tool) => (
-        <ToolCard
+      {stack.map((tool, index) => (
+        <div
           key={tool.id}
-          tool={tool}
-          riskLevel={toolRiskLevel(tool)}
-          onClick={onToolSelect ? () => onToolSelect(tool) : undefined}
-        />
+          className="animate-slide-in-right"
+          style={{ animationDelay: `${index * 50}ms` }}
+        >
+          <ToolCard
+            tool={tool}
+            riskLevel={toolRiskLevel(tool)}
+            onClick={onToolSelect ? () => onToolSelect(tool) : undefined}
+          />
+        </div>
       ))}
     </div>
   )

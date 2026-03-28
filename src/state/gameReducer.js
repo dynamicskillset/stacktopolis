@@ -1,8 +1,8 @@
 import { TOOL_NEEDS } from '../data/tools'
 import { EVENTS } from '../data/events'
 import { GAME_OVER_MESSAGES } from '../data/gameOverMessages'
-import { createInitialState, TUNING } from './initialState'
-import { checkGameOver } from './selectors'
+import { createInitialState, TUNING, DIFFICULTIES } from './initialState'
+import { checkGameOver, getProviderCounts } from './selectors'
 import { clamp } from '../utils/clamp'
 import { shuffle } from '../utils/shuffle'
 
@@ -39,7 +39,8 @@ function drawFromDeck(deck, index, allItems) {
 export function gameReducer(state, action) {
   switch (action.type) {
     case 'START_GAME': {
-      const fresh = createInitialState()
+      const difficulty = action.payload || 'normal'
+      const fresh = createInitialState(difficulty)
       const needId = fresh.toolDeck[0]
       const need = getNeedById(needId)
       return {
@@ -69,13 +70,21 @@ export function gameReducer(state, action) {
         surveillance: option.surveillance,
       }
 
+      // Vendor synergy / lock-in: cheaper to stay, but riskier
+      const providerCounts = getProviderCounts(state.stack)
+      const existingCount = providerCounts[option.provider] || 0
+      const ecosystemDiscount = existingCount > 0 ? 3 : 0
+      const lockInPenalty = existingCount > 0 ? existingCount * 5 : 0
+
+      const effectiveBudgetCost = Math.max(0, option.budgetCost - ecosystemDiscount)
+
       let newState = {
         ...state,
         stack: [...state.stack, newTool],
         jurisdiction: clamp(state.jurisdiction + option.jurisdiction),
-        continuity: clamp(state.continuity + option.continuity),
+        continuity: clamp(state.continuity + option.continuity + lockInPenalty),
         surveillance: clamp(state.surveillance + option.surveillance),
-        budget: clamp(state.budget - option.budgetCost),
+        budget: clamp(state.budget - effectiveBudgetCost),
         morale: clamp(state.morale - option.moraleCost),
         currentNeed: null,
       }
@@ -99,18 +108,21 @@ export function gameReducer(state, action) {
     case 'ACKNOWLEDGE_EVENT': {
       const event = state.currentEvent
       const delta = event.apply(state)
+      const evtDiff = DIFFICULTIES[state.difficulty] || DIFFICULTIES.normal
+      const mult = evtDiff.eventMultiplier
 
       let newState = {
         ...state,
-        jurisdiction: clamp(state.jurisdiction + (delta.jurisdiction || 0)),
-        continuity: clamp(state.continuity + (delta.continuity || 0)),
-        surveillance: clamp(state.surveillance + (delta.surveillance || 0)),
-        budget: clamp(state.budget + (delta.budget || 0)),
-        morale: clamp(state.morale + (delta.morale || 0)),
+        jurisdiction: clamp(state.jurisdiction + Math.round((delta.jurisdiction || 0) * mult)),
+        continuity: clamp(state.continuity + Math.round((delta.continuity || 0) * mult)),
+        surveillance: clamp(state.surveillance + Math.round((delta.surveillance || 0) * mult)),
+        budget: clamp(state.budget + Math.round((delta.budget || 0) * mult)),
+        morale: clamp(state.morale + Math.round((delta.morale || 0) * mult)),
         phase: 'manage',
         currentEvent: null,
         pastHeadlines: [...state.pastHeadlines, event.headline],
         shakeScreen: event.severity === 'critical',
+        flashColour: event.severity === 'critical' ? 'red' : event.severity === 'major' ? 'amber' : null,
       }
 
       newState = applyGameOverCheck(newState)
@@ -186,11 +198,12 @@ export function gameReducer(state, action) {
     }
 
     case 'END_QUARTER': {
+      const qDiff = DIFFICULTIES[state.difficulty] || DIFFICULTIES.normal
       let newState = {
         ...state,
         quarter: state.quarter + 1,
         budget: clamp(state.budget + TUNING.quarterBudgetRegen),
-        morale: clamp(state.morale - TUNING.quarterMoralDecay),
+        morale: clamp(state.morale - qDiff.quarterMoralDecay),
       }
 
       newState = applyGameOverCheck(newState)
@@ -211,6 +224,10 @@ export function gameReducer(state, action) {
 
     case 'CLEAR_SHAKE': {
       return { ...state, shakeScreen: false }
+    }
+
+    case 'CLEAR_FLASH': {
+      return { ...state, flashColour: null }
     }
 
     default:

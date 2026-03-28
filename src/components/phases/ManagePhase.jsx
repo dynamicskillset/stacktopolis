@@ -8,25 +8,73 @@ const ACTIONS = [
   {
     key: 'migrate',
     label: 'Migrate Tool',
-    description: 'Move a tool to a lower-risk provider.',
+    description: 'Swap a tool for a safer provider.',
+    detail: 'Reduces all three risk lenses for the migrated tool.',
+    lens: null,
     budgetCost: TUNING.migrationBudgetCost,
     moraleCost: TUNING.migrationMoraleCost,
   },
   {
     key: 'backup',
     label: 'Run Backup Drill',
-    description: 'Reduce continuity risk by testing your recovery plan.',
+    description: 'Test your recovery plan.',
+    detail: 'Reduces Continuity risk by 8 points.',
+    lens: 'continuity',
+    lensColour: 'text-risk-continuity',
     budgetCost: TUNING.backupDrillBudgetCost,
     moraleCost: 0,
   },
   {
     key: 'audit',
     label: 'Audit Data Practices',
-    description: 'Reduce surveillance debt through a privacy review.',
+    description: 'Conduct a privacy review.',
+    detail: 'Reduces Surveillance debt by 8 points.',
+    lens: 'surveillance',
+    lensColour: 'text-risk-surveillance',
     budgetCost: 0,
     moraleCost: TUNING.auditMoraleCost,
   },
 ]
+
+function RiskSummary({ jurisdiction, continuity, surveillance }) {
+  const risks = [
+    { label: 'Jurisdiction', value: jurisdiction, colour: 'bg-risk-jurisdiction' },
+    { label: 'Continuity', value: continuity, colour: 'bg-risk-continuity' },
+    { label: 'Surveillance', value: surveillance, colour: 'bg-risk-surveillance' },
+  ].sort((a, b) => b.value - a.value)
+
+  const highest = risks[0]
+
+  return (
+    <div className="bg-terminal-bg/50 rounded p-3 space-y-2">
+      <div className="font-mono text-[10px] uppercase tracking-widest text-terminal-muted">
+        Risk Assessment
+      </div>
+      {risks.map((r) => (
+        <div key={r.label} className="flex items-center gap-2">
+          <span className="font-mono text-xs text-terminal-muted w-24 truncate">{r.label}</span>
+          <div className="flex-1 h-1.5 bg-terminal-surface rounded overflow-hidden">
+            <div
+              className={`h-full rounded ${r.colour}`}
+              style={{ width: `${r.value}%`, transition: 'width 300ms ease' }}
+            />
+          </div>
+          <span className={`font-mono text-xs font-bold tabular-nums w-6 text-right ${r.value >= 75 ? 'text-danger' : r.value >= 50 ? 'text-amber-glow' : 'text-terminal-muted'}`}>
+            {r.value}
+          </span>
+        </div>
+      ))}
+      {highest.value >= 50 && (
+        <p className="font-serif text-xs text-terminal-muted italic mt-1">
+          {highest.label} is your highest risk.{' '}
+          {highest.label === 'Continuity' && 'Consider a backup drill.'}
+          {highest.label === 'Surveillance' && 'Consider a data audit.'}
+          {highest.label === 'Jurisdiction' && 'Consider migrating a US tool.'}
+        </p>
+      )}
+    </div>
+  )
+}
 
 function CostLabel({ budgetCost, moraleCost }) {
   const parts = []
@@ -40,7 +88,7 @@ function CostLabel({ budgetCost, moraleCost }) {
   )
 }
 
-export default function ManagePhase({ stack, budget, morale, actions }) {
+export default function ManagePhase({ stack, budget, morale, jurisdiction, continuity, surveillance, actions }) {
   const [selectedAction, setSelectedAction] = useState(null)
 
   function canAfford(action) {
@@ -59,24 +107,27 @@ export default function ManagePhase({ stack, budget, morale, actions }) {
   }
 
   return (
-    <div className="animate-fade-in space-y-5">
+    <div className="animate-fade-in space-y-4 bg-terminal-surface/50 rounded-lg p-4 border border-terminal-border">
       <div>
-        <div className="font-mono text-xs uppercase tracking-widest text-amber-glow mb-1">
-          Manage Your Stack
+        <div className="font-mono text-xs uppercase tracking-[0.25em] text-amber-glow mb-1 border-b-2 border-amber-glow pb-1 inline-block">
+          Work Order
         </div>
-        <p className="font-serif italic text-terminal-muted">
-          Spend resources to reduce risk, or skip to the next quarter.
-        </p>
       </div>
 
+      <RiskSummary
+        jurisdiction={jurisdiction}
+        continuity={continuity}
+        surveillance={surveillance}
+      />
+
       {!selectedAction && (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {ACTIONS.map((action) => {
             const disabled = !canAfford(action) || stack.length === 0
             return (
               <div
                 key={action.key}
-                className="bg-terminal-surface border border-terminal-border rounded p-4 space-y-2"
+                className="bg-terminal-surface border border-terminal-border border-l-4 border-l-amber-glow rounded p-3 space-y-1.5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
@@ -84,6 +135,9 @@ export default function ManagePhase({ stack, budget, morale, actions }) {
                       {action.label}
                     </div>
                     <p className="text-xs text-terminal-muted">{action.description}</p>
+                    <p className={`text-xs font-mono ${action.lensColour || 'text-amber-glow'}`}>
+                      {action.detail}
+                    </p>
                   </div>
                   <Button
                     onClick={() => setSelectedAction(action.key)}
@@ -111,7 +165,7 @@ export default function ManagePhase({ stack, budget, morale, actions }) {
               Back
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-2">
             {stack.map((tool) => (
               <ToolCard
                 key={tool.id}
@@ -125,7 +179,7 @@ export default function ManagePhase({ stack, budget, morale, actions }) {
       )}
 
       <div className="pt-3 border-t border-terminal-border">
-        <Button onClick={actions.endQuarter} variant="secondary">
+        <Button onClick={actions.endQuarter} variant="primary" className="w-full">
           End Quarter
         </Button>
       </div>
