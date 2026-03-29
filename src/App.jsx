@@ -5,6 +5,7 @@ import TitleScreen from './components/screens/TitleScreen'
 import GameScreen from './components/screens/GameScreen'
 import GameOverScreen from './components/screens/GameOverScreen'
 import SoundToggle from './components/ui/SoundToggle'
+import ThemeToggle from './components/ui/ThemeToggle'
 import MobileGate from './components/ui/MobileGate'
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
     <>
       <MobileGate />
       <div className="hidden lg:block">
+        <ThemeToggle />
         <SoundToggle />
         {screen}
       </div>

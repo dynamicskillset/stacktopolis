@@ -84,8 +84,7 @@ export default function GameScreen({ state, actions }) {
 
   return (
     <div
-      className={`min-h-screen flex flex-col relative crt-scanlines ${state.shakeScreen ? 'animate-shake' : ''}`}
-      style={{ backgroundColor: '#0a0e14' }}
+      className={`min-h-screen flex flex-col relative crt-scanlines bg-terminal-bg ${state.shakeScreen ? 'animate-shake' : ''}`}
     >
       <Skyline dangerLevel={dangerLevel} />
 

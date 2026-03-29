@@ -173,9 +173,7 @@ export default function TitleScreen({ onStartGame, highScores }) {
   const intro = useMemo(() => INTROS[Math.floor(Math.random() * INTROS.length)], [])
 
   return (
-    <div className="min-h-screen relative flex flex-col items-center justify-center p-6 animate-fade-in crt-scanlines"
-      style={{ backgroundColor: '#0a0e14' }}
-    >
+    <div className="min-h-screen relative flex flex-col items-center justify-center p-6 animate-fade-in crt-scanlines bg-terminal-bg">
       <Skyline dangerLevel={0} />
 
       <div className="flex-1 flex items-center justify-center relative z-10 w-full">
@@ -210,8 +208,8 @@ export default function TitleScreen({ onStartGame, highScores }) {
             {intro}
           </p>
 
-          {/* Difficulty + Start — compact row */}
-          <div className="flex items-center gap-4 mb-2">
+          {/* Difficulty selector — small inline toggle */}
+          <div className="flex items-center gap-1 mb-2 bg-terminal-surface/60 rounded-full p-1 border border-terminal-border">
             {DIFFICULTY_KEYS.map((key) => {
               const diff = DIFFICULTIES[key]
               const isSelected = key === selectedDifficulty
@@ -219,10 +217,10 @@ export default function TitleScreen({ onStartGame, highScores }) {
                 <button
                   key={key}
                   onClick={() => setSelectedDifficulty(key)}
-                  className={`px-4 py-2 min-h-[44px] font-mono text-sm uppercase tracking-wider rounded transition-colors ${
+                  className={`px-4 py-1.5 min-h-[36px] font-mono text-xs uppercase tracking-wider rounded-full transition-colors ${
                     isSelected
-                      ? 'bg-amber-glow text-terminal-bg'
-                      : 'bg-terminal-surface text-terminal-muted border border-terminal-border hover:text-terminal-text'
+                      ? 'bg-terminal-border text-terminal-text'
+                      : 'text-terminal-muted hover:text-terminal-text'
                   }`}
                 >
                   {diff.label}

@@ -30,9 +30,7 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
   }
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 animate-fade-in crt-scanlines"
-      style={{ backgroundColor: '#0a0e14' }}
-    >
+    <div className="min-h-screen relative flex items-center justify-center p-4 animate-fade-in crt-scanlines bg-terminal-bg">
       <Skyline dangerLevel={100} />
 
       <div className="w-full max-w-2xl bg-terminal-surface/95 border border-terminal-border rounded p-8 relative z-10 backdrop-blur-sm">

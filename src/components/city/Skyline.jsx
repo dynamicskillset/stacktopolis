@@ -1,6 +1,13 @@
 import { useMemo } from 'react'
 
-function getSkyGradient(dangerLevel) {
+function getSkyGradient(dangerLevel, isLight) {
+  if (isLight) {
+    if (dangerLevel < 20) return 'linear-gradient(180deg, #c8ddf0 0%, #dce8f2 40%, #e8eff5 100%)'
+    if (dangerLevel < 40) return 'linear-gradient(180deg, #c0d0e0 0%, #d5dde8 40%, #e0e5ea 100%)'
+    if (dangerLevel < 60) return 'linear-gradient(180deg, #d0c0b8 0%, #ddd0c8 40%, #e5dcd5 100%)'
+    if (dangerLevel < 80) return 'linear-gradient(180deg, #d8b8a8 0%, #e0c0b0 40%, #e8c8b8 100%)'
+    return 'linear-gradient(180deg, #d8a8a0 0%, #e0b0a8 40%, #e8b8b0 100%)'
+  }
   if (dangerLevel < 20) return 'linear-gradient(180deg, #0a1628 0%, #0f1d2d 40%, #162a3a 100%)'
   if (dangerLevel < 40) return 'linear-gradient(180deg, #0f1525 0%, #1a2030 40%, #1f2a35 100%)'
   if (dangerLevel < 60) return 'linear-gradient(180deg, #1a1520 0%, #25181e 40%, #2a1a1a 100%)'
@@ -9,7 +16,8 @@ function getSkyGradient(dangerLevel) {
 }
 
 export default function Skyline({ dangerLevel = 0 }) {
-  const skyGradient = useMemo(() => getSkyGradient(dangerLevel), [dangerLevel])
+  const isLight = typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'light'
+  const skyGradient = useMemo(() => getSkyGradient(dangerLevel, isLight), [dangerLevel, isLight])
   const stormOpacity = Math.min(1, Math.max(0, (dangerLevel - 50) / 50))
 
   return (

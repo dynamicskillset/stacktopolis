@@ -2,9 +2,7 @@ import { Shield } from 'lucide-react'
 
 export default function MobileGate() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center lg:hidden"
-      style={{ backgroundColor: '#0a0e14' }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center lg:hidden bg-terminal-bg">
       <Shield className="w-12 h-12 text-amber-glow mb-6" />
 
       <h1 className="font-mono text-2xl font-bold text-amber-glow tracking-widest mb-4">

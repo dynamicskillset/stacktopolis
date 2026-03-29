@@ -4,6 +4,7 @@
   --font-mono: "IBM Plex Mono", monospace;
   --font-serif: "Lora", serif;
 
+  /* Dark theme (default) */
   --color-terminal-bg: #0a0e14;
   --color-terminal-surface: #111820;
   --color-terminal-border: #1e2a38;
@@ -38,6 +39,29 @@
   --animate-delta-float: delta-float 1.2s ease-out forwards;
   --animate-slide-in-right: slide-in-right 0.3s ease-out forwards;
   --animate-slide-out-down: slide-out-down 0.3s ease-in forwards;
+}
+
+/* Light theme — TechFreedom.eu palette */
+[data-theme="light"] {
+  --color-terminal-bg: #F7F5F0;
+  --color-terminal-surface: #FFFFFF;
+  --color-terminal-border: #E0DDD5;
+  --color-terminal-muted: #636B78;
+  --color-terminal-text: #1A2332;
+  --color-amber-glow: #D4A843;
+  --color-amber-dim: #b08a30;
+  --color-amber-soft: #f5edd8;
+  --color-green-glow: #2E7D32;
+  --color-green-dim: #1b5e20;
+  --color-green-soft: #c8e6c9;
+  --color-risk-jurisdiction: #C62828;
+  --color-risk-continuity: #EF6C00;
+  --color-risk-surveillance: #2B6AB0;
+  --color-danger: #D9534F;
+}
+
+[data-theme="light"] .crt-scanlines::before {
+  opacity: 0.015;
 }
 
 @keyframes ticker-scroll {

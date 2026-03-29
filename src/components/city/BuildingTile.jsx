@@ -77,7 +77,7 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
           {/* Ground plot */}
           <polygon
             points="55,2 108,28 55,54 2,28"
-            fill="#0d1218"
+            fill="var(--color-terminal-surface, #0d1218)"
             stroke="#1e2a38"
             strokeWidth="1"
             strokeDasharray="4,3"
