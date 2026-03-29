@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, useEffect } from 'react'
 import NewsTicker from '../layout/NewsTicker'
 import CityGrid from '../city/CityGrid'
 import BuildingInspector from '../city/BuildingInspector'
@@ -8,6 +8,7 @@ import ControlPanel from '../city/ControlPanel'
 import Skyline from '../city/Skyline'
 import Advisor from '../ui/Advisor'
 import PauseOverlay from '../ui/PauseOverlay'
+import GuidedTour from '../ui/GuidedTour'
 import { useAdvisor } from '../../hooks/useAdvisor'
 import { getAdvisorLine } from '../../data/advisor'
 
@@ -60,6 +61,19 @@ export default function GameScreen({ state, actions }) {
     const key = METRIC_ADVICE_KEYS[metric]
     if (key) setManualLine(getAdvisorLine(key))
   }, [])
+
+  // Guided tour — show on first play, auto-pause
+  const [showTour, setShowTour] = useState(() => {
+    try { return !localStorage.getItem('stacktopolis-toured') } catch { return true }
+  })
+  useEffect(() => {
+    if (showTour && !state.isPaused) actions.togglePause()
+  }, [showTour])
+  const handleTourComplete = useCallback(() => {
+    setShowTour(false)
+    try { localStorage.setItem('stacktopolis-toured', '1') } catch {}
+    if (state.isPaused) actions.togglePause()
+  }, [state.isPaused, actions])
 
   // Manual line overrides auto advisor line
   const displayLine = manualLine || advisorLine
@@ -149,7 +163,8 @@ export default function GameScreen({ state, actions }) {
         onClickMetric={handleClickMetric}
       />
 
-      {state.isPaused && <PauseOverlay onResume={actions.togglePause} />}
+      {state.isPaused && !showTour && <PauseOverlay onResume={actions.togglePause} />}
+      {showTour && <GuidedTour onComplete={handleTourComplete} />}
     </div>
   )
 }

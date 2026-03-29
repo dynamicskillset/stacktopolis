@@ -2,16 +2,16 @@ export default function Attribution() {
   return (
     <footer className="text-xs text-terminal-muted font-mono py-3 text-center space-y-3">
       <div>
-        Risk framework:{' '}
+        Based on the{' '}
         <a
           href="https://techfreedom.eu"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline hover:text-terminal-text transition-colors"
+          className="text-amber-glow underline hover:text-terminal-text transition-colors font-bold"
         >
           TechFreedom.eu
         </a>{' '}
-        (CC BY)
+        risk framework (CC BY)
       </div>
       <div className="flex items-center justify-center gap-3">
         <a
