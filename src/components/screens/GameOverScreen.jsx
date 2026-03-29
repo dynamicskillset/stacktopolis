@@ -4,11 +4,24 @@ import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
 import GaugeDial from '../city/GaugeDial'
 import Skyline from '../city/Skyline'
+import InitialsEntry from '../ui/InitialsEntry'
 
-export default function GameOverScreen({ state, onPlayAgain }) {
+export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scoreSubmitted }) {
   const score = calculateScore(state)
   const title = awardTitle(score)
   const gameOverMessage = GAME_OVER_MESSAGES[state.gameOverCause] || GAME_OVER_MESSAGES.budget
+
+  function handleInitials(initials) {
+    onSubmitScore({
+      initials,
+      quarters: score.quarters,
+      title: title.label,
+      independence: score.independence,
+      totalScore: score.totalScore,
+      cause: state.gameOverCause,
+      difficulty: state.difficulty,
+    })
+  }
 
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 animate-fade-in crt-scanlines"
@@ -88,7 +101,7 @@ export default function GameOverScreen({ state, onPlayAgain }) {
 
         <div className="border-t border-terminal-border mb-6" />
 
-        {/* Risk breakdown — gauge dials */}
+        {/* Risk breakdown */}
         <div
           className="mb-8 animate-slide-up"
           style={{ animationDelay: '300ms' }}
@@ -97,35 +110,31 @@ export default function GameOverScreen({ state, onPlayAgain }) {
             Risk Assessment
           </h3>
           <div className="flex justify-center gap-8">
-            <GaugeDial
-              label="Jurisdiction"
-              value={state.jurisdiction}
-              colour="var(--color-risk-jurisdiction)"
-            />
-            <GaugeDial
-              label="Continuity"
-              value={state.continuity}
-              colour="var(--color-risk-continuity)"
-            />
-            <GaugeDial
-              label="Surveillance"
-              value={state.surveillance}
-              colour="var(--color-risk-surveillance)"
-            />
+            <GaugeDial label="Jurisdiction" value={state.jurisdiction} colour="var(--color-risk-jurisdiction)" />
+            <GaugeDial label="Continuity" value={state.continuity} colour="var(--color-risk-continuity)" />
+            <GaugeDial label="Surveillance" value={state.surveillance} colour="var(--color-risk-surveillance)" />
           </div>
         </div>
 
-        {/* Play again */}
+        <div className="border-t border-terminal-border mb-6" />
+
+        {/* Initials entry or Play Again */}
         <div
           className="text-center animate-slide-up"
           style={{ animationDelay: '400ms' }}
         >
-          <Button
-            onClick={onPlayAgain}
-            className="px-8 py-3 text-base"
-          >
-            Play Again
-          </Button>
+          {!scoreSubmitted ? (
+            <InitialsEntry onSubmit={handleInitials} />
+          ) : (
+            <div>
+              <p className="font-mono text-xs text-green-glow uppercase tracking-wider mb-4">
+                Score recorded
+              </p>
+              <Button onClick={onPlayAgain} className="px-8 py-3 text-base">
+                Play Again
+              </Button>
+            </div>
+          )}
         </div>
 
         <div style={{ animationDelay: '500ms' }} className="animate-slide-up">

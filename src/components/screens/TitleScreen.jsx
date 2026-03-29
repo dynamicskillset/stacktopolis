@@ -24,6 +24,9 @@ function HighScoreTable({ scores }) {
           >
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs text-terminal-muted w-4">{i + 1}.</span>
+              <span className="font-mono text-sm font-bold text-amber-glow w-10 tracking-widest">
+                {score.initials || '---'}
+              </span>
               <div>
                 <span className="font-mono text-sm text-terminal-text">{score.title}</span>
                 <span className="font-mono text-xs text-terminal-muted ml-2">

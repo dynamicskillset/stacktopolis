@@ -1,7 +1,6 @@
-import { useRef, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useGame } from './hooks/useGame'
 import { useLocalScores } from './hooks/useLocalScores'
-import { calculateScore, awardTitle } from './utils/scoring'
 import TitleScreen from './components/screens/TitleScreen'
 import GameScreen from './components/screens/GameScreen'
 import GameOverScreen from './components/screens/GameOverScreen'
@@ -11,26 +10,17 @@ import MobileGate from './components/ui/MobileGate'
 function App() {
   const { state, actions } = useGame()
   const { scores, addScore } = useLocalScores()
-  const scoreSaved = useRef(false)
+  const [scoreSubmitted, setScoreSubmitted] = useState(false)
 
-  useEffect(() => {
-    if (state.screen === 'gameOver' && !scoreSaved.current) {
-      const score = calculateScore(state)
-      const title = awardTitle(score)
-      addScore({
-        quarters: score.quarters,
-        title: title.label,
-        independence: score.independence,
-        totalScore: score.totalScore,
-        cause: state.gameOverCause,
-        difficulty: state.difficulty,
-      })
-      scoreSaved.current = true
-    }
-    if (state.screen !== 'gameOver') {
-      scoreSaved.current = false
-    }
-  }, [state.screen, state.gameOverCause, state.quarter, state.jurisdiction, state.continuity, state.surveillance, state.stack, state.difficulty, addScore])
+  const handleSubmitScore = useCallback((scoreData) => {
+    addScore(scoreData)
+    setScoreSubmitted(true)
+  }, [addScore])
+
+  // Reset submitted flag when leaving game over
+  if (state.screen !== 'gameOver' && scoreSubmitted) {
+    setScoreSubmitted(false)
+  }
 
   let screen
   switch (state.screen) {
@@ -41,7 +31,14 @@ function App() {
       screen = <GameScreen state={state} actions={actions} />
       break
     case 'gameOver':
-      screen = <GameOverScreen state={state} onPlayAgain={actions.restartGame} />
+      screen = (
+        <GameOverScreen
+          state={state}
+          onPlayAgain={actions.restartGame}
+          onSubmitScore={handleSubmitScore}
+          scoreSubmitted={scoreSubmitted}
+        />
+      )
       break
     default:
       screen = <TitleScreen onStartGame={actions.startGame} highScores={scores} />
