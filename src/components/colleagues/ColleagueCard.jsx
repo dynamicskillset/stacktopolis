@@ -94,21 +94,23 @@ function ColleagueCard({ scenario, patienceRemaining, patienceTotal, onResolve, 
                     <div className="flex flex-wrap items-center gap-2 mt-1.5">
                       {impacts ? (
                         <>
+                          {/* Risk: increase = bad (red), decrease = good (green) */}
                           {impacts.jurisdiction != null && impacts.jurisdiction !== 0 && (
-                            <span className={`font-mono text-xs ${impacts.jurisdiction > 0 ? 'text-risk-jurisdiction' : 'text-green-glow'}`}>
-                              {impacts.jurisdiction > 0 ? '+' : ''}{impacts.jurisdiction} JUR
+                            <span className={`font-mono text-xs ${impacts.jurisdiction > 0 ? 'text-danger' : 'text-green-glow'}`}>
+                              {impacts.jurisdiction > 0 ? '+' : ''}{impacts.jurisdiction} JUR risk
                             </span>
                           )}
                           {impacts.continuity != null && impacts.continuity !== 0 && (
-                            <span className={`font-mono text-xs ${impacts.continuity > 0 ? 'text-risk-continuity' : 'text-green-glow'}`}>
-                              {impacts.continuity > 0 ? '+' : ''}{impacts.continuity} CON
+                            <span className={`font-mono text-xs ${impacts.continuity > 0 ? 'text-danger' : 'text-green-glow'}`}>
+                              {impacts.continuity > 0 ? '+' : ''}{impacts.continuity} CON risk
                             </span>
                           )}
                           {impacts.surveillance != null && impacts.surveillance !== 0 && (
-                            <span className={`font-mono text-xs ${impacts.surveillance > 0 ? 'text-risk-surveillance' : 'text-green-glow'}`}>
-                              {impacts.surveillance > 0 ? '+' : ''}{impacts.surveillance} SUR
+                            <span className={`font-mono text-xs ${impacts.surveillance > 0 ? 'text-danger' : 'text-green-glow'}`}>
+                              {impacts.surveillance > 0 ? '+' : ''}{impacts.surveillance} SUR risk
                             </span>
                           )}
+                          {/* Budget/morale: increase = good (green), decrease = bad (red) */}
                           {impacts.budget != null && impacts.budget !== 0 && (
                             <span className={`font-mono text-xs ${impacts.budget > 0 ? 'text-green-glow' : 'text-danger'}`}>
                               {impacts.budget > 0 ? '+' : ''}{impacts.budget} budget

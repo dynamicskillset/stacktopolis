@@ -136,6 +136,33 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       {tool.region === 'us' && tool.jurisdiction >= 12 && <PoliceEffect />}
       {tool.surveillance >= 14 && <CameraEffect />}
 
+      {/* Region flag */}
+      <svg className="absolute top-2 left-1 pointer-events-none" width="12" height="10" viewBox="0 0 12 10" aria-hidden="true">
+        <line x1="1" y1="0" x2="1" y2="10" stroke="#636B78" strokeWidth="0.5" />
+        {tool.region === 'us' && (
+          <g>
+            <rect x="2" y="0" width="9" height="6" fill="#B71C1C" />
+            <rect x="2" y="1" width="9" height="1" fill="#FFFFFF" />
+            <rect x="2" y="3" width="9" height="1" fill="#FFFFFF" />
+            <rect x="2" y="5" width="9" height="1" fill="#FFFFFF" />
+            <rect x="2" y="0" width="4" height="3" fill="#1A2332" />
+          </g>
+        )}
+        {tool.region === 'eu' && (
+          <g>
+            <rect x="2" y="0" width="9" height="6" fill="#2B6AB0" />
+            <circle cx="6.5" cy="3" r="0.5" fill="#D4A843" />
+            <circle cx="5" cy="1.5" r="0.5" fill="#D4A843" />
+            <circle cx="8" cy="1.5" r="0.5" fill="#D4A843" />
+            <circle cx="5" cy="4.5" r="0.5" fill="#D4A843" />
+            <circle cx="8" cy="4.5" r="0.5" fill="#D4A843" />
+          </g>
+        )}
+        {tool.region === 'self' && (
+          <polygon points="2,0 10,3 2,6" fill="#2E7D32" opacity="0.7" />
+        )}
+      </svg>
+
       <div role="img" aria-hidden="true" className={risk === 'danger' ? 'opacity-80' : ''}>
         {buildingSvg}
       </div>

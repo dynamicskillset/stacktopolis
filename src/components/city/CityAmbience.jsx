@@ -21,7 +21,7 @@ export default function CityAmbience({ stack, morale, jurisdiction, continuity, 
       {/* Always present — ambient life */}
       <WalkingPeople />
       <FlyingThings maxRisk={maxRisk} />
-      <WhimsicalDetails maxRisk={maxRisk} jurisdiction={jurisdiction} />
+      <WhimsicalDetails maxRisk={maxRisk} jurisdiction={jurisdiction} surveillance={surveillance} continuity={continuity} />
 
       {/* Normal operations or emergency vehicles */}
       {hasFire ? <FireEngine /> : <DeliveryVan />}
