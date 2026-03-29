@@ -4,6 +4,8 @@ import FireEffect from './effects/FireEffect'
 import PoliceEffect from './effects/PoliceEffect'
 import CameraEffect from './effects/CameraEffect'
 import TapeEffect from './effects/TapeEffect'
+import RunningPeople from './effects/RunningPeople'
+import SwatVan from './effects/SwatVan'
 
 const CATEGORY_LABELS = {
   email: 'Email',
@@ -102,6 +104,7 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
   }
 
   const risk = toolRiskLevel(tool)
+  const combined = (tool.jurisdiction || 0) + (tool.continuity || 0) + (tool.surveillance || 0)
   const buildingSvg = getBuilding(categoryId, tool.region)
 
   const Wrapper = onClick ? 'button' : 'div'
@@ -116,10 +119,13 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       className={`flex flex-col items-center justify-end relative animate-slide-up ${risk === 'danger' ? 'animate-glitch' : risk === 'safe' ? 'animate-gentle-breathe' : ''} ${interactiveClass} ${selectedClass}`}
       aria-label={`${tool.name} (${(tool.region || '').toUpperCase()}) — ${CATEGORY_LABELS[categoryId]}, risk: ${risk}${onClick ? '. Click to inspect.' : ''}`}
     >
+      {/* Progressive visual effects based on combined risk */}
       {tool.degraded && <TapeEffect />}
-      {risk === 'danger' && tool.jurisdiction > 10 && <FireEffect />}
-      {risk === 'danger' && !tool.degraded && !(tool.jurisdiction > 10) && <SmokeEffect />}
-      {risk === 'warning' && <WarningIcon />}
+      {combined > 15 && combined <= 25 && <SmokeEffect />}
+      {combined > 25 && combined <= 35 && <><SmokeEffect /><WarningIcon /></>}
+      {combined > 35 && <><FireEffect /><RunningPeople /></>}
+      {combined > 40 && <SwatVan />}
+      {combined <= 15 && risk === 'warning' && <WarningIcon />}
       {tool.region === 'us' && tool.jurisdiction >= 12 && <PoliceEffect />}
       {tool.surveillance >= 14 && <CameraEffect />}
 
