@@ -1,6 +1,6 @@
 export default function FireEffect() {
   return (
-    <svg className="absolute top-4 left-1/2 -translate-x-1/2 pointer-events-none" width="28" height="24" viewBox="0 0 36 32" aria-hidden="true">
+    <svg className="absolute top-6 left-1/2 -translate-x-1/2 pointer-events-none" width="30" height="26" viewBox="0 0 36 32" aria-hidden="true">
       {/* Outer flame */}
       <path d="M18,28 Q10,20 14,12 Q16,8 18,4 Q20,8 22,12 Q26,20 18,28Z" fill="#ff6b00" opacity="0.8">
         <animate attributeName="d"

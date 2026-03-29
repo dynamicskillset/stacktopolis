@@ -126,7 +126,12 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       className={`flex flex-col items-center justify-end relative animate-slide-up ${risk === 'danger' ? 'animate-glitch' : risk === 'safe' ? 'animate-gentle-breathe' : ''} ${interactiveClass} ${selectedClass}`}
       aria-label={`${tool.name} (${(tool.region || '').toUpperCase()}) — ${CATEGORY_LABELS[categoryId]}, risk: ${risk}${onClick ? '. Click to inspect.' : ''}`}
     >
-      {/* Progressive visual effects based on combined risk */}
+      {/* Building SVG — rendered first so effects overlay on top */}
+      <div role="img" aria-hidden="true" className={risk === 'danger' ? 'opacity-80' : ''}>
+        {buildingSvg}
+      </div>
+
+      {/* Effects overlaid ON the building */}
       {tool.degraded && <TapeEffect />}
       {combined > 15 && combined <= 25 && <SmokeEffect />}
       {combined > 25 && combined <= 35 && <><SmokeEffect /><WarningIcon /></>}
@@ -136,8 +141,8 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       {tool.region === 'us' && tool.jurisdiction >= 12 && <PoliceEffect />}
       {tool.surveillance >= 14 && <CameraEffect />}
 
-      {/* Region flag */}
-      <svg className="absolute top-2 left-1 pointer-events-none" width="12" height="10" viewBox="0 0 12 10" aria-hidden="true">
+      {/* Region flag on the roof */}
+      <svg className="absolute top-3 left-2 pointer-events-none" width="12" height="10" viewBox="0 0 12 10" aria-hidden="true">
         <line x1="1" y1="0" x2="1" y2="10" stroke="#636B78" strokeWidth="0.5" />
         {tool.region === 'us' && (
           <g>
@@ -162,10 +167,6 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
           <polygon points="2,0 10,3 2,6" fill="#2E7D32" opacity="0.7" />
         )}
       </svg>
-
-      <div role="img" aria-hidden="true" className={risk === 'danger' ? 'opacity-80' : ''}>
-        {buildingSvg}
-      </div>
 
       {/* Risk LED indicator */}
       <div

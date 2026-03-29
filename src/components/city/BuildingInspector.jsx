@@ -17,7 +17,6 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
   const Icon = getIcon(tool.icon)
 
   const canMigrate = budget >= TUNING.migrationBudgetCost && morale >= TUNING.migrationMoraleCost
-  const canBackup = budget >= TUNING.backupDrillBudgetCost
   const canAudit = morale >= TUNING.auditMoraleCost
 
   return (
@@ -67,7 +66,7 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
         </div>
       )}
 
-      {/* Actions */}
+      {/* 3 building-specific actions */}
       <div className="space-y-2">
         <button
           onClick={() => { actions.migrateTool(tool.id); onClose() }}
@@ -76,18 +75,7 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
         >
           <div className="font-mono text-xs font-semibold text-terminal-text">Migrate to Safest</div>
           <div className="font-mono text-xs text-terminal-muted">
-            Cost: {TUNING.migrationBudgetCost} budget, {TUNING.migrationMoraleCost} morale
-          </div>
-        </button>
-
-        <button
-          onClick={() => { actions.runBackup(tool.id); onClose() }}
-          disabled={!canBackup}
-          className="w-full text-left px-3 py-2 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-risk-continuity transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          <div className="font-mono text-xs font-semibold text-terminal-text">Backup Drill</div>
-          <div className="font-mono text-xs text-terminal-muted">
-            Cost: {TUNING.backupDrillBudgetCost} budget. Reduces continuity risk by {TUNING.backupDrillReduction}.
+            Switches to lowest-risk provider. Cost: {TUNING.migrationBudgetCost} budget, {TUNING.migrationMoraleCost} morale.
           </div>
         </button>
 
@@ -98,21 +86,19 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
         >
           <div className="font-mono text-xs font-semibold text-terminal-text">Audit Data Practices</div>
           <div className="font-mono text-xs text-terminal-muted">
-            Cost: {TUNING.auditMoraleCost} morale. Reduces surveillance risk by {TUNING.auditReduction}.
+            Reviews this tool's data handling. Cost: {TUNING.auditMoraleCost} morale. Reduces surveillance risk by {TUNING.auditReduction}.
           </div>
         </button>
 
-        <div className="border-t border-terminal-border pt-2 mt-1">
-          <button
-            onClick={() => { actions.downgradeTool(tool.id); onClose() }}
-            className="w-full text-left px-3 py-2 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-danger transition-colors mt-2"
-          >
-            <div className="font-mono text-xs font-semibold text-terminal-text">Downgrade to Cheapest</div>
-            <div className="font-mono text-xs text-terminal-muted">
-              Saves budget but increases risk. Switches to the cheapest provider.
-            </div>
-          </button>
-        </div>
+        <button
+          onClick={() => { actions.downgradeTool(tool.id); onClose() }}
+          className="w-full text-left px-3 py-2 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-danger transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <div className="font-mono text-xs font-semibold text-terminal-text">Downgrade to Cheapest</div>
+          <div className="font-mono text-xs text-terminal-muted">
+            Saves budget but increases risk. Switches to the cheapest provider.
+          </div>
+        </button>
       </div>
     </div>
   )

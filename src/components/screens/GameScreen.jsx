@@ -196,6 +196,13 @@ export default function GameScreen({ state, actions }) {
               </button>
             )
           })()}
+          <button
+            onClick={() => actions.runBackup(null)}
+            disabled={state.budget < 10}
+            className="font-mono text-xs px-3 py-1.5 rounded border border-risk-continuity/40 text-risk-continuity hover:bg-risk-continuity/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+          >
+            Backup Drill (−10 budget, −8 CON risk)
+          </button>
         </div>
       </div>
 
