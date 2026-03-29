@@ -271,7 +271,10 @@ export function gameReducer(state, action) {
       let cDrift = 0
       let sDrift = 0
       for (const tool of state.stack) {
-        const mult = tool.degraded ? TUNING.degradedMultiplier : 1
+        const combined = (tool.jurisdiction || 0) + (tool.continuity || 0) + (tool.surveillance || 0)
+        // Fire spreading: tools on fire (combined > 35) generate 50% more drift
+        const fireMult = combined > 35 ? 1.5 : 1
+        const mult = (tool.degraded ? TUNING.degradedMultiplier : 1) * fireMult
         if (tool.region === 'us') {
           jDrift += (TUNING.driftUs.jurisdiction || 0) * mult
           sDrift += (TUNING.driftUs.surveillance || 0) * mult

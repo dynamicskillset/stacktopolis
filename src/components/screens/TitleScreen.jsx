@@ -156,7 +156,7 @@ function CityPreview() {
         </circle>
       </g>
 
-      {/* Tiny person running across the scene */}
+      {/* Tiny person running from right to left */}
       <g opacity="0.4">
         <circle cx="10" cy="84" r="1.5" fill="#1A2332" />
         <line x1="10" y1="86" x2="10" y2="90" stroke="#1A2332" strokeWidth="0.8" />
@@ -166,7 +166,7 @@ function CityPreview() {
         <line x1="10" y1="90" x2="12" y2="93" stroke="#1A2332" strokeWidth="0.8">
           <animate attributeName="x2" values="12;8;12" dur="0.3s" repeatCount="indefinite" />
         </line>
-        <animateTransform attributeName="transform" type="translate" values="-20,0;440,0" dur="12s" repeatCount="indefinite" />
+        <animateTransform attributeName="transform" type="translate" values="440,0;-20,0" dur="14s" repeatCount="indefinite" />
       </g>
 
       {/* Fire truck — sequenced: drive in (0-4s), spray (4-12s), drive off (12-16s), reset (16-20s) */}
