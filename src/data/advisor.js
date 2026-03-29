@@ -105,7 +105,7 @@ export const ADVISOR_LINES = {
   ],
 
   manageJurisdiction: [
-    'Jurisdiction is your biggest problem. Migrating a US tool would help. If you can afford it.',
+    'Jurisdiction risk is your biggest problem. Migrating a US tool would help. If you can afford it.',
     'That jurisdiction exposure is getting uncomfortable. Consider swapping a US provider.',
     'Your data is spread across more jurisdictions than a spy novel. Time to consolidate.',
     'Jurisdiction risk this high means one subpoena away from a very bad day.',
@@ -114,7 +114,7 @@ export const ADVISOR_LINES = {
   manageContinuity: [
     'Continuity risk is climbing. A backup drill would give you some breathing room.',
     'If your biggest provider goes down tomorrow, how many tools do you lose? Run a backup drill.',
-    'Continuity at this level means one outage away from carrier pigeons. Test your recovery plan.',
+    'Continuity risk at this level means one outage away from carrier pigeons. Test your recovery plan.',
     'All those eggs in one basket? A backup drill reduces continuity by 8 points.',
   ],
 

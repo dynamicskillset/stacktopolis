@@ -56,8 +56,8 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'video-zoomcorp',
-        name: 'ZoomCorp',
-        provider: 'ZoomCorp Inc.',
+        name: 'VidCall Pro',
+        provider: 'VidCall Pro Inc.',
         region: 'us',
         tagline:
           'Your meeting data takes a scenic tour through Virginia before anyone says hello.',
@@ -200,8 +200,8 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'crm-salesforce',
-        name: 'SalesForce Ultra',
-        provider: 'SalesForce Ultra',
+        name: 'DonorForce Pro',
+        provider: 'DonorForce Pro',
         region: 'us',
         tagline:
           'Enterprise pricing for your 200-person mailing list. You will need a consultant for the consultant.',
@@ -248,8 +248,8 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'hosting-amacloud',
-        name: 'AmaCloud',
-        provider: 'AmaCloud Services',
+        name: 'MegaHost',
+        provider: 'MegaHost Services',
         region: 'us',
         tagline:
           'Powers half the internet and most of the CIA. But the free tier is quite generous.',
@@ -261,8 +261,8 @@ export const TOOL_NEEDS = [
       },
       {
         id: 'hosting-hetznerbox',
-        name: 'HetznerBox',
-        provider: 'HetznerBox GmbH',
+        name: 'EuroServe',
+        provider: 'EuroServe GmbH',
         region: 'eu',
         tagline:
           'German engineering, German data protection, German-language error messages.',
@@ -296,8 +296,8 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'messaging-slackchat',
-        name: 'SlackChat',
-        provider: 'SlackChat Inc.',
+        name: 'ChatHive',
+        provider: 'ChatHive Inc.',
         region: 'us',
         tagline:
           'Where conversations go to die after 90 days on the free plan. Upgrade or lose your institutional memory.',
@@ -344,7 +344,7 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'office-officecorp',
-        name: 'OfficeCorp 365',
+        name: 'OfficeSuite 365',
         provider: 'MegaCorp',
         region: 'us',
         tagline:
@@ -405,8 +405,8 @@ export const TOOL_NEEDS = [
       },
       {
         id: 'analytics-plausible',
-        name: 'PlausibleStats',
-        provider: 'PlausibleStats OUe',
+        name: 'ClearMetrics',
+        provider: 'ClearMetrics OUe',
         region: 'eu',
         tagline:
           'Privacy-respecting analytics that fit on a single dashboard. Your data team will be furious.',
@@ -466,8 +466,8 @@ export const TOOL_NEEDS = [
       },
       {
         id: 'passwords-protonlock',
-        name: 'ProtonLock',
-        provider: 'ProtonLock AG',
+        name: 'SwissVault',
+        provider: 'SwissVault AG',
         region: 'eu',
         tagline:
           'Swiss-grade encryption for the password your CEO will still write on a sticky note.',
@@ -514,8 +514,8 @@ export const TOOL_NEEDS = [
       },
       {
         id: 'social-skyfeed',
-        name: 'SkyFeed',
-        provider: 'SkyFeed PBC',
+        name: 'OpenFeed',
+        provider: 'OpenFeed PBC',
         region: 'us',
         tagline:
           'Decentralised in theory. Hosted in the US in practice. But the vibes are better, honestly.',
@@ -536,7 +536,7 @@ export const TOOL_NEEDS = [
     options: [
       {
         id: 'ai-chatgenius',
-        name: 'ChatGenius',
+        name: 'BrainBot',
         provider: 'OpenBrain Inc.',
         region: 'us',
         tagline:

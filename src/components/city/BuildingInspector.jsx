@@ -87,7 +87,7 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
         >
           <div className="font-mono text-xs font-semibold text-terminal-text">Backup Drill</div>
           <div className="font-mono text-xs text-terminal-muted">
-            Cost: {TUNING.backupDrillBudgetCost} budget. Reduces continuity by {TUNING.backupDrillReduction}.
+            Cost: {TUNING.backupDrillBudgetCost} budget. Reduces continuity risk by {TUNING.backupDrillReduction}.
           </div>
         </button>
 
@@ -98,7 +98,7 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
         >
           <div className="font-mono text-xs font-semibold text-terminal-text">Audit Data Practices</div>
           <div className="font-mono text-xs text-terminal-muted">
-            Cost: {TUNING.auditMoraleCost} morale. Reduces surveillance by {TUNING.auditReduction}.
+            Cost: {TUNING.auditMoraleCost} morale. Reduces surveillance risk by {TUNING.auditReduction}.
           </div>
         </button>
       </div>

@@ -402,7 +402,7 @@ export const SCENARIOS = [
     colleagueId: 'priya',
     type: 'crisis',
     headline: 'Staff Caught Pasting Beneficiary Data into AI',
-    dialogue: "I've found staff using ChatGenius to summarise beneficiary case notes. The data is hitting US servers and training their model. What do you want me to do?",
+    dialogue: "I've found staff using BrainBot to summarise beneficiary case notes. The data is hitting US servers and training their model. What do you want me to do?",
     triggerCondition: (state) => state.stack.some(t => t.needId === 'ai' && t.region === 'us') || state.surveillance > 30,
     priority: 4,
     options: [
@@ -938,7 +938,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'video'),
     priority: 3,
     options: [
-      { label: 'ZoomCorp (US)', description: 'Everyone knows it, data tours Virginia', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-zoomcorp' }, responseText: "Done. Your meeting data now takes a scenic tour before anyone says hello." },
+      { label: 'VidCall Pro (US)', description: 'Everyone knows it, data tours Virginia', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-zoomcorp' }, responseText: "Done. Your meeting data now takes a scenic tour before anyone says hello." },
       { label: 'MeetFree (Self)', description: 'Self-hosted, breaks at 4 users', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-meetfree' }, responseText: "Works beautifully until the fourth person joins." },
       { label: 'TeamSync (US)', description: 'Bundled free, bundled surveillance', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-teamsync' }, responseText: "Bundled free with your office suite. Like a loyalty card for a surveillance programme." },
     ],
@@ -983,7 +983,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'crm'),
     priority: 3,
     options: [
-      { label: 'SalesForce Ultra (US)', description: 'Enterprise pricing for 200 people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-salesforce' }, responseText: "Enterprise pricing for your 200-person mailing list. You will need a consultant." },
+      { label: 'DonorForce Pro (US)', description: 'Enterprise pricing for 200 people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-salesforce' }, responseText: "Enterprise pricing for your 200-person mailing list. You will need a consultant." },
       { label: 'CiviData (Self)', description: 'Community-built, understood by four people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-cividata' }, responseText: "Built by the community. Understood by approximately four people." },
       { label: 'AirSheet (US)', description: 'A spreadsheet pretending to be a database', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-airsheet' }, responseText: "A spreadsheet that thinks it is a database. Your auditor will think otherwise." },
     ],
@@ -998,8 +998,8 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'hosting'),
     priority: 3,
     options: [
-      { label: 'AmaCloud (US)', description: 'Powers the internet and the CIA', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-amacloud' }, responseText: "Powers half the internet and most of the CIA. But the free tier is generous." },
-      { label: 'HetznerBox (EU)', description: 'German engineering and data protection', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-hetznerbox' }, responseText: "German engineering. German data protection. German-language error messages." },
+      { label: 'MegaHost (US)', description: 'Powers the internet and the CIA', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-amacloud' }, responseText: "Powers half the internet and most of the CIA. But the free tier is generous." },
+      { label: 'EuroServe (EU)', description: 'German engineering and data protection', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-hetznerbox' }, responseText: "German engineering. German data protection. German-language error messages." },
       { label: 'SelfServe (Self)', description: 'A laptop under a desk', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-selfserve' }, responseText: "A repurposed laptop under a desk. It has survived three office moves." },
     ],
     ignoreEffect: () => ({ morale: -5, continuity: 5 }),
@@ -1013,7 +1013,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'messaging'),
     priority: 2,
     options: [
-      { label: 'SlackChat (US)', description: 'Conversations die after 90 days', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-slackchat' }, responseText: "Where conversations go to die after 90 days on the free plan." },
+      { label: 'ChatHive (US)', description: 'Conversations die after 90 days', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-slackchat' }, responseText: "Where conversations go to die after 90 days on the free plan." },
       { label: 'MatterBridge (Self)', description: 'Looks like Slack, maintained on weekends', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-matterbridge' }, responseText: "Looks like Slack but your IT volunteer maintains it on weekends." },
       { label: 'SignalWire (EU)', description: 'So private even you can not find messages', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-signalwire' }, responseText: "So private that even you will struggle to find last week's messages." },
     ],
@@ -1028,7 +1028,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'office'),
     priority: 2,
     options: [
-      { label: 'OfficeCorp 365 (US)', description: '365 days of telemetry', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-officecorp' }, responseText: "Three hundred and sixty-five days a year of telemetry, phoning home." },
+      { label: 'OfficeSuite 365 (US)', description: '365 days of telemetry', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-officecorp' }, responseText: "Three hundred and sixty-five days a year of telemetry, phoning home." },
       { label: 'LibreWrite (Self)', description: 'Identical, staff will complain anyway', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-librewrite' }, responseText: "Functionally identical. Your staff will still complain it 'feels different'." },
       { label: 'DocuCloud (US)', description: 'Collaborative editing trains their AI', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-docucloud' }, responseText: "Collaborative editing that trains an AI model on your funding applications." },
     ],
@@ -1044,7 +1044,7 @@ export const SCENARIOS = [
     priority: 3,
     options: [
       { label: 'TrackAll Analytics (US)', description: 'You learn everything, so does California', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-trackall' }, responseText: "You learn everything about your visitors. So does an advertising company." },
-      { label: 'PlausibleStats (EU)', description: 'Privacy-respecting, fits one dashboard', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-plausible' }, responseText: "Privacy-respecting analytics. Your data team will be furious." },
+      { label: 'ClearMetrics (EU)', description: 'Privacy-respecting, fits one dashboard', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-plausible' }, responseText: "Privacy-respecting analytics. Your data team will be furious." },
       { label: 'SelfMetrics (Self)', description: 'Full control, PHP codebase from the depths', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-selfmetrics' }, responseText: "Full control. And a PHP codebase that has seen things you would not believe." },
     ],
     ignoreEffect: () => ({ budget: -8, morale: -5 }),
@@ -1060,7 +1060,7 @@ export const SCENARIOS = [
     options: [
       { label: 'PassVault (US)', description: 'Stores passwords, gets breached biannually', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-passvault' }, responseText: "Securely stores all passwords. Gets breached every eighteen months." },
       { label: 'BitGuard (EU)', description: 'Open source, audited, actually good', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-bitguard' }, responseText: "Open source, audited. The rare case where self-hosted does not mean self-harming." },
-      { label: 'ProtonLock (EU)', description: 'Swiss-grade, CEO still uses sticky notes', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-protonlock' }, responseText: "Swiss-grade encryption for passwords your CEO will still write on sticky notes." },
+      { label: 'SwissVault (EU)', description: 'Swiss-grade, CEO still uses sticky notes', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-protonlock' }, responseText: "Swiss-grade encryption for passwords your CEO will still write on sticky notes." },
     ],
     ignoreEffect: () => ({ surveillance: 12, morale: -5 }),
   },
@@ -1075,7 +1075,7 @@ export const SCENARIOS = [
     options: [
       { label: 'BirdApp (US)', description: 'The town square, on fire', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-birdapp' }, responseText: "The town square, if it were on fire and owned by the richest man alive." },
       { label: 'FediVerse (Self)', description: 'Nobody can censor you or find you', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-fediverse' }, responseText: "Nobody can censor you. Also, nobody can find you." },
-      { label: 'SkyFeed (US)', description: 'Decentralised in theory, US in practice', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-skyfeed' }, responseText: "Decentralised in theory. US-hosted in practice. But the vibes are better." },
+      { label: 'OpenFeed (US)', description: 'Decentralised in theory, US in practice', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-skyfeed' }, responseText: "Decentralised in theory. US-hosted in practice. But the vibes are better." },
     ],
     ignoreEffect: () => ({ morale: -3 }),
   },
@@ -1088,7 +1088,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'ai'),
     priority: 3,
     options: [
-      { label: 'ChatGenius (US)', description: 'Writes grants, feeds training sets', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-chatgenius' }, responseText: "It writes your grant applications and feeds them into a training set." },
+      { label: 'BrainBot (US)', description: 'Writes grants, feeds training sets', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-chatgenius' }, responseText: "It writes your grant applications and feeds them into a training set." },
       { label: 'LocalLLM (Self)', description: 'Private, local, hallucinates with charm', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-localllm' }, responseText: "Runs on your hardware. Respects your privacy. Hallucinates with local charm." },
       { label: 'Ban AI entirely', description: 'A bold stance, until the first deadline', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-noai' }, responseText: "A bold stance that lasts until the first funding deadline at 11pm on a Sunday." },
     ],
