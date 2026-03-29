@@ -1,11 +1,33 @@
-// Procedural ambient music — shifts with danger level
-// Uses Web Audio API oscillators, filters, and gain nodes
-// No external audio files needed
+// Procedural ambient music — evolving chords that shift with danger
+// Uses Web Audio API. No external audio files.
 
 let musicCtx = null
 let isPlaying = false
-let nodes = null
+let masterGain = null
+let chordInterval = null
 let currentDanger = 0
+let activeOscs = []
+
+// Chord progressions — calm vs tense
+const CALM_CHORDS = [
+  [130.81, 164.81, 196.00],  // C E G (C major)
+  [146.83, 174.61, 220.00],  // D F# A (D major)
+  [110.00, 130.81, 164.81],  // A C E (A minor)
+  [123.47, 155.56, 185.00],  // B D# F# (sort of)
+  [130.81, 155.56, 196.00],  // C Eb G (C minor)
+  [116.54, 146.83, 174.61],  // Bb D F#
+]
+
+const TENSE_CHORDS = [
+  [123.47, 146.83, 185.00],  // B D F# (B minor)
+  [110.00, 138.59, 164.81],  // A C# E (A major — tension through brightness)
+  [103.83, 130.81, 155.56],  // Ab C Eb
+  [116.54, 138.59, 174.61],  // Bb C# F
+  [98.00, 123.47, 146.83],   // G B D (lower, darker)
+  [92.50, 116.54, 138.59],   // F# Bb C#
+]
+
+let chordIndex = 0
 
 function getMusicCtx() {
   if (!musicCtx) {
@@ -17,143 +39,139 @@ function getMusicCtx() {
   return musicCtx
 }
 
-function createPad(ctx, freq, type = 'sine', volume = 0.03) {
-  const osc = ctx.createOscillator()
-  const gain = ctx.createGain()
-  const filter = ctx.createBiquadFilter()
+function playChord(ctx, freqs, type, volume, filterFreq, duration) {
+  const oscs = freqs.map((freq, i) => {
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    const filter = ctx.createBiquadFilter()
 
-  osc.type = type
-  osc.frequency.value = freq
-  filter.type = 'lowpass'
-  filter.frequency.value = 800
-  filter.Q.value = 1
+    osc.type = type
+    osc.frequency.value = freq
+    // Slight detuning for richness
+    osc.detune.value = (i - 1) * 4
 
-  gain.gain.value = volume
+    filter.type = 'lowpass'
+    filter.frequency.value = filterFreq
+    filter.Q.value = 0.7
 
-  osc.connect(filter)
-  filter.connect(gain)
-  gain.connect(ctx.destination)
+    // Envelope: fade in, sustain, fade out
+    const now = ctx.currentTime
+    gain.gain.setValueAtTime(0, now)
+    gain.gain.linearRampToValueAtTime(volume, now + 1.5)
+    gain.gain.setValueAtTime(volume, now + duration - 2)
+    gain.gain.linearRampToValueAtTime(0, now + duration)
 
-  osc.start()
-  return { osc, gain, filter }
+    osc.connect(filter)
+    filter.connect(gain)
+    gain.connect(masterGain)
+
+    osc.start(now)
+    osc.stop(now + duration + 0.1)
+
+    return { osc, gain, filter }
+  })
+
+  activeOscs.push(...oscs)
+
+  // Clean up stopped oscillators
+  setTimeout(() => {
+    activeOscs = activeOscs.filter(o => {
+      try { o.osc.frequency.value; return true } catch { return false }
+    })
+  }, (duration + 1) * 1000)
+
+  return oscs
+}
+
+function playNextChord() {
+  if (!isPlaying || !masterGain) return
+  const ctx = getMusicCtx()
+  const dangerPct = Math.max(0, Math.min(100, currentDanger)) / 100
+
+  // Pick chord from calm or tense progression based on danger
+  const calmChords = CALM_CHORDS
+  const tenseChords = TENSE_CHORDS
+
+  // Crossfade between calm and tense chords
+  const chordDuration = 8 // seconds per chord
+
+  // Calm pad (fades with danger)
+  if (dangerPct < 0.8) {
+    const calmVol = 0.018 * (1 - dangerPct)
+    const chord = calmChords[chordIndex % calmChords.length]
+    playChord(ctx, chord, 'sine', calmVol, 600 + dangerPct * 200, chordDuration)
+  }
+
+  // Tense pad (rises with danger)
+  if (dangerPct > 0.2) {
+    const tenseVol = 0.014 * dangerPct
+    const chord = tenseChords[chordIndex % tenseChords.length]
+    const filterF = 300 + dangerPct * 1000
+    playChord(ctx, chord, 'sawtooth', tenseVol, filterF, chordDuration)
+  }
+
+  // Deep bass note (always, root of current chord)
+  const bassChord = dangerPct < 0.5
+    ? calmChords[chordIndex % calmChords.length]
+    : tenseChords[chordIndex % tenseChords.length]
+  playChord(ctx, [bassChord[0] / 2], 'sine', 0.02, 200, chordDuration)
+
+  // High shimmer at low danger
+  if (dangerPct < 0.4) {
+    const shimmerVol = 0.005 * (1 - dangerPct * 2.5)
+    const shimmerChord = calmChords[chordIndex % calmChords.length].map(f => f * 4)
+    playChord(ctx, [shimmerChord[0], shimmerChord[2]], 'sine', shimmerVol, 2000, chordDuration)
+  }
+
+  chordIndex++
 }
 
 export function startMusic() {
   if (isPlaying) return
   const ctx = getMusicCtx()
 
-  // Create layered ambient pads
-  // Layer 1: Deep drone (always present)
-  const drone = createPad(ctx, 65.41, 'sine', 0.025) // C2
-
-  // Layer 2: Warm pad (calm — fades with danger)
-  const warmPad = createPad(ctx, 130.81, 'sine', 0.02) // C3
-  const warmPad2 = createPad(ctx, 164.81, 'sine', 0.015) // E3
-
-  // Layer 3: Tension pad (rises with danger)
-  const tensionPad = createPad(ctx, 123.47, 'sawtooth', 0) // B2
-  const tensionPad2 = createPad(ctx, 146.83, 'sawtooth', 0) // D3
-
-  // Layer 4: High shimmer (low danger only — peaceful)
-  const shimmer = createPad(ctx, 523.25, 'sine', 0.008) // C5
-  const shimmer2 = createPad(ctx, 659.25, 'sine', 0.006) // E5
-
-  // Slow LFO for gentle movement
-  const lfo = ctx.createOscillator()
-  const lfoGain = ctx.createGain()
-  lfo.type = 'sine'
-  lfo.frequency.value = 0.15 // Very slow wobble
-  lfoGain.gain.value = 3
-  lfo.connect(lfoGain)
-  lfoGain.connect(drone.osc.frequency)
-  lfoGain.connect(warmPad.osc.frequency)
-  lfo.start()
-
-  // Second LFO for filter sweep
-  const lfo2 = ctx.createOscillator()
-  const lfo2Gain = ctx.createGain()
-  lfo2.type = 'sine'
-  lfo2.frequency.value = 0.08
-  lfo2Gain.gain.value = 200
-  lfo2.connect(lfo2Gain)
-  lfo2Gain.connect(warmPad.filter.frequency)
-  lfo2Gain.connect(tensionPad.filter.frequency)
-  lfo2.start()
-
-  nodes = {
-    drone, warmPad, warmPad2,
-    tensionPad, tensionPad2,
-    shimmer, shimmer2,
-    lfo, lfoGain, lfo2, lfo2Gain,
-  }
+  masterGain = ctx.createGain()
+  masterGain.gain.value = 1
+  masterGain.connect(ctx.destination)
 
   isPlaying = true
-  updateDanger(currentDanger)
+  chordIndex = 0
+
+  // Play first chord immediately
+  playNextChord()
+
+  // Cycle chords every 8 seconds
+  chordInterval = setInterval(playNextChord, 8000)
 }
 
 export function stopMusic() {
-  if (!isPlaying || !nodes) return
+  if (!isPlaying) return
 
-  const ctx = getMusicCtx()
-  const fadeTime = ctx.currentTime + 1
+  clearInterval(chordInterval)
+  chordInterval = null
 
-  // Fade everything out
-  Object.values(nodes).forEach(node => {
-    if (node.gain) {
-      node.gain.gain.linearRampToValueAtTime(0, fadeTime)
-    }
-  })
+  if (masterGain) {
+    const ctx = getMusicCtx()
+    masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5)
+  }
 
-  // Stop oscillators after fade
   setTimeout(() => {
-    Object.values(nodes).forEach(node => {
-      if (node.osc) {
-        try { node.osc.stop() } catch {}
-      }
-      if (node.disconnect) {
-        try { node.disconnect() } catch {}
-      }
+    activeOscs.forEach(o => {
+      try { o.osc.stop() } catch {}
     })
-    nodes = null
+    activeOscs = []
+    if (masterGain) {
+      try { masterGain.disconnect() } catch {}
+      masterGain = null
+    }
     isPlaying = false
-  }, 1200)
+  }, 2000)
 }
 
 export function updateDanger(dangerLevel) {
   currentDanger = dangerLevel
-  if (!isPlaying || !nodes) return
-
-  const ctx = getMusicCtx()
-  const t = ctx.currentTime + 0.5 // Smooth transition
-  const danger = Math.max(0, Math.min(100, dangerLevel))
-  const dangerPct = danger / 100
-
-  // Warm pads fade out as danger rises
-  const warmVol = 0.02 * (1 - dangerPct)
-  nodes.warmPad.gain.gain.linearRampToValueAtTime(warmVol, t)
-  nodes.warmPad2.gain.gain.linearRampToValueAtTime(warmVol * 0.75, t)
-
-  // Tension pads fade in as danger rises
-  const tensionVol = 0.02 * dangerPct
-  nodes.tensionPad.gain.gain.linearRampToValueAtTime(tensionVol, t)
-  nodes.tensionPad2.gain.gain.linearRampToValueAtTime(tensionVol * 0.8, t)
-
-  // Filter opens up with danger (more harsh harmonics)
-  const filterFreq = 400 + dangerPct * 1200
-  nodes.tensionPad.filter.frequency.linearRampToValueAtTime(filterFreq, t)
-  nodes.tensionPad2.filter.frequency.linearRampToValueAtTime(filterFreq, t)
-
-  // Shimmer fades out at high danger
-  const shimmerVol = danger < 50 ? 0.008 * (1 - dangerPct * 2) : 0
-  nodes.shimmer.gain.gain.linearRampToValueAtTime(Math.max(0, shimmerVol), t)
-  nodes.shimmer2.gain.gain.linearRampToValueAtTime(Math.max(0, shimmerVol * 0.75), t)
-
-  // LFO speeds up slightly with danger
-  nodes.lfo.frequency.linearRampToValueAtTime(0.15 + dangerPct * 0.3, t)
-
-  // Drone gets slightly louder and lower with danger
-  nodes.drone.gain.gain.linearRampToValueAtTime(0.025 + dangerPct * 0.015, t)
-  nodes.drone.osc.frequency.linearRampToValueAtTime(65.41 - dangerPct * 10, t)
+  // Danger changes affect the NEXT chord that plays (every 8s)
+  // The current chord continues playing naturally
 }
 
 export function isMusicPlaying() {
