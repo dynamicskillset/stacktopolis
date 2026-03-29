@@ -185,10 +185,10 @@ export default function GameScreen({ state, actions }) {
       )}
 
       {/* Action bar */}
-      <div className="relative z-10 px-4 py-2 flex items-center justify-center gap-2 border-t border-terminal-border bg-terminal-bg/50">
+      <div className="relative z-10 px-4 py-2 flex items-center justify-center border-t border-terminal-border bg-terminal-bg/50">
         <button
           onClick={() => setShowHelp(prev => !prev)}
-          className="font-mono text-xs w-7 h-7 rounded-full border border-terminal-border text-terminal-muted hover:text-terminal-text hover:border-terminal-text transition-colors shrink-0"
+          className="absolute left-3 font-mono text-xs w-7 h-7 rounded-full border border-terminal-border text-terminal-muted hover:text-terminal-text hover:border-terminal-text transition-colors"
           aria-label="Show keyboard shortcuts"
           title="Keyboard shortcuts & help"
         >
