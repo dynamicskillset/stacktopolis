@@ -8,8 +8,8 @@ import ControlPanel from '../city/ControlPanel'
 import Skyline from '../city/Skyline'
 import Advisor from '../ui/Advisor'
 import PauseOverlay from '../ui/PauseOverlay'
-import AdvicePanel from '../ui/AdvicePanel'
 import { useAdvisor } from '../../hooks/useAdvisor'
+import { getAdvisorLine } from '../../data/advisor'
 
 function getDangerLevel(state) {
   return Math.max(state.jurisdiction, state.continuity, state.surveillance)
@@ -28,11 +28,20 @@ function getVignetteStyle(dangerLevel) {
   return { '--vignette-colour': 'rgba(120, 10, 0, 0.35)' }
 }
 
+const METRIC_ADVICE_KEYS = {
+  jurisdiction: 'adviceJurisdiction',
+  continuity: 'adviceContinuity',
+  surveillance: 'adviceSurveillance',
+  budget: 'adviceBudget',
+  morale: 'adviceMorale',
+}
+
 export default function GameScreen({ state, actions }) {
   const dangerLevel = getDangerLevel(state)
   const isGlitching = dangerLevel >= 70
   const vignetteStyle = useMemo(() => getVignetteStyle(dangerLevel), [dangerLevel])
   const advisorLine = useAdvisor(state)
+  const [manualLine, setManualLine] = useState(null)
   const [inspectedTool, setInspectedTool] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const handleSelectTool = useCallback((tool) => {
@@ -47,10 +56,17 @@ export default function GameScreen({ state, actions }) {
     actions.installTool(needId, optionId)
     setSelectedCategory(null)
   }, [actions])
-  const [activeAdvice, setActiveAdvice] = useState(null)
   const handleClickMetric = useCallback((metric) => {
-    setActiveAdvice(prev => prev === metric ? null : metric)
+    const key = METRIC_ADVICE_KEYS[metric]
+    if (key) setManualLine(getAdvisorLine(key))
   }, [])
+
+  // Manual line overrides auto advisor line
+  const displayLine = manualLine || advisorLine
+  // Clear manual line after it's been shown
+  if (manualLine && manualLine !== advisorLine) {
+    // Will clear after Advisor's linger timeout via the next advisorLine change
+  }
 
   return (
     <div
@@ -105,14 +121,11 @@ export default function GameScreen({ state, actions }) {
               onClose={() => setSelectedCategory(null)}
             />
           )}
-          <Advisor line={advisorLine} />
+          <Advisor line={displayLine} />
         </section>
 
-        {/* Right column: Advice panel + Colleague queue */}
+        {/* Right column: Colleague queue */}
         <section className="lg:col-span-2 min-h-0 flex flex-col gap-3 overflow-y-auto" aria-label="Colleague interactions">
-          {activeAdvice && (
-            <AdvicePanel metric={activeAdvice} onClose={() => setActiveAdvice(null)} />
-          )}
           <ColleagueQueue
             queue={state.colleagueQueue}
             gameTime={state.gameTime}

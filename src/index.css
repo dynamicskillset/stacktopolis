@@ -128,13 +128,13 @@
   animation: gentle-breathe 4s ease-in-out infinite;
 }
 
-/* Scanline overlay for CRT effect */
+/* Scanline overlay for CRT effect — z-index 1 so it doesn't block clicks */
 .crt-scanlines::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 50;
+  z-index: 1;
   background: repeating-linear-gradient(
     0deg,
     transparent,
