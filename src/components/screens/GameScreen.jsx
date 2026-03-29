@@ -1,6 +1,7 @@
 import { useMemo, useState, useCallback, useEffect } from 'react'
 import NewsTicker from '../layout/NewsTicker'
 import CityGrid from '../city/CityGrid'
+import CityAmbience from '../city/CityAmbience'
 import BuildingInspector from '../city/BuildingInspector'
 import ToolPicker from '../city/ToolPicker'
 import ColleagueQueue from '../colleagues/ColleagueQueue'
@@ -112,12 +113,21 @@ export default function GameScreen({ state, actions }) {
           <h2 className={`font-mono text-xs uppercase tracking-widest text-terminal-muted mb-2 ${isGlitching ? 'animate-glitch' : ''}`}>
             {state.orgName}
           </h2>
-          <CityGrid
-            stack={state.stack}
-            onSelectTool={handleSelectTool}
-            selectedToolId={inspectedTool?.id}
-            onClickEmpty={handleClickEmpty}
-          />
+          <div className="relative">
+            <CityGrid
+              stack={state.stack}
+              onSelectTool={handleSelectTool}
+              selectedToolId={inspectedTool?.id}
+              onClickEmpty={handleClickEmpty}
+            />
+            <CityAmbience
+              stack={state.stack}
+              morale={state.morale}
+              jurisdiction={state.jurisdiction}
+              continuity={state.continuity}
+              surveillance={state.surveillance}
+            />
+          </div>
           {inspectedTool && (
             <BuildingInspector
               tool={inspectedTool}
