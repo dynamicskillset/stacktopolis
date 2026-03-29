@@ -97,17 +97,17 @@ function ColleagueCard({ scenario, patienceRemaining, patienceTotal, onResolve, 
                           {/* Risk: increase = bad (red), decrease = good (green) */}
                           {impacts.jurisdiction != null && impacts.jurisdiction !== 0 && (
                             <span className={`font-mono text-xs ${impacts.jurisdiction > 0 ? 'text-danger' : 'text-green-glow'}`}>
-                              {impacts.jurisdiction > 0 ? '+' : ''}{impacts.jurisdiction} JUR risk
+                              {impacts.jurisdiction > 0 ? '+' : ''}{impacts.jurisdiction} jurisdiction risk
                             </span>
                           )}
                           {impacts.continuity != null && impacts.continuity !== 0 && (
                             <span className={`font-mono text-xs ${impacts.continuity > 0 ? 'text-danger' : 'text-green-glow'}`}>
-                              {impacts.continuity > 0 ? '+' : ''}{impacts.continuity} CON risk
+                              {impacts.continuity > 0 ? '+' : ''}{impacts.continuity} continuity risk
                             </span>
                           )}
                           {impacts.surveillance != null && impacts.surveillance !== 0 && (
                             <span className={`font-mono text-xs ${impacts.surveillance > 0 ? 'text-danger' : 'text-green-glow'}`}>
-                              {impacts.surveillance > 0 ? '+' : ''}{impacts.surveillance} SUR risk
+                              {impacts.surveillance > 0 ? '+' : ''}{impacts.surveillance} surveillance risk
                             </span>
                           )}
                           {/* Budget/morale: increase = good (green), decrease = bad (red) */}

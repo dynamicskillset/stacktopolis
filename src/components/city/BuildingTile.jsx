@@ -142,7 +142,7 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       {tool.surveillance >= 14 && <CameraEffect />}
 
       {/* Region flag on the roof */}
-      <svg className="absolute top-3 left-2 pointer-events-none" width="12" height="10" viewBox="0 0 12 10" aria-hidden="true">
+      <svg className="absolute top-3 left-1 pointer-events-none" width="16" height="13" viewBox="0 0 12 10" aria-hidden="true">
         <line x1="1" y1="0" x2="1" y2="10" stroke="#636B78" strokeWidth="0.5" />
         {tool.region === 'us' && (
           <g>

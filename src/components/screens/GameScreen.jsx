@@ -44,6 +44,7 @@ export default function GameScreen({ state, actions }) {
   const vignetteStyle = useMemo(() => getVignetteStyle(dangerLevel), [dangerLevel])
   const advisorLine = useAdvisor(state)
   const [manualLine, setManualLine] = useState(null)
+  const [showHelp, setShowHelp] = useState(false)
   const [inspectedTool, setInspectedTool] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState(null)
   const handleSelectTool = useCallback((tool) => {
@@ -158,15 +159,42 @@ export default function GameScreen({ state, actions }) {
         </section>
       </main>
 
-      {/* Tips bar + fundraiser action */}
-      <div className="relative z-10 px-4 py-2 flex items-center justify-between border-t border-terminal-border bg-terminal-bg/50">
-        <p className="font-mono text-xs text-terminal-muted">
-          <span className="font-bold">Space</span> pause &nbsp;&middot;&nbsp;
-          <span className="font-bold">Click building</span> inspect &nbsp;&middot;&nbsp;
-          <span className="font-bold">Click empty plot</span> install &nbsp;&middot;&nbsp;
-          <span className="font-bold">Click gauge</span> advice
-        </p>
-        <div className="flex items-center gap-2">
+      {/* Help popup */}
+      {showHelp && (
+        <div
+          className="absolute inset-0 z-50 flex items-end justify-start p-4 pb-24"
+          onClick={() => setShowHelp(false)}
+          role="dialog"
+          aria-label="Help and shortcuts"
+        >
+          <div
+            className="bg-terminal-surface border border-terminal-border rounded-lg p-4 max-w-xs animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+            style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}
+          >
+            <h3 className="font-mono text-xs font-bold text-terminal-text uppercase tracking-wider mb-3">Controls</h3>
+            <div className="space-y-1.5 font-mono text-xs text-terminal-muted">
+              <div><span className="text-terminal-text font-bold">Space</span> — pause / resume</div>
+              <div><span className="text-terminal-text font-bold">Click building</span> — inspect and manage</div>
+              <div><span className="text-terminal-text font-bold">Click empty plot</span> — install a tool</div>
+              <div><span className="text-terminal-text font-bold">Click gauge</span> — get advice from Cassandra</div>
+              <div><span className="text-terminal-text font-bold">1× 2× 3×</span> — game speed</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Action bar */}
+      <div className="relative z-10 px-4 py-2 flex items-center justify-center gap-2 border-t border-terminal-border bg-terminal-bg/50">
+        <button
+          onClick={() => setShowHelp(prev => !prev)}
+          className="font-mono text-xs w-7 h-7 rounded-full border border-terminal-border text-terminal-muted hover:text-terminal-text hover:border-terminal-text transition-colors shrink-0"
+          aria-label="Show keyboard shortcuts"
+          title="Keyboard shortcuts & help"
+        >
+          ?
+        </button>
+        <div className="flex items-center gap-2 flex-wrap justify-center">
           {(() => {
             const currentYear = Math.floor((state.quarter - 1) / 4) + 1
             const usedThisYear = state.lastFundraiserYear >= currentYear
@@ -201,7 +229,7 @@ export default function GameScreen({ state, actions }) {
             disabled={state.budget < 10}
             className="font-mono text-xs px-3 py-1.5 rounded border border-risk-continuity/40 text-risk-continuity hover:bg-risk-continuity/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
           >
-            Backup Drill (−10 budget, −8 CON risk)
+            Backup Drill (−10 budget, −8 continuity risk)
           </button>
         </div>
       </div>

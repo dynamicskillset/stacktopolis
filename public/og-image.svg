@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#F7F5F0"/>
+
+  <!-- Sky gradient area -->
+  <rect width="1200" height="300" fill="#c8ddf0" opacity="0.4"/>
+
+  <!-- Title -->
+  <text x="600" y="180" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="bold" font-size="72" letter-spacing="8" fill="#8B7A2F">STACKTOPOLIS</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="230" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#636B78">A satirical survival game about digital sovereignty</text>
+
+  <!-- Version -->
+  <text x="600" y="260" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" fill="#636B78">v3.0.0</text>
+
+  <!-- Risk labels -->
+  <text x="440" y="300" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="3" fill="#C62828">JURISDICTION</text>
+  <text x="600" y="300" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="3" fill="#B85400">CONTINUITY</text>
+  <text x="760" y="300" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="3" fill="#2B6AB0">SURVEILLANCE</text>
+
+  <!-- Ground line -->
+  <line x1="200" y1="520" x2="1000" y2="520" stroke="#E0DDD5" stroke-width="2"/>
+
+  <!-- EU brick building -->
+  <g transform="translate(350, 340)">
+    <ellipse cx="0" cy="170" rx="50" ry="12" fill="rgba(0,0,0,0.1)"/>
+    <polygon points="-40,80 0,60 40,80 40,165 0,165 -40,165" fill="#8b5e3c"/>
+    <polygon points="0,60 40,80 40,165 0,165" fill="#c17f4a"/>
+    <polygon points="-40,80 0,60 40,80 0,100" fill="#e0a870"/>
+    <rect x="-25" y="100" width="10" height="12" fill="#ffdd66" opacity="0.5"/>
+    <rect x="15" y="110" width="10" height="12" fill="#ffdd66" opacity="0.4"/>
+  </g>
+
+  <!-- Tall US glass building (on fire) -->
+  <g transform="translate(550, 300)">
+    <ellipse cx="0" cy="210" rx="55" ry="14" fill="rgba(0,0,0,0.1)"/>
+    <polygon points="-45,40 0,15 45,40 45,205 0,205 -45,205" fill="#2c5f8a"/>
+    <polygon points="0,15 45,40 45,205 0,205" fill="#4a90d9"/>
+    <polygon points="-45,40 0,15 45,40 0,65" fill="#8ab4e8"/>
+    <rect x="-30" y="70" width="12" height="14" fill="#ffdd66" opacity="0.4"/>
+    <rect x="18" y="80" width="12" height="14" fill="#ffdd66" opacity="0.3"/>
+    <rect x="-30" y="110" width="12" height="14" fill="#ffdd66" opacity="0.5"/>
+    <rect x="18" y="120" width="12" height="14" fill="#ffdd66" opacity="0.4"/>
+    <!-- Fire -->
+    <path d="M0,13 Q-12,0 -6,-15 Q-2,-25 0,-30 Q2,-25 6,-15 Q12,0 0,13Z" fill="#C62828" opacity="0.8"/>
+    <path d="M0,13 Q-8,3 -4,-10 Q-1,-18 0,-22 Q1,-18 4,-10 Q8,3 0,13Z" fill="#B85400" opacity="0.9"/>
+    <!-- Smoke -->
+    <circle cx="-4" cy="-28" r="6" fill="#636B78" opacity="0.2"/>
+    <circle cx="5" cy="-35" r="5" fill="#636B78" opacity="0.15"/>
+  </g>
+
+  <!-- Wide self-hosted building -->
+  <g transform="translate(780, 350)">
+    <ellipse cx="0" cy="160" rx="60" ry="14" fill="rgba(0,0,0,0.1)"/>
+    <polygon points="-50,70 0,45 50,70 50,155 0,155 -50,155" fill="#3d5a3d"/>
+    <polygon points="0,45 50,70 50,155 0,155" fill="#5a7a5a"/>
+    <polygon points="-50,70 0,45 50,70 0,95" fill="#7a9a7a"/>
+    <rect x="-35" y="90" width="10" height="10" fill="#ffdd66" opacity="0.3"/>
+    <rect x="25" y="100" width="10" height="10" fill="#ffdd66" opacity="0.4"/>
+  </g>
+
+  <!-- TechFreedom attribution -->
+  <text x="600" y="580" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="16" fill="#636B78">Based on the TechFreedom.eu risk framework</text>
+  <text x="600" y="610" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="13" fill="#8B7A2F">techfreedom.eu</text>
+</svg>
