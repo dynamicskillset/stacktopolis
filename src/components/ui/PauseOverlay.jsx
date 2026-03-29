@@ -5,8 +5,11 @@ export default function PauseOverlay({ onResume }) {
     <div
       className="absolute inset-0 z-50 flex items-center justify-center bg-terminal-bg/80 backdrop-blur-sm"
       onClick={onResume}
+      onKeyDown={(e) => { if (e.key === 'Escape' || e.key === ' ') { e.preventDefault(); onResume() } }}
+      tabIndex={0}
       role="dialog"
-      aria-label="Game paused"
+      aria-modal="true"
+      aria-label="Game paused. Click or press space to resume."
     >
       <div className="text-center">
         <Pause className="w-16 h-16 text-amber-glow mx-auto mb-4 opacity-80" />

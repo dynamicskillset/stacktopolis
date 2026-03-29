@@ -70,7 +70,14 @@ export default function GuidedTour({ onComplete }) {
   }
 
   return (
-    <div className="fixed inset-0" style={{ zIndex: 9999 }}>
+    <div
+      className="fixed inset-0"
+      style={{ zIndex: 9999 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Tour step ${step + 1} of ${STEPS.length}: ${current.title}`}
+      onKeyDown={(e) => { if (e.key === 'Escape') skip() }}
+    >
       {/* Dark overlay with cutout */}
       <svg className="absolute inset-0 w-full h-full">
         <defs>
@@ -99,7 +106,7 @@ export default function GuidedTour({ onComplete }) {
           height={highlight.height}
           rx="8"
           fill="none"
-          stroke="#ffb000"
+          stroke="#8B7A2F"
           strokeWidth="2"
           strokeDasharray="6,4"
         >

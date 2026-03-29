@@ -21,6 +21,7 @@ function ColleagueCard({ scenario, patienceRemaining, patienceTotal, onResolve, 
         onClick={onExpand}
         className="w-full flex items-center gap-3 px-3 py-2.5 text-left min-h-[44px]"
         aria-expanded={isExpanded}
+        aria-label={`${colleague.name}, ${colleague.role}. ${scenario.headline}`}
       >
         <div className="shrink-0">
           <ColleagueAvatar colleagueId={scenario.colleagueId} />
