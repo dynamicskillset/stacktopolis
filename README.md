@@ -1,3 +1,5 @@
+![Stacktopolis promo image](https://github.com/dynamicskillset/stacktopolis/blob/main/public/og-image.png)
+
 # Stacktopolis
 
 A satirical city-builder survival game about digital sovereignty, based on the [TechFreedom](https://techfreedom.eu) risk framework.
