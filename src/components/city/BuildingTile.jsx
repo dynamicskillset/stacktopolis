@@ -155,10 +155,6 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
             <circle cx="44" cy="62" r="1" fill="#a09888" />
           </g>
 
-          {/* Available label */}
-          <text x="55" y="76" textAnchor="middle" fill="#636B78" fontFamily="monospace" fontSize="7" opacity="0.6">
-            AVAILABLE
-          </text>
         </svg>
         <span className="text-xs font-mono text-terminal-muted uppercase tracking-wider mt-1 select-none">
           {CATEGORY_LABELS[categoryId]}
