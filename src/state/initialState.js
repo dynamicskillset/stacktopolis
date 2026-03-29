@@ -49,6 +49,8 @@ export const TUNING = {
   backupDrillReduction: 8,
   auditMoraleCost: 8,
   auditReduction: 8,
+  fundraiserMoraleCost: 8,
+  fundraiserBudgetGain: 12,
   riskWarningThreshold: 50,
   riskDangerThreshold: 75,
   // Game clock

@@ -173,6 +173,60 @@ export function gameReducer(state, action) {
       }
     }
 
+    case 'RUN_FUNDRAISER': {
+      if (state.morale < TUNING.fundraiserMoraleCost) return state
+      return {
+        ...state,
+        budget: clamp(state.budget + TUNING.fundraiserBudgetGain),
+        morale: clamp(state.morale - TUNING.fundraiserMoraleCost),
+      }
+    }
+
+    case 'DOWNGRADE_TOOL': {
+      const toolId = action.payload
+      const tool = state.stack.find(t => t.id === toolId)
+      if (!tool) return state
+
+      const need = getNeedById(tool.needId)
+      if (!need) return state
+
+      // Find cheapest option (lowest budgetCost, likely US/free)
+      const cheapest = [...need.options]
+        .sort((a, b) => (a.budgetCost || 0) - (b.budgetCost || 0))[0]
+
+      if (cheapest.id === tool.id) return state
+
+      const riskIncrease = {
+        jurisdiction: cheapest.jurisdiction - tool.jurisdiction,
+        continuity: cheapest.continuity - tool.continuity,
+        surveillance: cheapest.surveillance - tool.surveillance,
+      }
+
+      const budgetSaved = Math.abs(cheapest.budgetCost || 0) + 5
+
+      const newTool = {
+        ...tool,
+        id: cheapest.id,
+        name: cheapest.name,
+        provider: cheapest.provider,
+        region: cheapest.region,
+        jurisdiction: cheapest.jurisdiction,
+        continuity: cheapest.continuity,
+        surveillance: cheapest.surveillance,
+        degraded: false,
+        installedAt: state.quarter,
+      }
+
+      return {
+        ...state,
+        stack: state.stack.map(t => t.id === toolId ? newTool : t),
+        jurisdiction: clamp(state.jurisdiction + riskIncrease.jurisdiction),
+        continuity: clamp(state.continuity + riskIncrease.continuity),
+        surveillance: clamp(state.surveillance + riskIncrease.surveillance),
+        budget: clamp(state.budget + budgetSaved),
+      }
+    }
+
     case 'RUN_BACKUP': {
       const toolId = action.payload
       const tool = state.stack.find(t => t.id === toolId)

@@ -826,6 +826,93 @@ export const SCENARIOS = [
   },
 
   {
+    id: 'matched-funding',
+    colleagueId: 'nkechi',
+    type: 'opportunity',
+    headline: 'Matched Funding Opportunity Available',
+    dialogue: "A corporate partner is offering matched funding for digital infrastructure projects. For every pound we spend on tools, they will match it. The catch: they want their logo on your website.",
+    triggerCondition: (state) => state.budget < 40,
+    priority: 3,
+    options: [
+      {
+        label: 'Accept the match',
+        description: 'Double your spending power',
+        effect: () => ({ budget: 18, morale: 5 }),
+        responseText: "Done. Their logo is now larger than yours on the homepage. A small price to pay.",
+      },
+      {
+        label: 'Negotiate terms',
+        description: 'Try to limit the branding',
+        effect: () => ({ budget: 12 }),
+        responseText: "They agreed to a small logo in the footer. Still feels like selling out, but the budget needed it.",
+      },
+      {
+        label: 'Decline',
+        description: 'Keep your independence',
+        effect: () => ({ morale: 5 }),
+        responseText: "Principled. Also broke. But principled.",
+      },
+    ],
+    ignoreEffect: () => ({ morale: -3 }),
+  },
+
+  {
+    id: 'emergency-appeal',
+    colleagueId: 'nkechi',
+    type: 'opportunity',
+    headline: 'Emergency Fundraising Appeal Approved',
+    dialogue: "The board has approved an emergency fundraising appeal. We can send it out immediately, but it will take staff time to manage the responses. Worth it?",
+    triggerCondition: (state) => state.budget < 25,
+    priority: 4,
+    options: [
+      {
+        label: 'Launch the appeal',
+        description: 'All hands on deck',
+        effect: () => ({ budget: 20, morale: -6 }),
+        responseText: "Appeal sent. The donations are coming in. So are the complaints about email frequency.",
+      },
+      {
+        label: 'Targeted approach',
+        description: 'Only contact major donors',
+        effect: () => ({ budget: 12, morale: -3 }),
+        responseText: "Targeted emails sent. Fewer donations, fewer complaints. A fair trade.",
+      },
+    ],
+    ignoreEffect: () => ({ budget: -5 }),
+  },
+
+  {
+    id: 'corporate-partnership',
+    colleagueId: 'nkechi',
+    type: 'opportunity',
+    headline: 'Corporate Tech Partnership Offered',
+    dialogue: "A US tech company is offering free tool licences in exchange for a case study. Free tools, but they will want access to your usage data for marketing purposes.",
+    triggerCondition: (state) => state.stack.some(t => t.region === 'us'),
+    priority: 2,
+    options: [
+      {
+        label: 'Accept the deal',
+        description: 'Free tools, strings attached',
+        effect: () => ({ budget: 15, surveillance: 8 }),
+        responseText: "Free licences activated. They are already writing the case study. Your data is the product.",
+      },
+      {
+        label: 'Counter-offer',
+        description: 'Negotiate data limits',
+        effect: () => ({ budget: 8, surveillance: 3 }),
+        responseText: "They agreed to anonymised data only. Whether they will honour that is another question.",
+      },
+      {
+        label: 'Pass',
+        description: 'Nothing is truly free',
+        effect: () => ({}),
+        responseText: "Wise. If the product is free, you are the product.",
+      },
+    ],
+    ignoreEffect: () => ({}),
+  },
+
+  {
     id: 'volunteer-sysadmin',
     colleagueId: 'marcus',
     type: 'opportunity',

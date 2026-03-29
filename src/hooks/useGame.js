@@ -15,6 +15,8 @@ export function useGame() {
   const migrateTool = useCallback((toolId) => { playSound('click'); dispatch({ type: 'MIGRATE_TOOL', payload: toolId }) }, [])
   const runBackup = useCallback((toolId) => { playSound('click'); dispatch({ type: 'RUN_BACKUP', payload: toolId }) }, [])
   const auditData = useCallback((toolId) => { playSound('click'); dispatch({ type: 'AUDIT_DATA', payload: toolId }) }, [])
+  const runFundraiser = useCallback(() => { playSound('positive'); dispatch({ type: 'RUN_FUNDRAISER' }) }, [])
+  const downgradeTool = useCallback((toolId) => { playSound('click'); dispatch({ type: 'DOWNGRADE_TOOL', payload: toolId }) }, [])
   const installTool = useCallback((needId, optionId) => { playSound('toolSelect'); dispatch({ type: 'INSTALL_TOOL', payload: { needId, optionId } }) }, [])
   const resolveScenario = useCallback((scenarioId, optionIndex) => { playSound('click'); dispatch({ type: 'RESOLVE_SCENARIO', payload: { scenarioId, optionIndex } }) }, [])
   const togglePause = useCallback(() => dispatch({ type: 'TOGGLE_PAUSE' }), [])
@@ -94,6 +96,8 @@ export function useGame() {
       migrateTool,
       runBackup,
       auditData,
+      runFundraiser,
+      downgradeTool,
       installTool,
       resolveScenario,
       togglePause,
