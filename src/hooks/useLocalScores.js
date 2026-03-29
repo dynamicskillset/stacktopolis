@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 
 const STORAGE_KEY = 'stacktopolis-scores'
-const MAX_SCORES = 10
+const MAX_SCORES = 20
 
 function loadScores() {
   try {

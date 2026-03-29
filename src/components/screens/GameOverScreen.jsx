@@ -6,10 +6,16 @@ import GaugeDial from '../city/GaugeDial'
 import Skyline from '../city/Skyline'
 import InitialsEntry from '../ui/InitialsEntry'
 
-export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scoreSubmitted }) {
+const MAX_HIGH_SCORES = 20
+
+export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scoreSubmitted, existingScores = [] }) {
   const score = calculateScore(state)
   const title = awardTitle(score)
   const gameOverMessage = GAME_OVER_MESSAGES[state.gameOverCause] || GAME_OVER_MESSAGES.budget
+
+  // Only prompt for initials if score qualifies for top 20
+  const qualifiesForHighScore = existingScores.length < MAX_HIGH_SCORES ||
+    score.totalScore > (existingScores[existingScores.length - 1]?.totalScore || 0)
 
   function handleInitials(initials) {
     onSubmitScore({
@@ -123,13 +129,20 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
           className="text-center animate-slide-up"
           style={{ animationDelay: '400ms' }}
         >
-          {!scoreSubmitted ? (
-            <InitialsEntry onSubmit={handleInitials} />
+          {qualifiesForHighScore && !scoreSubmitted ? (
+            <>
+              <p className="font-mono text-xs text-amber-glow uppercase tracking-wider mb-3">
+                New high score!
+              </p>
+              <InitialsEntry onSubmit={handleInitials} />
+            </>
           ) : (
             <div>
-              <p className="font-mono text-xs text-green-glow uppercase tracking-wider mb-4">
-                Score recorded
-              </p>
+              {scoreSubmitted && (
+                <p className="font-mono text-xs text-green-glow uppercase tracking-wider mb-4">
+                  Score recorded
+                </p>
+              )}
               <Button onClick={onPlayAgain} className="px-8 py-3 text-base">
                 Play Again
               </Button>

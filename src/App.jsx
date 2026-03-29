@@ -37,6 +37,7 @@ function App() {
           onPlayAgain={actions.restartGame}
           onSubmitScore={handleSubmitScore}
           scoreSubmitted={scoreSubmitted}
+          existingScores={scores}
         />
       )
       break
