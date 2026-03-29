@@ -148,7 +148,25 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
           )}
         </div>
 
-        <div style={{ animationDelay: '500ms' }} className="animate-slide-up">
+        {/* TechFreedom CTA */}
+        <div
+          className="mt-6 p-4 rounded-lg border border-risk-surveillance/30 bg-risk-surveillance/5 text-center animate-slide-up"
+          style={{ animationDelay: '500ms' }}
+        >
+          <p className="font-serif text-sm text-terminal-text leading-relaxed mb-3">
+            If any of this felt uncomfortably familiar, it was meant to.
+          </p>
+          <a
+            href="https://techfreedom.eu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block font-mono text-sm font-bold text-risk-surveillance underline hover:text-terminal-text transition-colors"
+          >
+            Assess your real tech stack at TechFreedom.eu
+          </a>
+        </div>
+
+        <div style={{ animationDelay: '600ms' }} className="animate-slide-up">
           <Attribution />
         </div>
       </div>
