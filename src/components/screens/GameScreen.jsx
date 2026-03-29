@@ -166,13 +166,21 @@ export default function GameScreen({ state, actions }) {
           <span className="font-bold">Click empty plot</span> install &nbsp;&middot;&nbsp;
           <span className="font-bold">Click gauge</span> advice
         </p>
-        <button
-          onClick={actions.runFundraiser}
-          disabled={state.morale < 8}
-          className="font-mono text-xs px-3 py-1.5 rounded border border-green-glow/40 text-green-glow hover:bg-green-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
-        >
-          Run Fundraiser (−8 morale, +12 budget)
-        </button>
+        {(() => {
+          const currentYear = Math.floor((state.quarter - 1) / 4) + 1
+          const usedThisYear = state.lastFundraiserYear >= currentYear
+          const canAfford = state.morale >= 8
+          return (
+            <button
+              onClick={actions.runFundraiser}
+              disabled={!canAfford || usedThisYear}
+              className="font-mono text-xs px-3 py-1.5 rounded border border-green-glow/40 text-green-glow hover:bg-green-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+              title={usedThisYear ? 'Already used this year' : ''}
+            >
+              {usedThisYear ? 'Fundraiser used (1/year)' : 'Run Fundraiser (−8 morale, +12 budget)'}
+            </button>
+          )
+        })()}
       </div>
 
       <ControlPanel

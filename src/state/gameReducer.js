@@ -174,11 +174,14 @@ export function gameReducer(state, action) {
     }
 
     case 'RUN_FUNDRAISER': {
+      const currentYear = Math.floor((state.quarter - 1) / 4) + 1
       if (state.morale < TUNING.fundraiserMoraleCost) return state
+      if (state.lastFundraiserYear >= currentYear) return state
       return {
         ...state,
         budget: clamp(state.budget + TUNING.fundraiserBudgetGain),
         morale: clamp(state.morale - TUNING.fundraiserMoraleCost),
+        lastFundraiserYear: currentYear,
       }
     }
 

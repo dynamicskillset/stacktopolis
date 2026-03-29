@@ -173,6 +173,7 @@ export function createInitialState(difficulty = 'normal') {
     quarter: 1,
 
     // Colleague system
+    lastFundraiserYear: 0,
     colleagueQueue: [],
     nextColleagueAt: TUNING.firstColleagueDelay,
     scenarioHistory: [],
