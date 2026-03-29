@@ -1,21 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
 
-const CHAR_DELAY = 30
-const LINGER_MS = 4000
+const CHAR_DELAY = 12
+const LINGER_MS = 6000
 
 function CassandraAvatar() {
   return (
-    <svg viewBox="0 0 48 56" width="64" height="75" className="shrink-0" aria-hidden="true">
+    <svg viewBox="-4 -4 56 64" width="72" height="84" className="shrink-0" aria-hidden="true">
+      {/* Background circle for visibility */}
+      <circle cx="24" cy="26" r="28" fill="#1a2030" stroke="#ffb000" strokeWidth="0.5" opacity="0.9" />
       {/* Curly/coily hair — bigger, more textured */}
-      <ellipse cx="24" cy="14" rx="15" ry="13" fill="#2a1a0e" />
-      <circle cx="11" cy="12" r="5" fill="#2a1a0e" />
-      <circle cx="37" cy="12" r="5" fill="#2a1a0e" />
-      <circle cx="13" cy="20" r="4" fill="#2a1a0e" />
-      <circle cx="35" cy="20" r="4" fill="#2a1a0e" />
-      <circle cx="10" cy="8" r="3" fill="#2a1a0e" />
-      <circle cx="38" cy="8" r="3" fill="#2a1a0e" />
+      <ellipse cx="24" cy="14" rx="15" ry="13" fill="#3a2a1a" />
+      <circle cx="11" cy="12" r="5" fill="#3a2a1a" />
+      <circle cx="37" cy="12" r="5" fill="#3a2a1a" />
+      <circle cx="13" cy="20" r="4" fill="#3a2a1a" />
+      <circle cx="35" cy="20" r="4" fill="#3a2a1a" />
+      <circle cx="10" cy="8" r="3" fill="#3a2a1a" />
+      <circle cx="38" cy="8" r="3" fill="#3a2a1a" />
       {/* Face */}
-      <ellipse cx="24" cy="18" rx="11" ry="13" fill="#b07840" />
+      <ellipse cx="24" cy="18" rx="11" ry="13" fill="#c88a50" />
       {/* Eyes — expressive, one slightly narrowed (sardonic) */}
       <ellipse cx="19.5" cy="16.5" rx="2.2" ry="1.5" fill="#1a1008">
         <animate attributeName="ry" values="1.5;1.5;0.2;1.5" dur="5s" repeatCount="indefinite" />
@@ -37,7 +39,7 @@ function CassandraAvatar() {
       <circle cx="13" cy="22" r="1.2" fill="#ffb000" />
       <circle cx="35" cy="22" r="1.2" fill="#ffb000" />
       {/* Neck */}
-      <rect x="20" y="30" width="8" height="4" fill="#b07840" />
+      <rect x="20" y="30" width="8" height="4" fill="#c88a50" />
       {/* Blazer — dark, professional */}
       <path d="M12 34 L18 31 L24 35 L30 31 L36 34 L38 48 L10 48 Z" fill="#1a2030" />
       {/* Lapels */}

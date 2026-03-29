@@ -140,24 +140,24 @@ export const ADVISOR_LINES = {
 
   // Metric advice — triggered when player clicks a gauge
   adviceJurisdiction: [
-    'Jurisdiction too high? Click a US building and choose Migrate to Safest. Or build with EU and self-hosted tools instead. Nkechi sometimes brings regulation scenarios that help too.',
-    'Every US tool adds jurisdiction drift. Migrate the worst offenders first, then fill empty plots with EU providers. It costs budget, but it buys you time.',
+    'Jurisdiction risk too high? Click a US building and choose Migrate to Safest. Or build with EU and self-hosted tools instead. Nkechi sometimes brings regulation scenarios that help too.',
+    'Every US tool adds jurisdiction risk drift. Migrate the worst offenders first, then fill empty plots with EU providers. It costs budget, but it buys you time.',
   ],
   adviceContinuity: [
-    'Continuity climbing? Click any building and run a Backup Drill for 10 budget. Also avoid putting too many tools with the same provider: lock-in makes outages catastrophic.',
-    'Spread your tools across different providers. If one goes down, you do not want to lose everything. Backup drills reduce continuity by 8 points each.',
+    'Continuity risk climbing? Click any building and run a Backup Drill for 10 budget. Also avoid putting too many tools with the same provider: lock-in makes outages catastrophic.',
+    'Continuity risk too high? Spread your tools across different providers. If one goes down, you do not want to lose everything. Backup drills reduce continuity risk by 8 points each.',
   ],
   adviceSurveillance: [
-    'Surveillance creeping up? Click any building and Audit Data Practices for 8 morale. Self-hosted tools have zero surveillance drift. Priya brings scenarios that help if you choose well.',
-    'US tools generate passive surveillance drift every tick. Replace them with self-hosted options for zero surveillance, or EU tools for lower exposure. Audits buy immediate relief.',
+    'Surveillance risk creeping up? Click any building and Audit Data Practices for 8 morale. Self-hosted tools have zero surveillance drift. Priya brings scenarios that help if you choose well.',
+    'Surveillance risk rising? US tools generate passive drift every tick. Replace them with self-hosted options for zero surveillance, or EU tools for lower exposure. Audits buy immediate relief.',
   ],
   adviceBudget: [
     'Budget tight? It regenerates by 5 each quarter automatically. Nkechi sometimes brings grant opportunities worth 15 to 20 budget. US tools are cheap but risky. Your call.',
-    'Survive and the budget recovers on its own. Do not ignore colleagues: the morale penalty from ignoring them compounds the budget pressure. Accept grants when Nkechi offers them.',
+    'Budget pressure? Survive and it recovers on its own. Do not ignore colleagues: the morale penalty from ignoring them compounds the problem. Accept grants when Nkechi offers them.',
   ],
   adviceMorale: [
     'Morale dropping? Respond to Sam quickly: his scenarios boost morale if you choose the supportive option. Every ignored colleague costs 5 morale on top of whatever else they brought.',
-    'Stop ignoring your colleagues. Seriously. Each one that leaves costs 5 morale plus their scenario penalty. Sam and community rally scenarios are your best morale sources.',
+    'Morale crisis? Stop ignoring your colleagues. Each one that leaves costs 5 morale plus their scenario penalty. Sam and community rally scenarios are your best morale sources.',
   ],
 
   // Hidden info reveals
