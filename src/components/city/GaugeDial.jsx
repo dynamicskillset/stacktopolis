@@ -29,7 +29,7 @@ export default function GaugeDial({ label, value, colour, onClick }) {
   let glowFilter = ''
   if (clampedValue >= 75) {
     arcOpacity = 1
-    glowFilter = `drop-shadow(0 0 6px ${colour}) drop-shadow(0 0 12px ${colour})`
+    glowFilter = `drop-shadow(0 0 3px ${colour})`
   } else if (clampedValue >= 50) {
     arcOpacity = 1
   }

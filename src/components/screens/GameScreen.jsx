@@ -148,6 +148,16 @@ export default function GameScreen({ state, actions }) {
         </section>
       </main>
 
+      {/* Tips bar — fills empty space above control panel */}
+      <div className="relative z-10 px-4 py-2 text-center border-t border-terminal-border bg-terminal-bg/50">
+        <p className="font-mono text-xs text-terminal-muted">
+          <span className="font-bold">Space</span> pause &nbsp;&middot;&nbsp;
+          <span className="font-bold">Click building</span> inspect &nbsp;&middot;&nbsp;
+          <span className="font-bold">Click empty plot</span> install tool &nbsp;&middot;&nbsp;
+          <span className="font-bold">Click gauge</span> get advice
+        </p>
+      </div>
+
       <ControlPanel
         jurisdiction={state.jurisdiction}
         continuity={state.continuity}

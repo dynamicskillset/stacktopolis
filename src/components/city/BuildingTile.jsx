@@ -136,7 +136,7 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
       {/* Risk LED indicator */}
       <div
         className={`absolute top-1 right-1 w-2.5 h-2.5 rounded-full ${LED_COLOURS[risk]} ${risk !== 'safe' ? 'animate-pulse-glow-fast' : ''}`}
-        style={risk !== 'safe' ? { boxShadow: `0 0 6px ${risk === 'danger' ? '#ef4444' : '#f59e0b'}` } : {}}
+        style={risk !== 'safe' ? { boxShadow: `0 0 3px ${risk === 'danger' ? '#C62828' : '#EF6C00'}` } : {}}
         aria-hidden="true"
       />
 

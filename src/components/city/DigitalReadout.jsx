@@ -22,19 +22,18 @@ export default function DigitalReadout({ value, label, colour, icon: Icon, onCli
       onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
     >
       <div
-        className="flex items-center gap-2 px-3 py-2 rounded bg-terminal-bg border border-terminal-border"
-        style={{ boxShadow: 'inset 0 2px 6px rgba(0, 0, 0, 0.5)' }}
+        className="flex items-center gap-2 px-3 py-2 rounded bg-terminal-surface border border-terminal-border"
       >
         {Icon && (
           <Icon
             size={16}
-            className={`${textClass} opacity-85`}
+            className={`${textClass}`}
             aria-hidden="true"
           />
         )}
         <span
           className={`font-mono text-2xl font-bold tracking-wider ${textClass} ${isLow ? 'animate-pulse-glow' : ''}`}
-          style={{ textShadow: '0 0 8px currentColor', transition: 'color 0.5s ease' }}
+          style={{ transition: 'color 0.5s ease' }}
           aria-label={`${label}: ${value}`}
         >
           {padValue(value)}
