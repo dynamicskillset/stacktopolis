@@ -97,17 +97,20 @@ function CityPreview() {
       <rect x="155" y="50" width="5" height="6" fill="#ffdd66" opacity="0.4" />
       <rect x="138" y="60" width="5" height="6" fill="#ffdd66" opacity="0.5" />
       <rect x="155" y="65" width="5" height="6" fill="#ffdd66" opacity="0.3" />
-      {/* Fire */}
-      <path d="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" fill="#ff6b00" opacity="0.8">
-        <animate attributeName="d" values="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z;M150,23 Q144,16 145,8 Q147,3 150,-1 Q153,3 155,8 Q156,16 150,23Z;M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" dur="0.4s" repeatCount="indefinite" />
-      </path>
-      <path d="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" fill="#ffcc00" opacity="0.9">
-        <animate attributeName="d" values="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z;M150,23 Q146,17 148,11 Q149,7 150,3 Q151,7 152,11 Q154,17 150,23Z;M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" dur="0.35s" repeatCount="indefinite" />
-      </path>
-      <circle cx="148" cy="2" r="3" fill="#94a7bb" opacity="0.3">
-        <animate attributeName="cy" values="2;-8;-16" dur="2.5s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.3;0.15;0" dur="2.5s" repeatCount="indefinite" />
-      </circle>
+      {/* Fire — visible 0-12s, fades out 12-14s, hidden 14-20s, loop 20s */}
+      <g>
+        <animate attributeName="opacity" values="0.8;0.8;0.8;0;0;0.8" keyTimes="0;0.5;0.6;0.7;0.85;1" dur="20s" repeatCount="indefinite" />
+        <path d="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" fill="#ff6b00">
+          <animate attributeName="d" values="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z;M150,23 Q144,16 145,8 Q147,3 150,-1 Q153,3 155,8 Q156,16 150,23Z;M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" dur="0.4s" repeatCount="indefinite" />
+        </path>
+        <path d="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" fill="#ffcc00" opacity="0.9">
+          <animate attributeName="d" values="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z;M150,23 Q146,17 148,11 Q149,7 150,3 Q151,7 152,11 Q154,17 150,23Z;M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" dur="0.35s" repeatCount="indefinite" />
+        </path>
+        <circle cx="148" cy="2" r="3" fill="#94a7bb" opacity="0.3">
+          <animate attributeName="cy" values="2;-8;-16" dur="2.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.3;0.15;0" dur="2.5s" repeatCount="indefinite" />
+        </circle>
+      </g>
 
       {/* Building 3 — Wide self-hosted, calm, biggest */}
       <ellipse cx="250" cy="92" rx="28" ry="6" fill="rgba(0,0,0,0.3)" />
@@ -163,31 +166,39 @@ function CityPreview() {
         <animate attributeName="transform" type="translate" values="0,0;30,0;0,0" dur="3s" repeatCount="indefinite" />
       </g>
 
-      {/* Fire truck driving toward the burning building */}
+      {/* Fire truck — sequenced: drive in (0-4s), spray (4-12s), drive off (12-16s), reset (16-20s) */}
       <g>
+        {/* Truck movement: offscreen → park → park → drive off → offscreen. 20s loop */}
+        <animateTransform attributeName="transform" type="translate"
+          values="-40,0;100,0;100,0;100,0;300,0;-40,0"
+          keyTimes="0;0.2;0.3;0.6;0.75;1"
+          dur="20s" repeatCount="indefinite" />
+
         <polygon points="4,86 14,82 24,86 24,92 4,92" fill="#C62828" />
         <polygon points="4,86 4,84 14,80 14,82" fill="#991f1f" />
         <polygon points="14,80 24,84 24,86 14,82" fill="#C62828" />
-        {/* Ladder */}
         <rect x="8" y="81" width="10" height="1" rx="0.2" fill="#8B7A2F" />
-        {/* Flashing light */}
         <circle cx="8" cy="81" r="1" fill="#B85400">
           <animate attributeName="opacity" values="1;0.2;1" dur="0.6s" repeatCount="indefinite" />
         </circle>
-        {/* Wheels */}
         <circle cx="8" cy="92" r="1.5" fill="#2d3748" />
         <circle cx="20" cy="92" r="1.5" fill="#2d3748" />
-        {/* Water spray arc toward building */}
-        <path d="M14,80 Q25,68 38,72" fill="none" stroke="#2B6AB0" strokeWidth="0.8" opacity="0.4">
-          <animate attributeName="d" values="M14,80 Q25,68 38,72;M14,80 Q27,66 40,70;M14,80 Q25,68 38,72" dur="1.2s" repeatCount="indefinite" />
-        </path>
-        {/* Droplets */}
-        <circle cx="36" cy="73" r="0.6" fill="#2B6AB0" opacity="0.3">
-          <animate attributeName="cy" values="73;78;84" dur="0.7s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.3;0.15;0" dur="0.7s" repeatCount="indefinite" />
-        </circle>
-        {/* Drive in from left and park */}
-        <animateTransform attributeName="transform" type="translate" values="-30,0;100,0" dur="4s" fill="freeze" />
+
+        {/* Water spray — only visible during spray phase (4-12s = 20%-60%) */}
+        <g>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.2;0.25;0.6;0.65;1" dur="20s" repeatCount="indefinite" />
+          <path d="M14,80 Q25,68 38,72" fill="none" stroke="#2B6AB0" strokeWidth="0.8" opacity="0.5">
+            <animate attributeName="d" values="M14,80 Q25,68 38,72;M14,80 Q27,66 40,70;M14,80 Q25,68 38,72" dur="1.2s" repeatCount="indefinite" />
+          </path>
+          <circle cx="36" cy="73" r="0.6" fill="#2B6AB0" opacity="0.3">
+            <animate attributeName="cy" values="73;78;84" dur="0.7s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.3;0.15;0" dur="0.7s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="39" cy="71" r="0.5" fill="#2B6AB0" opacity="0.2">
+            <animate attributeName="cy" values="71;77;83" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.2;0.1;0" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
+          </circle>
+        </g>
       </g>
     </svg>
   )
