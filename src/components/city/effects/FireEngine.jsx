@@ -33,8 +33,8 @@ export default function FireEngine() {
         <animate attributeName="cy" values="-2;4;10" dur="0.9s" begin="0.3s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.25;0.15;0" dur="0.9s" begin="0.3s" repeatCount="indefinite" />
       </circle>
-      {/* Drive in and park */}
-      <animateTransform attributeName="transform" type="translate" values="-50,0;200,0" dur="6s" fill="freeze" />
+      {/* Drive around the map */}
+      <animateTransform attributeName="transform" type="translate" values="-50,0;300,0;300,0;-50,0" dur="14s" repeatCount="indefinite" />
     </svg>
   )
 }

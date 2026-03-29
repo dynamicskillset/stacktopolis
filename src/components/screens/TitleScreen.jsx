@@ -3,6 +3,7 @@ import { Shield, Trophy } from 'lucide-react'
 import { DIFFICULTIES } from '../../state/initialState'
 import Button from '../ui/Button'
 import Attribution from '../shared/Attribution'
+import AboutModal from '../ui/AboutModal'
 import Skyline from '../city/Skyline'
 
 const TAGLINES = [
@@ -171,6 +172,7 @@ export default function TitleScreen({ onStartGame, highScores }) {
   const [selectedDifficulty, setSelectedDifficulty] = useState('normal')
   const tagline = useMemo(() => TAGLINES[Math.floor(Math.random() * TAGLINES.length)], [])
   const intro = useMemo(() => INTROS[Math.floor(Math.random() * INTROS.length)], [])
+  const [showAbout, setShowAbout] = useState(false)
 
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-center p-6 animate-fade-in crt-scanlines bg-terminal-bg">
@@ -247,8 +249,10 @@ export default function TitleScreen({ onStartGame, highScores }) {
       </div>
 
       <div className="relative z-10 w-full">
-        <Attribution />
+        <Attribution onAbout={() => setShowAbout(true)} />
       </div>
+
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
     </div>
   )
 }

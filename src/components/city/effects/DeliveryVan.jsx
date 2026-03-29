@@ -41,6 +41,28 @@ export default function DeliveryVan() {
         </line>
         <animateTransform attributeName="transform" type="translate" values="0,0;380,0;0,0" dur="8s" begin="1s" repeatCount="indefinite" />
       </g>
+
+      {/* Red car — drives right, fast */}
+      <g>
+        <polygon points="454,11 463,7 472,11 472,15 454,15" fill="#C62828" />
+        <polygon points="454,11 454,9 463,5 463,7" fill="#991f1f" />
+        <polygon points="463,5 472,9 472,11 463,7" fill="#C62828" />
+        <polygon points="456,10 461,7 461,10 456,12" fill="#9ab0c8" opacity="0.4" />
+        <circle cx="458" cy="15" r="1.2" fill="#2d3748" />
+        <circle cx="468" cy="15" r="1.2" fill="#2d3748" />
+        <animateTransform attributeName="transform" type="translate" values="-460,0;260,0" dur="10s" begin="6s" repeatCount="indefinite" />
+      </g>
+
+      {/* Blue car — drives left, medium */}
+      <g>
+        <polygon points="204,11 213,7 222,11 222,15 204,15" fill="#2B6AB0" />
+        <polygon points="204,11 204,9 213,5 213,7" fill="#1e5090" />
+        <polygon points="213,5 222,9 222,11 213,7" fill="#2B6AB0" />
+        <polygon points="215,10 220,7 220,10 215,12" fill="#9ab0c8" opacity="0.4" />
+        <circle cx="208" cy="15" r="1.2" fill="#2d3748" />
+        <circle cx="218" cy="15" r="1.2" fill="#2d3748" />
+        <animateTransform attributeName="transform" type="translate" values="500,0;-220,0" dur="12s" begin="9s" repeatCount="indefinite" />
+      </g>
     </svg>
   )
 }

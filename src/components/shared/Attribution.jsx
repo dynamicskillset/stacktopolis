@@ -1,4 +1,4 @@
-export default function Attribution() {
+export default function Attribution({ onAbout }) {
   return (
     <footer className="text-xs text-terminal-muted font-mono py-3 text-center space-y-3">
       <div>
@@ -28,6 +28,12 @@ export default function Attribution() {
         </a>
         <span className="text-terminal-border">|</span>
         <span>AGPL-3.0</span>
+        {onAbout && (
+          <>
+            <span className="text-terminal-border">|</span>
+            <button onClick={onAbout} className="hover:text-terminal-text transition-colors">About</button>
+          </>
+        )}
       </div>
     </footer>
   )

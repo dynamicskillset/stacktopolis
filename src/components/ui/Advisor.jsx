@@ -113,7 +113,7 @@ export default function Advisor({ line }) {
     : ''
 
   return (
-    <div className={`w-full bg-terminal-surface border border-terminal-border rounded-lg px-5 py-4 mt-3 flex items-start gap-5 backdrop-blur-sm ${animClass}`} style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' }}>
+    <div className={`w-full bg-terminal-surface border border-terminal-border rounded-lg px-5 py-4 mt-6 flex items-start gap-5 backdrop-blur-sm ${animClass}`} style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' }}>
       <div className="shrink-0 flex flex-col items-center gap-1.5">
         <CassandraAvatar />
         <span className="font-mono text-xs font-bold tracking-wider text-amber-glow">
