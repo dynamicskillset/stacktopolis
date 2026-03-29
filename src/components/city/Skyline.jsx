@@ -94,7 +94,7 @@ export default function Skyline({ dangerLevel = 0 }) {
             y={80 + (i * 17) % 100}
             width="2"
             height="3"
-            fill="#D4A843"
+            fill="#8B7A2F"
             opacity={0.2 + (i % 4) * 0.15}
           />
         ))}

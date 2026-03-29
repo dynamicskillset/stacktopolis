@@ -11,19 +11,19 @@
   --color-terminal-muted: #636B78;
   --color-terminal-text: #1A2332;
 
-  --color-amber-glow: #D4A843;
-  --color-amber-dim: #b08a30;
-  --color-amber-soft: #f5edd8;
+  --color-amber-glow: #8B7A2F;
+  --color-amber-dim: #6b5e20;
+  --color-amber-soft: #f0e8d0;
 
   --color-green-glow: #2E7D32;
   --color-green-dim: #1b5e20;
   --color-green-soft: #c8e6c9;
 
   --color-risk-jurisdiction: #C62828;
-  --color-risk-continuity: #EF6C00;
+  --color-risk-continuity: #B85400;
   --color-risk-surveillance: #2B6AB0;
 
-  --color-danger: #D9534F;
+  --color-danger: #B71C1C;
 
   --animate-ticker-scroll: ticker-scroll 240s linear infinite;
   --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
