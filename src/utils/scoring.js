@@ -10,11 +10,16 @@ export function calculateScore(state) {
     ? (state.stack.length - usTools) / state.stack.length
     : 0
 
+  const resolved = state.resolvedScenarios || 0
+  const ignored = state.ignoredScenarios || 0
+
   const quarterScore = quarters * 10
   const balanceBonus = riskSpread <= 20 ? quarters * 3 : 0
   const independenceBonus = Math.round(independence * 50)
+  const triageBonus = resolved * 5
+  const negligenceDeduction = ignored * -3
 
-  const totalScore = quarterScore + balanceBonus + independenceBonus
+  const totalScore = Math.max(0, quarterScore + balanceBonus + independenceBonus + triageBonus + negligenceDeduction)
 
   return {
     quarters,
@@ -23,6 +28,8 @@ export function calculateScore(state) {
     quarterScore,
     balanceBonus,
     independenceBonus,
+    triageBonus,
+    negligenceDeduction,
     totalScore,
   }
 }

@@ -5,6 +5,22 @@
 // ============================================================
 
 export const ADVISOR_LINES = {
+  // Onboarding — fired once per session
+  welcome: [
+    'Welcome to the mess. Your predecessor left six months of technical debt and a password on a sticky note. Click a building to inspect it, or an empty plot to fill the gap.',
+    'So, you are the new CTO. Take a look around. Click the buildings to see what you have inherited. Click the empty plots to install what you are missing. Colleagues will arrive with problems shortly.',
+    'Right. This is what they left you. Some of these tools are... questionable. Click any building to investigate, or claim an empty plot before someone else decides for you.',
+  ],
+  hintClickBuilding: [
+    'Try clicking one of those buildings. You can migrate, audit, or back up any tool in your stack.',
+  ],
+  hintClickEmpty: [
+    'Those empty plots are not going to fill themselves. Click one to choose a tool.',
+  ],
+  hintColleague: [
+    'Your first visitor. Colleagues bring problems that need decisions. Choose an option before their patience runs out, or face the consequences.',
+  ],
+
   toolSelectUs: [
     'Another US tool. At this rate, the NSA will send you a thank-you card.',
     'Bold choice. Your data now has a layover in Virginia before it does anything useful.',
@@ -120,6 +136,41 @@ export const ADVISOR_LINES = {
     'Quarter 10. You\'ve outlasted three prime ministers and a data protection framework.',
     'Quarter 15. At this point, you\'re less a charity and more a survival experiment.',
     'Quarter 20. If this were a PhD, you\'d have a thesis on institutional suffering by now.',
+  ],
+
+  // Hidden info reveals
+  revealBadSurveillance: [
+    'Surprise. The free tier has a surveillance cost. Who could have predicted this. Oh wait, I did.',
+    'And there it is. The hidden surveillance score. Higher than you hoped, lower than I expected.',
+    'The surveillance number just appeared. I wish I could say I was shocked.',
+    'That surveillance figure was hidden for a reason. Now you know why.',
+  ],
+  revealBadCost: [
+    'The true cost of self-hosting reveals itself. Your budget just felt that.',
+    'And the real morale cost lands. Self-hosting: great for sovereignty, brutal for weekends.',
+    'There is the actual price tag. Self-hosted tools are free in the same way puppies are free.',
+  ],
+
+  // Colleague-related reactions
+  colleagueArrived: [
+    'Another colleague at your door. This is what happens when you answer emails.',
+    'Someone wants your attention. They always do.',
+    'A queue is forming. You should probably deal with that before they start leaving.',
+  ],
+  colleagueIgnored: [
+    'Ignoring people is a choice. An expensive one.',
+    'They left. The problem they brought did not.',
+    'Well, that\'s one way to handle things. Not a good way, but a way.',
+    'Ignoring your colleagues. Your predecessor did that too. Look where it got them.',
+  ],
+  colleagueResolved: [
+    'Handled. For now.',
+    'Decision made. On to the next crisis.',
+    'One down. I would not celebrate just yet.',
+  ],
+  colleagueCrisis: [
+    'This one looks serious. I would not keep them waiting.',
+    'High priority. The kind of thing that ends up in a board report.',
   ],
 }
 

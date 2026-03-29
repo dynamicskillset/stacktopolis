@@ -7,7 +7,7 @@
   --color-terminal-bg: #0a0e14;
   --color-terminal-surface: #111820;
   --color-terminal-border: #1e2a38;
-  --color-terminal-muted: #7a8fa6;
+  --color-terminal-muted: #94a7bb;
   --color-terminal-text: #dce3eb;
 
   --color-amber-glow: #ffb000;
@@ -110,6 +110,24 @@
   100% { transform: translateY(20px); opacity: 0; }
 }
 
+@keyframes empty-plot-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes gentle-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+.animate-empty-plot-pulse {
+  animation: empty-plot-pulse 3s ease-in-out infinite;
+}
+
+.animate-gentle-breathe {
+  animation: gentle-breathe 4s ease-in-out infinite;
+}
+
 /* Scanline overlay for CRT effect */
 .crt-scanlines::before {
   content: '';
@@ -142,44 +160,33 @@
 /* Isometric city grid */
 .city-grid {
   display: grid;
-  grid-template-columns: repeat(4, 120px);
-  grid-template-rows: repeat(3, 95px);
-  gap: 6px 10px;
+  grid-template-columns: repeat(4, 155px);
+  grid-template-rows: repeat(3, 160px);
+  gap: 4px 8px;
   justify-content: center;
   align-content: center;
-  padding: 12px;
+  padding: 8px 16px;
 }
 
 .city-tile {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  overflow: visible;
+  position: relative;
 }
 
 /* Tablet */
 @media (max-width: 768px) {
   .city-grid {
-    grid-template-columns: repeat(4, 90px);
-    grid-template-rows: repeat(3, 75px);
-    gap: 4px 6px;
-    padding: 8px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 520px) {
-  .city-grid {
-    grid-template-columns: repeat(4, 70px);
-    grid-template-rows: repeat(3, 60px);
+    grid-template-columns: repeat(4, 110px);
+    grid-template-rows: repeat(3, 115px);
     gap: 2px 4px;
-    padding: 4px;
-  }
-
-  .city-tile {
-    transform: scale(0.85);
-    transform-origin: bottom center;
+    padding: 4px 8px;
   }
 }
+
+/* Mobile — game is hidden, see MobileGate component */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

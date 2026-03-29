@@ -1,17 +1,50 @@
 import { TOOL_NEEDS } from '../data/tools'
-import { EVENTS } from '../data/events'
+import { SCENARIOS } from '../data/scenarios'
+import { COLLEAGUES } from '../data/colleagues'
 import { GAME_OVER_MESSAGES } from '../data/gameOverMessages'
 import { createInitialState, TUNING, DIFFICULTIES } from './initialState'
 import { checkGameOver, getProviderCounts } from './selectors'
 import { clamp } from '../utils/clamp'
-import { shuffle } from '../utils/shuffle'
 
 function getNeedById(id) {
   return TOOL_NEEDS.find(n => n.id === id)
 }
 
-function getEventById(id) {
-  return EVENTS.find(e => e.id === id)
+function pickScenario(state) {
+  const activeIds = new Set(state.colleagueQueue.map(q => q.scenarioId))
+  const recentIds = new Set(state.scenarioHistory.slice(-10))
+
+  const eligible = SCENARIOS.filter(s =>
+    !activeIds.has(s.id) &&
+    !recentIds.has(s.id) &&
+    s.triggerCondition(state)
+  )
+
+  if (eligible.length === 0) return null
+
+  const totalWeight = eligible.reduce((sum, s) => sum + s.priority, 0)
+  let roll = Math.random() * totalWeight
+  for (const s of eligible) {
+    roll -= s.priority
+    if (roll <= 0) return s
+  }
+  return eligible[eligible.length - 1]
+}
+
+function nextColleagueDelay() {
+  const range = TUNING.colleagueIntervalMax - TUNING.colleagueIntervalMin
+  return TUNING.colleagueIntervalMin + Math.floor(Math.random() * range)
+}
+
+function applyEffect(effect, state) {
+  const delta = typeof effect === 'function' ? effect(state) : effect
+  return {
+    jurisdiction: clamp(state.jurisdiction + (delta.jurisdiction || 0)),
+    continuity: clamp(state.continuity + (delta.continuity || 0)),
+    surveillance: clamp(state.surveillance + (delta.surveillance || 0)),
+    budget: clamp(state.budget + (delta.budget || 0)),
+    morale: clamp(state.morale + (delta.morale || 0)),
+  }
 }
 
 function applyGameOverCheck(state) {
@@ -28,12 +61,58 @@ function applyGameOverCheck(state) {
   return state
 }
 
-function drawFromDeck(deck, index, allItems) {
-  if (index >= deck.length) {
-    const reshuffled = shuffle(allItems.map(i => i.id || i))
-    return { deck: reshuffled, index: 1, item: reshuffled[0] }
+function installTool(state, toolInstall) {
+  const need = getNeedById(toolInstall.needId)
+  if (!need) return state
+
+  const option = need.options.find(o => o.id === toolInstall.optionId)
+  if (!option) return state
+
+  const existingTool = state.stack.find(t => t.needId === toolInstall.needId)
+
+  const newTool = {
+    id: option.id,
+    needId: toolInstall.needId,
+    name: option.name,
+    provider: option.provider,
+    region: option.region,
+    icon: need.icon,
+    jurisdiction: option.jurisdiction,
+    continuity: option.continuity,
+    surveillance: option.surveillance,
+    degraded: false,
+    installedAt: state.quarter,
+    lastAuditedAt: null,
   }
-  return { deck, index: index + 1, item: deck[index] }
+
+  const providerCounts = getProviderCounts(state.stack)
+  const existingCount = providerCounts[option.provider] || 0
+  const ecosystemDiscount = existingCount > 0 ? 3 : 0
+  const lockInPenalty = existingCount > 0 ? existingCount * 5 : 0
+  const effectiveBudgetCost = Math.max(0, (option.budgetCost || 0) - ecosystemDiscount)
+
+  let jDelta = option.jurisdiction
+  let cDelta = option.continuity
+  let sDelta = option.surveillance
+  if (existingTool) {
+    jDelta -= existingTool.jurisdiction
+    cDelta -= existingTool.continuity
+    sDelta -= existingTool.surveillance
+  }
+
+  const newStack = existingTool
+    ? state.stack.map(t => t.needId === toolInstall.needId ? newTool : t)
+    : [...state.stack, newTool]
+
+  return {
+    ...state,
+    stack: newStack,
+    jurisdiction: clamp(state.jurisdiction + jDelta),
+    continuity: clamp(state.continuity + cDelta + lockInPenalty),
+    surveillance: clamp(state.surveillance + sDelta),
+    budget: clamp(state.budget - effectiveBudgetCost),
+    morale: clamp(state.morale - (option.moraleCost || 0)),
+  }
 }
 
 export function gameReducer(state, action) {
@@ -41,92 +120,11 @@ export function gameReducer(state, action) {
     case 'START_GAME': {
       const difficulty = action.payload || 'normal'
       const fresh = createInitialState(difficulty)
-      const needId = fresh.toolDeck[0]
-      const need = getNeedById(needId)
-      return {
-        ...fresh,
-        screen: 'playing',
-        phase: 'build',
-        currentNeed: need,
-        toolDeckIndex: 1,
-      }
+      return { ...fresh, screen: 'playing' }
     }
 
     case 'RESTART_GAME': {
       return createInitialState()
-    }
-
-    case 'SELECT_TOOL': {
-      const option = action.payload
-      const newTool = {
-        id: option.id,
-        needId: state.currentNeed.id,
-        name: option.name,
-        provider: option.provider,
-        region: option.region,
-        icon: state.currentNeed.icon,
-        jurisdiction: option.jurisdiction,
-        continuity: option.continuity,
-        surveillance: option.surveillance,
-      }
-
-      // Vendor synergy / lock-in: cheaper to stay, but riskier
-      const providerCounts = getProviderCounts(state.stack)
-      const existingCount = providerCounts[option.provider] || 0
-      const ecosystemDiscount = existingCount > 0 ? 3 : 0
-      const lockInPenalty = existingCount > 0 ? existingCount * 5 : 0
-
-      const effectiveBudgetCost = Math.max(0, option.budgetCost - ecosystemDiscount)
-
-      let newState = {
-        ...state,
-        stack: [...state.stack, newTool],
-        jurisdiction: clamp(state.jurisdiction + option.jurisdiction),
-        continuity: clamp(state.continuity + option.continuity + lockInPenalty),
-        surveillance: clamp(state.surveillance + option.surveillance),
-        budget: clamp(state.budget - effectiveBudgetCost),
-        morale: clamp(state.morale - option.moraleCost),
-        currentNeed: null,
-      }
-
-      newState = applyGameOverCheck(newState)
-      if (newState.screen === 'gameOver') return newState
-
-      const { deck, index, item } = drawFromDeck(
-        newState.eventDeck, newState.eventDeckIndex, EVENTS
-      )
-      const event = getEventById(item)
-      return {
-        ...newState,
-        phase: 'event',
-        eventDeck: deck,
-        eventDeckIndex: index,
-        currentEvent: event,
-      }
-    }
-
-    case 'ACKNOWLEDGE_EVENT': {
-      const event = state.currentEvent
-      const delta = event.apply(state)
-      const evtDiff = DIFFICULTIES[state.difficulty] || DIFFICULTIES.normal
-      const mult = evtDiff.eventMultiplier
-
-      let newState = {
-        ...state,
-        jurisdiction: clamp(state.jurisdiction + Math.round((delta.jurisdiction || 0) * mult)),
-        continuity: clamp(state.continuity + Math.round((delta.continuity || 0) * mult)),
-        surveillance: clamp(state.surveillance + Math.round((delta.surveillance || 0) * mult)),
-        budget: clamp(state.budget + Math.round((delta.budget || 0) * mult)),
-        morale: clamp(state.morale + Math.round((delta.morale || 0) * mult)),
-        phase: 'manage',
-        currentEvent: null,
-        pastHeadlines: [...state.pastHeadlines, event.headline],
-        shakeScreen: event.severity === 'critical',
-        flashColour: event.severity === 'critical' ? 'red' : event.severity === 'major' ? 'amber' : null,
-      }
-
-      newState = applyGameOverCheck(newState)
-      return newState
     }
 
     case 'MIGRATE_TOOL': {
@@ -160,6 +158,8 @@ export function gameReducer(state, action) {
         jurisdiction: safest.jurisdiction,
         continuity: safest.continuity,
         surveillance: safest.surveillance,
+        degraded: false,
+        installedAt: state.quarter,
       }
 
       return {
@@ -197,29 +197,165 @@ export function gameReducer(state, action) {
       }
     }
 
-    case 'END_QUARTER': {
-      const qDiff = DIFFICULTIES[state.difficulty] || DIFFICULTIES.normal
+    case 'TICK': {
+      if (state.screen !== 'playing') return state
+
+      const newGameTime = state.gameTime + 1
+
+      let jDrift = 0
+      let cDrift = 0
+      let sDrift = 0
+      for (const tool of state.stack) {
+        const mult = tool.degraded ? TUNING.degradedMultiplier : 1
+        if (tool.region === 'us') {
+          jDrift += (TUNING.driftUs.jurisdiction || 0) * mult
+          sDrift += (TUNING.driftUs.surveillance || 0) * mult
+        } else if (tool.region === 'eu') {
+          jDrift += (TUNING.driftEu.jurisdiction || 0) * mult
+        } else {
+          cDrift += (TUNING.driftSelf.continuity || 0) * mult
+        }
+      }
+
+      const rawJ = state.jurisdiction + jDrift
+      const rawC = state.continuity + cDrift
+      const rawS = state.surveillance + sDrift
+
       let newState = {
         ...state,
-        quarter: state.quarter + 1,
-        budget: clamp(state.budget + TUNING.quarterBudgetRegen),
-        morale: clamp(state.morale - qDiff.quarterMoralDecay),
+        gameTime: newGameTime,
+        jurisdiction: clamp(Math.round(rawJ * 100) / 100),
+        continuity: clamp(Math.round(rawC * 100) / 100),
+        surveillance: clamp(Math.round(rawS * 100) / 100),
       }
 
-      newState = applyGameOverCheck(newState)
-      if (newState.screen === 'gameOver') return newState
+      // Quarter boundary
+      const prevQuarter = Math.floor(state.gameTime / TUNING.ticksPerQuarter) + 1
+      const newQuarter = Math.floor(newGameTime / TUNING.ticksPerQuarter) + 1
+      if (newQuarter > prevQuarter) {
+        const qDiff = DIFFICULTIES[state.difficulty] || DIFFICULTIES.normal
+        newState = {
+          ...newState,
+          quarter: newQuarter,
+          budget: clamp(newState.budget + TUNING.quarterBudgetRegen),
+          morale: clamp(newState.morale - qDiff.quarterMoralDecay),
+        }
+      }
 
-      const { deck, index, item } = drawFromDeck(
-        newState.toolDeck, newState.toolDeckIndex, TOOL_NEEDS
-      )
-      const need = getNeedById(item)
-      return {
+      // Expire colleagues
+      let expiredQueue = []
+      let activeQueue = []
+      for (const entry of newState.colleagueQueue) {
+        const elapsedTicks = newGameTime - entry.arrivedAt
+        const elapsedMs = elapsedTicks * TUNING.tickIntervalMs
+        if (elapsedMs >= entry.patienceMs) {
+          expiredQueue.push(entry)
+        } else {
+          activeQueue.push(entry)
+        }
+      }
+
+      if (expiredQueue.length > 0) {
+        let j = newState.jurisdiction
+        let c = newState.continuity
+        let s = newState.surveillance
+        let b = newState.budget
+        let m = newState.morale
+        const headlines = [...newState.pastHeadlines]
+
+        for (const entry of expiredQueue) {
+          const delta = typeof entry.scenario.ignoreEffect === 'function'
+            ? entry.scenario.ignoreEffect(newState)
+            : entry.scenario.ignoreEffect
+          j = clamp(j + (delta.jurisdiction || 0))
+          c = clamp(c + (delta.continuity || 0))
+          s = clamp(s + (delta.surveillance || 0))
+          b = clamp(b + (delta.budget || 0))
+          m = clamp(m + (delta.morale || 0) - TUNING.patienceMoralePenalty)
+          headlines.push(entry.scenario.headline)
+        }
+
+        newState = {
+          ...newState,
+          colleagueQueue: activeQueue,
+          jurisdiction: j,
+          continuity: c,
+          surveillance: s,
+          budget: b,
+          morale: m,
+          pastHeadlines: headlines,
+          ignoredScenarios: newState.ignoredScenarios + expiredQueue.length,
+          flashColour: expiredQueue.some(e => e.scenario.priority >= 4) ? 'amber' : null,
+        }
+      }
+
+      // Spawn colleague
+      if (newGameTime >= newState.nextColleagueAt && newState.colleagueQueue.length < TUNING.maxColleagueQueue) {
+        const scenario = pickScenario(newState)
+        if (scenario) {
+          const colleague = COLLEAGUES[scenario.colleagueId]
+          const entry = {
+            scenarioId: scenario.id,
+            colleagueId: scenario.colleagueId,
+            scenario,
+            arrivedAt: newGameTime,
+            patienceMs: colleague.patience,
+          }
+          newState = {
+            ...newState,
+            colleagueQueue: [...newState.colleagueQueue, entry],
+            nextColleagueAt: newGameTime + nextColleagueDelay(),
+            scenarioHistory: [...newState.scenarioHistory, scenario.id].slice(-20),
+          }
+        } else {
+          newState = { ...newState, nextColleagueAt: newGameTime + 20 }
+        }
+      }
+
+      return applyGameOverCheck(newState)
+    }
+
+    case 'INSTALL_TOOL': {
+      const { needId, optionId } = action.payload
+      let newState = installTool(state, { needId, optionId })
+      return applyGameOverCheck(newState)
+    }
+
+    case 'RESOLVE_SCENARIO': {
+      const { scenarioId, optionIndex } = action.payload
+      const entry = state.colleagueQueue.find(q => q.scenarioId === scenarioId)
+      if (!entry) return state
+
+      const option = entry.scenario.options[optionIndex]
+      if (!option) return state
+
+      let newState = state
+
+      // Handle tool installation if the option includes it
+      if (option.toolInstall) {
+        newState = installTool(newState, option.toolInstall)
+      }
+
+      // Apply resource effects
+      const resources = applyEffect(option.effect, newState)
+      newState = {
         ...newState,
-        phase: 'build',
-        toolDeck: deck,
-        toolDeckIndex: index,
-        currentNeed: need,
+        ...resources,
+        colleagueQueue: newState.colleagueQueue.filter(q => q.scenarioId !== scenarioId),
+        resolvedScenarios: newState.resolvedScenarios + 1,
+        pastHeadlines: [...newState.pastHeadlines, entry.scenario.headline],
       }
+
+      return applyGameOverCheck(newState)
+    }
+
+    case 'TOGGLE_PAUSE': {
+      if (state.screen !== 'playing') return state
+      return { ...state, isPaused: !state.isPaused }
+    }
+
+    case 'SET_SPEED': {
+      return { ...state, speed: action.payload }
     }
 
     case 'CLEAR_SHAKE': {

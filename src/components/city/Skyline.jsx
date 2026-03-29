@@ -100,6 +100,33 @@ export default function Skyline({ dangerLevel = 0 }) {
         ))}
       </svg>
 
+      {/* Ambient birds/drones drifting across */}
+      {dangerLevel < 60 && (
+        <div className="absolute inset-0">
+          {[
+            { top: '22%', dur: '35s', delay: '0s', scale: 1 },
+            { top: '18%', dur: '28s', delay: '8s', scale: 0.7 },
+            { top: '30%', dur: '42s', delay: '15s', scale: 0.85 },
+          ].map((bird, i) => (
+            <svg
+              key={i}
+              className="absolute"
+              style={{
+                top: bird.top,
+                width: `${8 * bird.scale}px`,
+                height: `${6 * bird.scale}px`,
+                animation: `ticker-scroll ${bird.dur} linear infinite`,
+                animationDelay: bird.delay,
+                opacity: 0.3,
+              }}
+              viewBox="0 0 12 8"
+            >
+              <path d="M0,4 Q3,0 6,4 Q9,0 12,4" fill="none" stroke="#94a7bb" strokeWidth="1.2" />
+            </svg>
+          ))}
+        </div>
+      )}
+
       {/* Lightning flash on high danger */}
       {dangerLevel >= 70 && (
         <div

@@ -99,6 +99,16 @@ const SOUNDS = {
   endQuarter() {
     playTone(440, 0.05, 'triangle', 0.06)
   },
+
+  colleagueArrive() {
+    playTone(523, 0.06, 'sine', 0.06)
+    setTimeout(() => playTone(659, 0.06, 'sine', 0.05), 60)
+  },
+
+  colleagueExpire() {
+    playTone(330, 0.12, 'sawtooth', 0.06)
+    setTimeout(() => playTone(220, 0.15, 'sawtooth', 0.04), 100)
+  },
 }
 
 export function playSound(name) {

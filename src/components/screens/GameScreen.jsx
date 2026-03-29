@@ -1,13 +1,15 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import NewsTicker from '../layout/NewsTicker'
 import CityGrid from '../city/CityGrid'
-import DecisionPanel from '../layout/DecisionPanel'
+import BuildingInspector from '../city/BuildingInspector'
+import ToolPicker from '../city/ToolPicker'
+import ColleagueQueue from '../colleagues/ColleagueQueue'
 import ControlPanel from '../city/ControlPanel'
 import Skyline from '../city/Skyline'
 import Advisor from '../ui/Advisor'
-import Tutorial from '../shared/Tutorial'
+import PauseOverlay from '../ui/PauseOverlay'
+import AdvicePanel from '../ui/AdvicePanel'
 import { useAdvisor } from '../../hooks/useAdvisor'
-import { useTutorial } from '../../hooks/useTutorial'
 
 function getDangerLevel(state) {
   return Math.max(state.jurisdiction, state.continuity, state.surveillance)
@@ -26,19 +28,29 @@ function getVignetteStyle(dangerLevel) {
   return { '--vignette-colour': 'rgba(120, 10, 0, 0.35)' }
 }
 
-const PHASE_LABELS = {
-  build: { step: '1', label: 'Choose a Tool', description: 'Pick a tool for your organisation.' },
-  event: { step: '2', label: 'Breaking News', description: 'A random event strikes your stack.' },
-  manage: { step: '3', label: 'Manage Risk', description: 'Spend resources or move on.' },
-}
-
 export default function GameScreen({ state, actions }) {
   const dangerLevel = getDangerLevel(state)
   const isGlitching = dangerLevel >= 70
   const vignetteStyle = useMemo(() => getVignetteStyle(dangerLevel), [dangerLevel])
   const advisorLine = useAdvisor(state)
-  const tutorial = useTutorial()
-  const phaseInfo = PHASE_LABELS[state.phase]
+  const [inspectedTool, setInspectedTool] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const handleSelectTool = useCallback((tool) => {
+    setSelectedCategory(null)
+    setInspectedTool(prev => prev?.id === tool.id ? null : tool)
+  }, [])
+  const handleClickEmpty = useCallback((categoryId) => {
+    setInspectedTool(null)
+    setSelectedCategory(prev => prev === categoryId ? null : categoryId)
+  }, [])
+  const handleInstallTool = useCallback((needId, optionId) => {
+    actions.installTool(needId, optionId)
+    setSelectedCategory(null)
+  }, [actions])
+  const [activeAdvice, setActiveAdvice] = useState(null)
+  const handleClickMetric = useCallback((metric) => {
+    setActiveAdvice(prev => prev === metric ? null : metric)
+  }, [])
 
   return (
     <div
@@ -66,54 +78,43 @@ export default function GameScreen({ state, actions }) {
       <NewsTicker headlines={state.pastHeadlines} />
 
       <main className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-3 p-3 sm:p-4 overflow-y-auto relative z-10">
-        {/* Left column: City + Advisor (3/5 on desktop) */}
-        <section className="lg:col-span-3 min-h-0 flex flex-col">
+        {/* Left column: City + Inspector + Advisor */}
+        <section className="lg:col-span-3 min-h-0 flex flex-col" aria-label="City grid and advisor">
           <h2 className={`font-mono text-xs uppercase tracking-widest text-terminal-muted mb-2 ${isGlitching ? 'animate-glitch' : ''}`}>
-            Your Organisation
+            {state.orgName}
           </h2>
-          <CityGrid stack={state.stack} />
+          <CityGrid
+            stack={state.stack}
+            onSelectTool={handleSelectTool}
+            selectedToolId={inspectedTool?.id}
+            onClickEmpty={handleClickEmpty}
+          />
+          {inspectedTool && (
+            <BuildingInspector
+              tool={inspectedTool}
+              onClose={() => setInspectedTool(null)}
+              actions={actions}
+              budget={state.budget}
+              morale={state.morale}
+            />
+          )}
+          {selectedCategory && (
+            <ToolPicker
+              categoryId={selectedCategory}
+              onInstall={handleInstallTool}
+              onClose={() => setSelectedCategory(null)}
+            />
+          )}
           <Advisor line={advisorLine} />
         </section>
 
-        {/* Right column: Phase indicator + Decision panel (2/5 on desktop) */}
-        <section className="lg:col-span-2 min-h-0 flex flex-col gap-3">
-          {/* Phase step indicator */}
-          {phaseInfo && (
-            <div className="flex items-center gap-3 bg-terminal-surface/60 rounded-lg px-4 py-3 border border-terminal-border" role="status" aria-live="polite">
-              <div className="flex items-center gap-1.5">
-                {['1', '2', '3'].map((step) => (
-                  <div
-                    key={step}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-sm font-bold transition-all duration-300 ${
-                      step === phaseInfo.step
-                        ? 'bg-amber-glow text-terminal-bg scale-110'
-                        : step < phaseInfo.step
-                          ? 'bg-terminal-border text-terminal-muted'
-                          : 'bg-terminal-surface text-terminal-muted border border-terminal-border'
-                    }`}
-                    aria-current={step === phaseInfo.step ? 'step' : undefined}
-                  >
-                    {step}
-                  </div>
-                ))}
-              </div>
-              <div className="min-w-0">
-                <div className="font-mono text-sm font-bold text-amber-glow uppercase tracking-wider">
-                  {phaseInfo.label}
-                </div>
-                <div className="font-serif text-xs text-terminal-muted">
-                  {phaseInfo.description}
-                </div>
-              </div>
-            </div>
-          )}
-
-          <DecisionPanel
-            phase={state.phase}
-            currentNeed={state.currentNeed}
-            currentEvent={state.currentEvent}
-            actions={actions}
-            state={state}
+        {/* Right column: Colleague queue */}
+        <section className="lg:col-span-2 min-h-0 flex flex-col gap-3 overflow-y-auto" aria-label="Colleague interactions">
+          <ColleagueQueue
+            queue={state.colleagueQueue}
+            gameTime={state.gameTime}
+            onResolve={actions.resolveScenario}
+            isPaused={state.isPaused}
           />
         </section>
       </main>
@@ -125,11 +126,15 @@ export default function GameScreen({ state, actions }) {
         budget={state.budget}
         morale={state.morale}
         quarter={state.quarter}
+        speed={state.speed}
+        isPaused={state.isPaused}
+        onSetSpeed={actions.setSpeed}
+        onTogglePause={actions.togglePause}
+        onClickMetric={handleClickMetric}
       />
 
-      {tutorial.isActive && (
-        <Tutorial step={tutorial.step} onNext={tutorial.nextStep} onDismiss={tutorial.dismiss} />
-      )}
+      {activeAdvice && <AdvicePanel metric={activeAdvice} onClose={() => setActiveAdvice(null)} />}
+      {state.isPaused && <PauseOverlay onResume={actions.togglePause} />}
     </div>
   )
 }

@@ -17,12 +17,12 @@ function describeArc(cx, cy, r, startAngle, sweepDeg) {
 const ARC_START = 210
 const FULL_SWEEP = 240
 
-export default function GaugeDial({ label, value, colour }) {
+export default function GaugeDial({ label, value, colour, onClick }) {
   const cx = 45
   const cy = 45
   const r = 34
 
-  const clampedValue = Math.max(0, Math.min(100, value))
+  const clampedValue = Math.max(0, Math.min(100, Math.round(value)))
   const valueSweep = (clampedValue / 100) * FULL_SWEEP
 
   let arcOpacity = 0.6
@@ -40,7 +40,14 @@ export default function GaugeDial({ label, value, colour }) {
   const isAlert = clampedValue >= 75
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div
+      className={`flex flex-col items-center gap-1 ${onClick ? 'cursor-pointer hover:scale-105 transition-transform' : ''}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
+      aria-label={onClick ? `${label} risk: ${clampedValue}. Click for advice.` : undefined}
+    >
       <div className="relative" style={{ width: 90, height: 90 }}>
         <svg
           width="90"
@@ -88,7 +95,7 @@ export default function GaugeDial({ label, value, colour }) {
         )}
       </div>
 
-      <span className="font-mono text-[10px] uppercase tracking-widest text-terminal-muted" aria-hidden="true">
+      <span className="font-mono text-xs uppercase tracking-widest text-terminal-muted" aria-hidden="true">
         {label}
       </span>
     </div>

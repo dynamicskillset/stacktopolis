@@ -6,6 +6,7 @@ import TitleScreen from './components/screens/TitleScreen'
 import GameScreen from './components/screens/GameScreen'
 import GameOverScreen from './components/screens/GameOverScreen'
 import SoundToggle from './components/ui/SoundToggle'
+import MobileGate from './components/ui/MobileGate'
 
 function App() {
   const { state, actions } = useGame()
@@ -48,8 +49,11 @@ function App() {
 
   return (
     <>
-      <SoundToggle />
-      {screen}
+      <MobileGate />
+      <div className="hidden lg:block">
+        <SoundToggle />
+        {screen}
+      </div>
     </>
   )
 }

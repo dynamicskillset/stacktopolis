@@ -6,7 +6,7 @@ const GRID_SLOTS = [
   'analytics', 'passwords', 'social', 'ai',
 ]
 
-export default function CityGrid({ stack }) {
+export default function CityGrid({ stack, onSelectTool, selectedToolId, onClickEmpty }) {
   return (
     <div className="city-grid" role="region" aria-label="City grid showing installed tools">
       {GRID_SLOTS.map((slotId, index) => {
@@ -20,10 +20,16 @@ export default function CityGrid({ stack }) {
             style={{
               gridRow: row + 1,
               gridColumn: col + 1,
-              marginLeft: row % 2 === 1 ? '50px' : '0',
+              marginLeft: row % 2 === 1 ? '65px' : '0',
             }}
           >
-            <BuildingTile tool={tool} categoryId={slotId} />
+            <BuildingTile
+              tool={tool}
+              categoryId={slotId}
+              onClick={tool && onSelectTool ? () => onSelectTool(tool) : undefined}
+              isSelected={tool && tool.id === selectedToolId}
+              onClickEmpty={!tool && onClickEmpty ? onClickEmpty : undefined}
+            />
           </div>
         )
       })}

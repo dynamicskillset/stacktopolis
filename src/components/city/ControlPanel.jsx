@@ -1,8 +1,12 @@
 import { Coins, Heart } from 'lucide-react'
 import GaugeDial from './GaugeDial'
 import DigitalReadout from './DigitalReadout'
+import SpeedControl from '../ui/SpeedControl'
 
-export default function ControlPanel({ jurisdiction, continuity, surveillance, budget, morale, quarter }) {
+export default function ControlPanel({
+  jurisdiction, continuity, surveillance, budget, morale, quarter,
+  speed, isPaused, onSetSpeed, onTogglePause, onClickMetric,
+}) {
   const maxRisk = Math.max(jurisdiction, continuity, surveillance)
 
   return (
@@ -14,17 +18,17 @@ export default function ControlPanel({ jurisdiction, continuity, surveillance, b
     >
       <div className="flex flex-col md:flex-row md:items-center md:justify-between px-4 py-3 gap-4">
         <div className="flex items-center justify-center gap-4 md:gap-6">
-          <GaugeDial label="Jurisdiction" value={jurisdiction} colour="var(--color-risk-jurisdiction)" />
-          <GaugeDial label="Continuity" value={continuity} colour="var(--color-risk-continuity)" />
-          <GaugeDial label="Surveillance" value={surveillance} colour="var(--color-risk-surveillance)" />
+          <GaugeDial label="Jurisdiction" value={jurisdiction} colour="var(--color-risk-jurisdiction)" onClick={() => onClickMetric('jurisdiction')} />
+          <GaugeDial label="Continuity" value={continuity} colour="var(--color-risk-continuity)" onClick={() => onClickMetric('continuity')} />
+          <GaugeDial label="Surveillance" value={surveillance} colour="var(--color-risk-surveillance)" onClick={() => onClickMetric('surveillance')} />
         </div>
 
         <div className="hidden md:block self-stretch w-px bg-terminal-border my-1" aria-hidden="true" />
         <div className="block md:hidden h-px bg-terminal-border" aria-hidden="true" />
 
         <div className="flex items-center justify-center gap-4 md:gap-6">
-          <DigitalReadout value={budget} label="Budget" colour="amber" icon={Coins} />
-          <DigitalReadout value={morale} label="Morale" colour="green" icon={Heart} />
+          <DigitalReadout value={budget} label="Budget" colour="amber" icon={Coins} onClick={() => onClickMetric('budget')} />
+          <DigitalReadout value={morale} label="Morale" colour="green" icon={Heart} onClick={() => onClickMetric('morale')} />
 
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center px-3 py-2 rounded bg-terminal-bg border border-terminal-border"
@@ -39,10 +43,17 @@ export default function ControlPanel({ jurisdiction, continuity, surveillance, b
               </span>
               <span className="animate-cursor-blink ml-0.5 font-mono text-2xl font-bold text-amber-glow">_</span>
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-terminal-muted" aria-hidden="true">
+            <span className="font-mono text-xs uppercase tracking-widest text-terminal-muted" aria-hidden="true">
               Quarter
             </span>
           </div>
+
+          <SpeedControl
+            speed={speed}
+            onSetSpeed={onSetSpeed}
+            isPaused={isPaused}
+            onTogglePause={onTogglePause}
+          />
         </div>
       </div>
     </div>

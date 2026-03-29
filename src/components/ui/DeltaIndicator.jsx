@@ -6,7 +6,7 @@ export default function DeltaIndicator({ value, label }) {
   const [key, setKey] = useState(0)
 
   useEffect(() => {
-    const diff = value - prevValue.current
+    const diff = Math.round(value) - Math.round(prevValue.current)
     if (diff !== 0) {
       setDelta(diff)
       setKey(k => k + 1)

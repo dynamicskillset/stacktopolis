@@ -40,12 +40,21 @@ function BaseShadow() {
   return <ellipse cx="40" cy="92" rx="30" ry="8" fill="rgba(0,0,0,0.3)" />
 }
 
+// Animated window light — slow flicker for ambient life
+function WinLight({ x, y, w = 4, h = 5, dur = '5s', begin = '0s' }) {
+  return (
+    <rect x={x} y={y} width={w} height={h} fill="#ffdd66" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.6;0.2;0.5;0.3" dur={dur} begin={begin} repeatCount="indefinite" />
+    </rect>
+  )
+}
+
 // --------------------------------------------------------------------------
 // 1. EMAIL — Tall rectangular building with mail slot / envelope on front
 // --------------------------------------------------------------------------
 function EmailBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Left face */}
       <polygon points="12,55 40,40 40,88 12,88" fill={palette.secondary} />
@@ -64,6 +73,9 @@ function EmailBuilding({ palette }) {
       <rect x="28" y="70" width="5" height="6" fill={palette.accent} opacity="0.4" />
       {/* Door on left face */}
       <rect x="21" y="81" width="6" height="7" fill={palette.base} opacity="0.7" />
+      <WinLight x={19} y={63} dur="6s" begin="0.5s" />
+      <WinLight x={29} y={59} dur="5s" begin="2s" />
+      <WinLight x={47} y={61} dur="7s" begin="1s" />
     </svg>
   )
 }
@@ -73,7 +85,7 @@ function EmailBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function VideoBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Left face */}
       <polygon points="15,60 40,48 40,88 15,88" fill={palette.secondary} />
@@ -100,6 +112,8 @@ function VideoBuilding({ palette }) {
       {/* Left face windows */}
       <rect x="20" y="66" width="6" height="5" fill={palette.accent} opacity="0.4" />
       <rect x="30" y="62" width="6" height="5" fill={palette.accent} opacity="0.4" />
+      <WinLight x={21} y={67} dur="5.5s" begin="1s" />
+      <WinLight x={31} y={63} dur="6.5s" begin="3s" />
     </svg>
   )
 }
@@ -109,7 +123,7 @@ function VideoBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function CloudStorageBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Wide and squat — warehouse proportions */}
       {/* Left face */}
@@ -135,6 +149,8 @@ function CloudStorageBuilding({ palette }) {
       {/* Cloud wisps on roof */}
       <ellipse cx="36" cy="60" rx="6" ry="3" fill={palette.primary} opacity="0.3" />
       <ellipse cx="42" cy="59" rx="5" ry="3.5" fill={palette.primary} opacity="0.3" />
+      <WinLight x={46} y={73} dur="6s" begin="0.5s" />
+      <WinLight x={56} y={76} dur="7s" begin="2.5s" />
     </svg>
   )
 }
@@ -144,7 +160,7 @@ function CloudStorageBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function ProjectMgmtBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Tall building — 4 stories */}
       {/* Left face */}
@@ -205,7 +221,7 @@ function ProjectMgmtBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function CrmBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Left face */}
       <polygon points="14,58 40,45 40,88 14,88" fill={palette.secondary} />
@@ -238,7 +254,7 @@ function CrmBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function HostingBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Tall, narrow tower */}
       {/* Left face */}
@@ -296,7 +312,7 @@ function HostingBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function MessagingBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Squat building base */}
       {/* Left face */}
@@ -338,7 +354,7 @@ function MessagingBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function OfficeSuiteBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Widest building — classic corporate HQ */}
       {/* Left face */}
@@ -391,7 +407,7 @@ function OfficeSuiteBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function AnalyticsBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Left face */}
       <polygon points="14,58 40,46 40,88 14,88" fill={palette.secondary} />
@@ -423,7 +439,7 @@ function AnalyticsBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function PasswordBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Squat, heavy, reinforced building */}
       {/* Left face */}
@@ -466,7 +482,7 @@ function PasswordBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function SocialMediaBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Left face */}
       <polygon points="14,58 40,46 40,88 14,88" fill={palette.secondary} />
@@ -511,7 +527,7 @@ function SocialMediaBuilding({ palette }) {
 // --------------------------------------------------------------------------
 function AiAssistantBuilding({ palette }) {
   return (
-    <svg viewBox="0 0 80 100" width="80" height="100">
+    <svg viewBox="0 0 80 100" width="100" height="120">
       <BaseShadow />
       {/* Unconventional shape — twisted / stacked blocks */}
       {/* Lower section — left face */}

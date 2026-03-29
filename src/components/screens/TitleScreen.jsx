@@ -103,8 +103,9 @@ export default function TitleScreen({ onStartGame, highScores }) {
         <IsometricPreview />
 
         <p className="font-serif text-terminal-text max-w-md text-center mb-10 leading-relaxed">
-          You are the CTO of a small European charity. Build your tech stack.
-          Survive the disasters. How many quarters can you last?
+          You&rsquo;ve just been hired as CTO of a small European charity.
+          Your predecessor left three months ago. This is what they left behind.
+          How many quarters can you survive?
         </p>
 
         <div className="flex gap-2 mb-3">

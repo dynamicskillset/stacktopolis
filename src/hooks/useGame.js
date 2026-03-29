@@ -1,22 +1,24 @@
 import { useReducer, useCallback, useEffect, useRef } from 'react'
 import { gameReducer } from '../state/gameReducer'
 import { createInitialState } from '../state/initialState'
+import { useGameClock } from './useGameClock'
 import { playSound } from '../utils/sounds'
 
 export function useGame() {
   const [state, dispatch] = useReducer(gameReducer, null, createInitialState)
   const prevScreen = useRef(state.screen)
-  const prevPhase = useRef(state.phase)
-  const prevStack = useRef(state.stack.length)
+
+  useGameClock(dispatch, state.isPaused || state.screen !== 'playing', state.speed)
 
   const startGame = useCallback((difficulty) => dispatch({ type: 'START_GAME', payload: difficulty }), [])
   const restartGame = useCallback(() => dispatch({ type: 'RESTART_GAME' }), [])
-  const selectTool = useCallback((option) => { playSound('toolSelect'); dispatch({ type: 'SELECT_TOOL', payload: option }) }, [])
-  const acknowledgeEvent = useCallback(() => dispatch({ type: 'ACKNOWLEDGE_EVENT' }), [])
   const migrateTool = useCallback((toolId) => { playSound('click'); dispatch({ type: 'MIGRATE_TOOL', payload: toolId }) }, [])
   const runBackup = useCallback((toolId) => { playSound('click'); dispatch({ type: 'RUN_BACKUP', payload: toolId }) }, [])
   const auditData = useCallback((toolId) => { playSound('click'); dispatch({ type: 'AUDIT_DATA', payload: toolId }) }, [])
-  const endQuarter = useCallback(() => { playSound('endQuarter'); dispatch({ type: 'END_QUARTER' }) }, [])
+  const installTool = useCallback((needId, optionId) => { playSound('toolSelect'); dispatch({ type: 'INSTALL_TOOL', payload: { needId, optionId } }) }, [])
+  const resolveScenario = useCallback((scenarioId, optionIndex) => { playSound('click'); dispatch({ type: 'RESOLVE_SCENARIO', payload: { scenarioId, optionIndex } }) }, [])
+  const togglePause = useCallback(() => dispatch({ type: 'TOGGLE_PAUSE' }), [])
+  const setSpeed = useCallback((s) => dispatch({ type: 'SET_SPEED', payload: s }), [])
   const clearShake = useCallback(() => dispatch({ type: 'CLEAR_SHAKE' }), [])
   const clearFlash = useCallback(() => dispatch({ type: 'CLEAR_FLASH' }), [])
 
@@ -34,23 +36,12 @@ export function useGame() {
     }
   }, [state.flashColour, clearFlash])
 
-  // Sound effects for state transitions
   useEffect(() => {
     if (state.screen === 'gameOver' && prevScreen.current !== 'gameOver') {
       playSound('gameOver')
     }
     prevScreen.current = state.screen
   }, [state.screen])
-
-  useEffect(() => {
-    if (state.phase === 'event' && prevPhase.current !== 'event' && state.currentEvent) {
-      const severity = state.currentEvent.severity
-      if (severity === 'critical') playSound('eventCritical')
-      else if (severity === 'major') playSound('eventMajor')
-      else playSound('eventMinor')
-    }
-    prevPhase.current = state.phase
-  }, [state.phase, state.currentEvent])
 
   // Risk warning sound
   useEffect(() => {
@@ -64,17 +55,49 @@ export function useGame() {
     state.surveillance >= 75,
   ])
 
+  // Colleague arrival/expiry sounds
+  const prevColleagueCount = useRef(state.colleagueQueue?.length || 0)
+  const prevIgnored = useRef(state.ignoredScenarios || 0)
+  useEffect(() => {
+    const count = state.colleagueQueue?.length || 0
+    if (count > prevColleagueCount.current) {
+      playSound('colleagueArrive')
+    }
+    prevColleagueCount.current = count
+  }, [state.colleagueQueue?.length])
+
+  useEffect(() => {
+    const ignored = state.ignoredScenarios || 0
+    if (ignored > prevIgnored.current) {
+      playSound('colleagueExpire')
+    }
+    prevIgnored.current = ignored
+  }, [state.ignoredScenarios])
+
+  // Spacebar to toggle pause
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.code === 'Space' && state.screen === 'playing' && e.target === document.body) {
+        e.preventDefault()
+        togglePause()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [state.screen, togglePause])
+
   return {
     state,
     actions: {
       startGame,
       restartGame,
-      selectTool,
-      acknowledgeEvent,
       migrateTool,
       runBackup,
       auditData,
-      endQuarter,
+      installTool,
+      resolveScenario,
+      togglePause,
+      setSpeed,
       clearShake,
     },
   }
