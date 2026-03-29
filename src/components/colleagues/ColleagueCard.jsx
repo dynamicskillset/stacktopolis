@@ -65,19 +65,71 @@ function ColleagueCard({ scenario, patienceRemaining, patienceTotal, onResolve, 
             </div>
           ) : (
             <div className="space-y-2">
-              {scenario.options.map((option, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setSelectedOption(i)
-                    setTimeout(() => onResolve(scenario.id, i), 1200)
-                  }}
-                  className="w-full text-left px-3 py-2.5 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-amber-glow hover:bg-terminal-surface transition-colors focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2"
-                >
-                  <div className="font-mono text-sm text-terminal-text">{option.label}</div>
-                  <div className="font-serif text-xs text-terminal-muted">{option.description}</div>
-                </button>
-              ))}
+              {scenario.options.map((option, i) => {
+                // Try to extract static effect values for display
+                let impacts = null
+                if (option.effect) {
+                  try {
+                    const result = typeof option.effect === 'function' ? option.effect({}) : option.effect
+                    if (result && typeof result === 'object') {
+                      impacts = result
+                    }
+                  } catch {
+                    // Dynamic effect that needs state — show as unknown
+                    impacts = null
+                  }
+                }
+
+                return (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setSelectedOption(i)
+                      setTimeout(() => onResolve(scenario.id, i), 1200)
+                    }}
+                    className="w-full text-left px-3 py-2.5 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-amber-glow hover:bg-terminal-surface transition-colors focus-visible:outline-2 focus-visible:outline-amber-glow focus-visible:outline-offset-2"
+                  >
+                    <div className="font-mono text-sm text-terminal-text">{option.label}</div>
+                    <div className="font-serif text-xs text-terminal-muted">{option.description}</div>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      {impacts ? (
+                        <>
+                          {impacts.jurisdiction != null && impacts.jurisdiction !== 0 && (
+                            <span className={`font-mono text-xs ${impacts.jurisdiction > 0 ? 'text-risk-jurisdiction' : 'text-green-glow'}`}>
+                              {impacts.jurisdiction > 0 ? '+' : ''}{impacts.jurisdiction} JUR
+                            </span>
+                          )}
+                          {impacts.continuity != null && impacts.continuity !== 0 && (
+                            <span className={`font-mono text-xs ${impacts.continuity > 0 ? 'text-risk-continuity' : 'text-green-glow'}`}>
+                              {impacts.continuity > 0 ? '+' : ''}{impacts.continuity} CON
+                            </span>
+                          )}
+                          {impacts.surveillance != null && impacts.surveillance !== 0 && (
+                            <span className={`font-mono text-xs ${impacts.surveillance > 0 ? 'text-risk-surveillance' : 'text-green-glow'}`}>
+                              {impacts.surveillance > 0 ? '+' : ''}{impacts.surveillance} SUR
+                            </span>
+                          )}
+                          {impacts.budget != null && impacts.budget !== 0 && (
+                            <span className={`font-mono text-xs ${impacts.budget > 0 ? 'text-green-glow' : 'text-danger'}`}>
+                              {impacts.budget > 0 ? '+' : ''}{impacts.budget} budget
+                            </span>
+                          )}
+                          {impacts.morale != null && impacts.morale !== 0 && (
+                            <span className={`font-mono text-xs ${impacts.morale > 0 ? 'text-green-glow' : 'text-danger'}`}>
+                              {impacts.morale > 0 ? '+' : ''}{impacts.morale} morale
+                            </span>
+                          )}
+                          {Object.values(impacts).every(v => v === 0 || v == null) && (
+                            <span className="font-mono text-xs text-terminal-muted">No immediate impact</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="font-mono text-xs text-terminal-muted">Impact: ???</span>
+                      )}
+                    </div>
+                  </button>
+                )
+              })}
             </div>
           )}
         </div>
