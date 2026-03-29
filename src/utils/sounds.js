@@ -1,8 +1,9 @@
 let audioCtx = null
-let muted = true
+let muted = false
 
 try {
-  muted = localStorage.getItem('stacktopolis-muted') !== 'false'
+  const stored = localStorage.getItem('stacktopolis-muted')
+  if (stored !== null) muted = stored === 'true'
 } catch {}
 
 function getCtx() {

@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
 import { isMuted, toggleMute } from '../../utils/sounds'
+import { startMusic, stopMusic, isMusicPlaying } from '../../utils/music'
 
 export default function SoundToggle() {
   const [muted, setMuted] = useState(isMuted)
 
   function handleToggle() {
     toggleMute()
-    setMuted(isMuted())
+    const nowMuted = isMuted()
+    setMuted(nowMuted)
+    if (nowMuted) {
+      stopMusic()
+    } else if (!isMusicPlaying()) {
+      startMusic()
+    }
   }
 
   return (

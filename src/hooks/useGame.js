@@ -2,7 +2,8 @@ import { useReducer, useCallback, useEffect, useRef } from 'react'
 import { gameReducer } from '../state/gameReducer'
 import { createInitialState } from '../state/initialState'
 import { useGameClock } from './useGameClock'
-import { playSound } from '../utils/sounds'
+import { playSound, isMuted } from '../utils/sounds'
+import { startMusic, stopMusic, updateDanger } from '../utils/music'
 
 export function useGame() {
   const [state, dispatch] = useReducer(gameReducer, null, createInitialState)
@@ -40,11 +41,26 @@ export function useGame() {
   }, [state.flashColour, clearFlash])
 
   useEffect(() => {
+    if (state.screen === 'playing' && prevScreen.current !== 'playing') {
+      if (!isMuted()) startMusic()
+    }
     if (state.screen === 'gameOver' && prevScreen.current !== 'gameOver') {
+      stopMusic()
       playSound('gameOver')
+    }
+    if (state.screen === 'title' && prevScreen.current !== 'title') {
+      stopMusic()
     }
     prevScreen.current = state.screen
   }, [state.screen])
+
+  // Update ambient music based on danger level
+  useEffect(() => {
+    if (state.screen === 'playing') {
+      const maxRisk = Math.max(state.jurisdiction, state.continuity, state.surveillance)
+      updateDanger(maxRisk)
+    }
+  }, [state.jurisdiction, state.continuity, state.surveillance, state.screen])
 
   // Risk warning sound
   useEffect(() => {
