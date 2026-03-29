@@ -23,33 +23,33 @@ const TAGLINES = [
 ]
 
 const INTROS = [
-  "You\u2019ve just been hired as CTO of a small European charity. Your predecessor left three months ago. This is what they left behind. How many quarters can you survive?",
-  "Congratulations on your new role as CTO. The previous one left under mysterious circumstances. Something about a subpoena. Anyway, here\u2019s your tech stack.",
+  "You\u2019ve just been hired as CTO of a small European charity. Your predecessor left three months ago. This is what they left behind.",
+  "Congratulations on your new role as CTO. The previous one left under mysterious circumstances. Something about a subpoena.",
   "Welcome aboard. The good news: you\u2019re the new CTO. The bad news: you\u2019re the new CTO. The worse news: look at this tech stack.",
-  "Your predecessor\u2019s final email read: 'I\u2019m sorry. For everything.' You are about to find out what they meant.",
-  "The board hired you because you once fixed a printer. You are now responsible for an entire digital infrastructure. Good luck.",
-  "Day one. The wifi password is the founder\u2019s cat\u2019s name. The root password is taped to the server. The server is under a desk. Welcome.",
+  "Your predecessor\u2019s final email read: \u2018I\u2019m sorry. For everything.\u2019 You are about to find out what they meant.",
+  "The board hired you because you once fixed a printer. You are now responsible for an entire digital infrastructure.",
+  "Day one. The wifi password is the founder\u2019s cat\u2019s name. The root password is taped to the server. The server is under a desk.",
 ]
 
 function HighScoreTable({ scores }) {
   if (!scores || scores.length === 0) return null
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full">
       <div className="flex items-center gap-2 mb-3 justify-center">
         <Trophy className="w-4 h-4 text-amber-glow" />
         <h2 className="font-mono text-xs uppercase tracking-widest text-amber-glow">
           High Scores
         </h2>
       </div>
-      <div className="bg-terminal-surface/90 border border-terminal-border rounded overflow-hidden backdrop-blur-sm">
+      <div className="bg-terminal-bg/80 border border-terminal-border rounded overflow-hidden">
         {scores.slice(0, 5).map((score, i) => (
           <div
             key={i}
-            className="flex items-center justify-between px-4 py-2 border-b border-terminal-border last:border-b-0"
+            className={`flex items-center justify-between px-4 py-2 border-b border-terminal-border last:border-b-0 ${i === 0 ? 'bg-amber-glow/5' : ''}`}
           >
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs text-terminal-muted w-4">{i + 1}.</span>
+              <span className={`font-mono text-xs w-4 ${i === 0 ? 'text-amber-glow' : 'text-terminal-muted'}`}>{i + 1}.</span>
               <span className="font-mono text-sm font-bold text-amber-glow w-10 tracking-widest">
                 {score.initials || '---'}
               </span>
@@ -60,7 +60,7 @@ function HighScoreTable({ scores }) {
                 </span>
               </div>
             </div>
-            <span className="font-mono text-sm font-bold text-amber-glow">{score.totalScore}</span>
+            <span className={`font-mono text-sm font-bold ${i === 0 ? 'text-amber-glow' : 'text-terminal-text'}`}>{score.totalScore}</span>
           </div>
         ))}
       </div>
@@ -68,53 +68,99 @@ function HighScoreTable({ scores }) {
   )
 }
 
-/* Decorative mini city — isometric buildings, one on fire */
-function IsometricPreview() {
+/* Decorative mini city — 5 isometric buildings with drama */
+function CityPreview() {
   return (
-    <svg viewBox="0 0 280 100" width="280" height="100" className="mx-auto mb-6" aria-hidden="true">
-      {/* Ground shadows */}
-      <ellipse cx="60" cy="85" rx="22" ry="6" fill="rgba(0,0,0,0.3)" />
-      <ellipse cx="140" cy="85" rx="22" ry="6" fill="rgba(0,0,0,0.3)" />
-      <ellipse cx="220" cy="85" rx="22" ry="6" fill="rgba(0,0,0,0.3)" />
+    <svg viewBox="0 0 420 110" width="420" height="110" className="mx-auto" aria-hidden="true">
+      {/* Ground line */}
+      <line x1="20" y1="95" x2="400" y2="95" stroke="#1e2a38" strokeWidth="1" opacity="0.5" />
 
-      {/* Building 1 — EU brick, safe */}
-      <polygon points="45,55 60,47 75,55 75,82 60,82 45,82" fill="#8b5e3c" />
-      <polygon points="60,47 75,55 75,82 60,82" fill="#c17f4a" />
-      <polygon points="45,55 60,47 75,55 60,63" fill="#e0a870" />
-      <rect x="50" y="60" width="4" height="4" fill="#ffdd66" opacity="0.5">
+      {/* Building 1 — Small EU brick, safe, gentle glow */}
+      <ellipse cx="60" cy="92" rx="20" ry="5" fill="rgba(0,0,0,0.3)" />
+      <polygon points="45,60 60,52 75,60 75,90 60,90 45,90" fill="#8b5e3c" />
+      <polygon points="60,52 75,60 75,90 60,90" fill="#c17f4a" />
+      <polygon points="45,60 60,52 75,60 60,68" fill="#e0a870" />
+      <rect x="50" y="66" width="4" height="5" fill="#ffdd66" opacity="0.5">
         <animate attributeName="opacity" values="0.5;0.8;0.3;0.6;0.5" dur="5s" repeatCount="indefinite" />
       </rect>
-      <rect x="55" y="68" width="4" height="4" fill="#ffdd66" opacity="0.4">
+      <rect x="65" y="70" width="4" height="5" fill="#ffdd66" opacity="0.4">
         <animate attributeName="opacity" values="0.4;0.7;0.3;0.5;0.4" dur="6s" begin="1s" repeatCount="indefinite" />
       </rect>
 
-      {/* Building 2 — US glass, ON FIRE */}
-      <polygon points="125,40 140,32 155,40 155,82 140,82 125,82" fill="#2c5f8a" />
-      <polygon points="140,32 155,40 155,82 140,82" fill="#4a90d9" />
-      <polygon points="125,40 140,32 155,40 140,48" fill="#8ab4e8" />
+      {/* Building 2 — Tall US glass tower, ON FIRE */}
+      <ellipse cx="150" cy="92" rx="22" ry="5" fill="rgba(0,0,0,0.3)" />
+      <polygon points="132,35 150,25 168,35 168,90 150,90 132,90" fill="#2c5f8a" />
+      <polygon points="150,25 168,35 168,90 150,90" fill="#4a90d9" />
+      <polygon points="132,35 150,25 168,35 150,45" fill="#8ab4e8" />
+      <rect x="138" y="45" width="5" height="6" fill="#ffdd66" opacity="0.3" />
+      <rect x="155" y="50" width="5" height="6" fill="#ffdd66" opacity="0.4" />
+      <rect x="138" y="60" width="5" height="6" fill="#ffdd66" opacity="0.5" />
+      <rect x="155" y="65" width="5" height="6" fill="#ffdd66" opacity="0.3" />
       {/* Fire */}
-      <path d="M140,30 Q134,22 137,14 Q139,10 140,6 Q141,10 143,14 Q146,22 140,30Z" fill="#ff6b00" opacity="0.8">
-        <animate attributeName="d" values="M140,30 Q134,22 137,14 Q139,10 140,6 Q141,10 143,14 Q146,22 140,30Z;M140,30 Q135,24 136,16 Q138,11 140,5 Q142,11 144,16 Q145,24 140,30Z;M140,30 Q134,22 137,14 Q139,10 140,6 Q141,10 143,14 Q146,22 140,30Z" dur="0.4s" repeatCount="indefinite" />
+      <path d="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" fill="#ff6b00" opacity="0.8">
+        <animate attributeName="d" values="M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z;M150,23 Q144,16 145,8 Q147,3 150,-1 Q153,3 155,8 Q156,16 150,23Z;M150,23 Q143,14 146,6 Q148,2 150,-2 Q152,2 154,6 Q157,14 150,23Z" dur="0.4s" repeatCount="indefinite" />
       </path>
-      <path d="M140,30 Q136,24 138,18 Q139,14 140,10 Q141,14 142,18 Q144,24 140,30Z" fill="#ffcc00" opacity="0.9">
-        <animate attributeName="d" values="M140,30 Q136,24 138,18 Q139,14 140,10 Q141,14 142,18 Q144,24 140,30Z;M140,30 Q137,25 139,19 Q140,15 140,11 Q140,15 141,19 Q143,25 140,30Z;M140,30 Q136,24 138,18 Q139,14 140,10 Q141,14 142,18 Q144,24 140,30Z" dur="0.35s" repeatCount="indefinite" />
+      <path d="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" fill="#ffcc00" opacity="0.9">
+        <animate attributeName="d" values="M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z;M150,23 Q146,17 148,11 Q149,7 150,3 Q151,7 152,11 Q154,17 150,23Z;M150,23 Q145,16 147,10 Q149,6 150,2 Q151,6 153,10 Q155,16 150,23Z" dur="0.35s" repeatCount="indefinite" />
       </path>
-      {/* Smoke */}
-      <circle cx="138" cy="10" r="3" fill="#94a7bb" opacity="0.3">
-        <animate attributeName="cy" values="10;0;-8" dur="2.5s" repeatCount="indefinite" />
+      <circle cx="148" cy="2" r="3" fill="#94a7bb" opacity="0.3">
+        <animate attributeName="cy" values="2;-8;-16" dur="2.5s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.3;0.15;0" dur="2.5s" repeatCount="indefinite" />
       </circle>
 
-      {/* Building 3 — Self-hosted green, calm */}
-      <polygon points="205,50 220,42 235,50 235,82 220,82 205,82" fill="#3d5a3d" />
-      <polygon points="220,42 235,50 235,82 220,82" fill="#5a7a5a" />
-      <polygon points="205,50 220,42 235,50 220,58" fill="#7a9a7a" />
-      <rect x="210" y="58" width="4" height="4" fill="#ffdd66" opacity="0.3">
+      {/* Building 3 — Wide self-hosted, calm, biggest */}
+      <ellipse cx="250" cy="92" rx="28" ry="6" fill="rgba(0,0,0,0.3)" />
+      <polygon points="222,45 250,33 278,45 278,90 250,90 222,90" fill="#3d5a3d" />
+      <polygon points="250,33 278,45 278,90 250,90" fill="#5a7a5a" />
+      <polygon points="222,45 250,33 278,45 250,57" fill="#7a9a7a" />
+      <rect x="230" y="55" width="5" height="5" fill="#ffdd66" opacity="0.3">
         <animate attributeName="opacity" values="0.3;0.6;0.2;0.4;0.3" dur="7s" begin="2s" repeatCount="indefinite" />
       </rect>
-      <rect x="225" y="62" width="4" height="4" fill="#ffdd66" opacity="0.4">
+      <rect x="240" y="65" width="5" height="5" fill="#ffdd66" opacity="0.4">
         <animate attributeName="opacity" values="0.4;0.2;0.5;0.3;0.4" dur="5.5s" repeatCount="indefinite" />
       </rect>
+      <rect x="260" y="58" width="5" height="5" fill="#ffdd66" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.3;0.6;0.4;0.5" dur="6s" begin="1s" repeatCount="indefinite" />
+      </rect>
+      <rect x="265" y="72" width="5" height="5" fill="#ffdd66" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.5;0.2;0.6;0.3" dur="8s" begin="3s" repeatCount="indefinite" />
+      </rect>
+
+      {/* Building 4 — EU with camera (surveillance) */}
+      <ellipse cx="340" cy="92" rx="18" ry="5" fill="rgba(0,0,0,0.3)" />
+      <polygon points="325,55 340,47 355,55 355,90 340,90 325,90" fill="#8b5e3c" />
+      <polygon points="340,47 355,55 355,90 340,90" fill="#c17f4a" />
+      <polygon points="325,55 340,47 355,55 340,63" fill="#e0a870" />
+      <rect x="330" y="62" width="4" height="5" fill="#ffdd66" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.7;0.3;0.5;0.4" dur="5s" begin="0.5s" repeatCount="indefinite" />
+      </rect>
+      {/* Surveillance camera */}
+      <rect x="356" y="52" width="6" height="4" rx="1" fill="#555" />
+      <circle cx="362" cy="54" r="1.5" fill="#333" />
+      <circle cx="358" cy="53" r="0.8" fill="#ef4444">
+        <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
+      </circle>
+
+      {/* Tiny police car between buildings */}
+      <g>
+        <polygon points="96,88 104,84 112,88 112,92 96,92" fill="#1a2848" />
+        <circle cx="100" cy="85" r="1" fill="#3b82f6">
+          <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="108" cy="85" r="1" fill="#ef4444">
+          <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite" />
+        </circle>
+      </g>
+
+      {/* Tiny running person */}
+      <g opacity="0.5">
+        <circle cx="195" cy="84" r="1.5" fill="#dce3eb" />
+        <line x1="195" y1="86" x2="195" y2="90" stroke="#dce3eb" strokeWidth="0.8" />
+        <line x1="195" y1="90" x2="193" y2="93" stroke="#dce3eb" strokeWidth="0.8">
+          <animate attributeName="x2" values="193;197;193" dur="0.3s" repeatCount="indefinite" />
+        </line>
+        <animate attributeName="transform" type="translate" values="0,0;30,0;0,0" dur="3s" repeatCount="indefinite" />
+      </g>
     </svg>
   )
 }
@@ -126,79 +172,83 @@ export default function TitleScreen({ onStartGame, highScores }) {
   const tagline = useMemo(() => TAGLINES[Math.floor(Math.random() * TAGLINES.length)], [])
   const intro = useMemo(() => INTROS[Math.floor(Math.random() * INTROS.length)], [])
 
-  const hasScores = highScores && highScores.length > 0
-
   return (
-    <div className="min-h-screen relative flex flex-col items-center justify-center p-8 animate-fade-in crt-scanlines"
+    <div className="min-h-screen relative flex flex-col items-center justify-center p-6 animate-fade-in crt-scanlines"
       style={{ backgroundColor: '#0a0e14' }}
     >
       <Skyline dangerLevel={0} />
 
-      <div className="flex-1 flex items-center justify-center relative z-10 w-full max-w-5xl">
-        <div className={`flex ${hasScores ? 'gap-12 items-start' : 'flex-col items-center'}`}>
-          {/* Left: Game info + New Game */}
-          <div className="flex flex-col items-center text-center">
-            <Shield className="w-16 h-16 text-amber-glow mb-6" />
+      <div className="flex-1 flex items-center justify-center relative z-10 w-full">
+        <div className="w-full max-w-2xl flex flex-col items-center text-center">
 
+          {/* Header: shield + title + tagline */}
+          <div className="mb-6">
+            <Shield className="w-12 h-12 text-amber-glow mx-auto mb-4" />
             <h1 className="font-mono text-5xl font-bold text-amber-glow tracking-widest mb-1">
               STACKTOPOLIS
             </h1>
-            <span className="font-mono text-xs text-terminal-muted tracking-wider mb-3">v3.0.0</span>
-
-            <p className="font-serif text-lg text-terminal-muted italic mb-6">
-              {tagline}
-            </p>
-
-            <div className="flex gap-6 justify-center text-sm font-mono uppercase tracking-wider mb-6">
-              <span className="text-risk-jurisdiction">Jurisdiction</span>
-              <span className="text-risk-continuity">Continuity</span>
-              <span className="text-risk-surveillance">Surveillance</span>
-            </div>
-
-            <IsometricPreview />
-
-            <p className="font-serif text-terminal-text max-w-md text-center mb-8 leading-relaxed">
-              {intro}
-            </p>
-
-            <div className="flex gap-2 mb-3">
-              {DIFFICULTY_KEYS.map((key) => {
-                const diff = DIFFICULTIES[key]
-                const isSelected = key === selectedDifficulty
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setSelectedDifficulty(key)}
-                    className={`px-4 py-2 min-h-[44px] font-mono text-sm uppercase tracking-wider rounded transition-colors ${
-                      isSelected
-                        ? 'bg-amber-glow text-terminal-bg'
-                        : 'bg-terminal-surface text-terminal-muted border border-terminal-border hover:text-terminal-text'
-                    }`}
-                  >
-                    {diff.label}
-                  </button>
-                )
-              })}
-            </div>
-
-            <p className="font-serif text-sm text-terminal-muted italic mb-6">
-              {DIFFICULTIES[selectedDifficulty].description}
-            </p>
-
-            <Button
-              onClick={() => onStartGame(selectedDifficulty)}
-              className="px-8 py-3 text-base"
-            >
-              New Game
-            </Button>
+            <span className="font-mono text-xs text-terminal-muted tracking-wider">v3.0.0</span>
           </div>
 
-          {/* Right: High Scores (only if scores exist) */}
-          {hasScores && <HighScoreTable scores={highScores} />}
+          <p className="font-serif text-lg text-terminal-muted italic mb-4">
+            {tagline}
+          </p>
+
+          <div className="flex gap-6 justify-center text-xs font-mono uppercase tracking-wider mb-5">
+            <span className="text-risk-jurisdiction">Jurisdiction</span>
+            <span className="text-risk-continuity">Continuity</span>
+            <span className="text-risk-surveillance">Surveillance</span>
+          </div>
+
+          {/* City preview — wide, dramatic */}
+          <div className="w-full mb-5">
+            <CityPreview />
+          </div>
+
+          {/* Intro text */}
+          <p className="font-serif text-terminal-text max-w-lg text-center mb-6 leading-relaxed">
+            {intro}
+          </p>
+
+          {/* Difficulty + Start — compact row */}
+          <div className="flex items-center gap-4 mb-2">
+            {DIFFICULTY_KEYS.map((key) => {
+              const diff = DIFFICULTIES[key]
+              const isSelected = key === selectedDifficulty
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedDifficulty(key)}
+                  className={`px-4 py-2 min-h-[44px] font-mono text-sm uppercase tracking-wider rounded transition-colors ${
+                    isSelected
+                      ? 'bg-amber-glow text-terminal-bg'
+                      : 'bg-terminal-surface text-terminal-muted border border-terminal-border hover:text-terminal-text'
+                  }`}
+                >
+                  {diff.label}
+                </button>
+              )
+            })}
+          </div>
+          <p className="font-serif text-sm text-terminal-muted italic mb-5">
+            {DIFFICULTIES[selectedDifficulty].description}
+          </p>
+
+          <Button
+            onClick={() => onStartGame(selectedDifficulty)}
+            className="px-10 py-3 text-base mb-8"
+          >
+            New Game
+          </Button>
+
+          {/* High scores — full width below button */}
+          <div className="w-full max-w-md">
+            <HighScoreTable scores={highScores} />
+          </div>
         </div>
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Attribution />
       </div>
     </div>
