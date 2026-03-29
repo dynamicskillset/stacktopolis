@@ -6,7 +6,7 @@ import GaugeDial from '../city/GaugeDial'
 import Skyline from '../city/Skyline'
 import InitialsEntry from '../ui/InitialsEntry'
 
-const MAX_HIGH_SCORES = 20
+const MAX_HIGH_SCORES = 10
 
 export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scoreSubmitted, existingScores = [] }) {
   const score = calculateScore(state)
