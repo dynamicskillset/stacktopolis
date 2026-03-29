@@ -124,13 +124,13 @@ export default function GuidedTour({ onComplete }) {
         <div className="flex items-center justify-between">
           <button
             onClick={skip}
-            className="font-mono text-xs text-terminal-muted hover:text-terminal-text transition-colors"
+            className="font-mono text-xs text-terminal-muted hover:text-terminal-text transition-colors focus-visible:outline-2 focus-visible:outline-terminal-text focus-visible:outline-offset-2 rounded"
           >
             Skip tour
           </button>
           <button
             onClick={next}
-            className="font-mono text-sm text-terminal-bg bg-amber-glow px-4 py-2 min-h-[36px] rounded hover:bg-amber-glow/90 transition-colors"
+            className="font-mono text-sm text-white bg-amber-glow px-4 py-2 min-h-[36px] rounded hover:bg-amber-glow/90 transition-colors focus-visible:outline-2 focus-visible:outline-terminal-text focus-visible:outline-offset-2"
           >
             {step < STEPS.length - 1 ? 'Next' : 'Start Playing'}
           </button>

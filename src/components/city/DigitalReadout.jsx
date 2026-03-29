@@ -15,7 +15,7 @@ export default function DigitalReadout({ value, label, colour, icon: Icon, onCli
 
   return (
     <div
-      className={`flex flex-col items-center gap-1 ${onClick ? 'cursor-pointer hover:scale-105 transition-transform' : ''}`}
+      className={`flex flex-col items-center gap-1 ${onClick ? 'cursor-pointer hover:scale-105 transition-transform focus-visible:outline-2 focus-visible:outline-terminal-text focus-visible:outline-offset-2 rounded' : ''}`}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
