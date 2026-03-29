@@ -108,8 +108,11 @@ export default function GameScreen({ state, actions }) {
           <Advisor line={advisorLine} />
         </section>
 
-        {/* Right column: Colleague queue */}
+        {/* Right column: Advice panel + Colleague queue */}
         <section className="lg:col-span-2 min-h-0 flex flex-col gap-3 overflow-y-auto" aria-label="Colleague interactions">
+          {activeAdvice && (
+            <AdvicePanel metric={activeAdvice} onClose={() => setActiveAdvice(null)} />
+          )}
           <ColleagueQueue
             queue={state.colleagueQueue}
             gameTime={state.gameTime}
@@ -133,7 +136,6 @@ export default function GameScreen({ state, actions }) {
         onClickMetric={handleClickMetric}
       />
 
-      {activeAdvice && <AdvicePanel metric={activeAdvice} onClose={() => setActiveAdvice(null)} />}
       {state.isPaused && <PauseOverlay onResume={actions.togglePause} />}
     </div>
   )

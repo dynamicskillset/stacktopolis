@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 const ADVICE = {
@@ -58,43 +57,31 @@ export default function AdvicePanel({ metric, onClose }) {
   const advice = ADVICE[metric]
   if (!advice) return null
 
-  return createPortal(
-    <div
-      className="fixed inset-0"
-      style={{ zIndex: 9999 }}
-      onClick={onClose}
-    >
-      <div
-        className="absolute bottom-24 left-0 right-0 px-4 pb-2 animate-slide-up"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="bg-terminal-surface border border-terminal-border rounded-lg p-4 max-w-2xl mx-auto" style={{ boxShadow: '0 -4px 24px rgba(0,0,0,0.6)' }}>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className={`font-mono text-sm font-bold uppercase tracking-wider ${advice.colour}`}>
-              {advice.title}
-            </h3>
-            <button
-              onClick={onClose}
-              className="p-1 min-w-[32px] min-h-[32px] flex items-center justify-center text-terminal-muted hover:text-terminal-text"
-              aria-label="Close advice"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="space-y-2">
-            {advice.tips.map((tip, i) => (
-              <div key={i} className={`border-l-2 ${advice.border} pl-3 py-1`}>
-                <div className="font-mono text-xs font-semibold text-terminal-text">{tip.action}</div>
-                <div className="font-serif text-xs text-terminal-muted">{tip.detail}</div>
-                {tip.cost && (
-                  <div className="font-mono text-xs text-terminal-muted mt-0.5">Cost: {tip.cost}</div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+  return (
+    <div className="bg-terminal-surface border border-terminal-border rounded-lg p-4 animate-fade-in">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className={`font-mono text-sm font-bold uppercase tracking-wider ${advice.colour}`}>
+          {advice.title}
+        </h3>
+        <button
+          onClick={onClose}
+          className="p-1.5 min-w-[36px] min-h-[36px] flex items-center justify-center text-terminal-muted hover:text-terminal-text transition-colors"
+          aria-label="Close advice"
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
-    </div>,
-    document.body
+      <div className="space-y-2">
+        {advice.tips.map((tip, i) => (
+          <div key={i} className={`border-l-2 ${advice.border} pl-3 py-1`}>
+            <div className="font-mono text-xs font-semibold text-terminal-text">{tip.action}</div>
+            <div className="font-serif text-xs text-terminal-muted">{tip.detail}</div>
+            {tip.cost && (
+              <div className="font-mono text-xs text-terminal-muted mt-0.5">Cost: {tip.cost}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
