@@ -135,7 +135,7 @@ export default function InitialsEntry({ onSubmit }) {
       </div>
 
       {!submitted && (
-        <div className="space-y-2">
+        <div className="space-y-2 mb-6">
           <button
             onClick={submit}
             className="font-mono text-sm text-amber-glow hover:text-terminal-text transition-colors px-4 py-2 min-h-[44px] border border-amber-glow/40 rounded hover:bg-amber-glow/10"

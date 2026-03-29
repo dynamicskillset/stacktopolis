@@ -35,7 +35,7 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
 
       {/* TechFreedom banner — top of page */}
       <div className="w-full max-w-2xl relative z-10 mb-4 px-4 py-3 rounded-lg bg-risk-surveillance/10 border border-risk-surveillance/30 text-center animate-fade-in">
-        <span className="font-serif text-sm text-terminal-text">If any of this felt uncomfortably familiar, it was meant to. </span>
+        <p className="font-serif text-sm text-terminal-text mb-1">If any of this felt uncomfortably familiar, it was meant to.</p>
         <a
           href="https://techfreedom.eu"
           target="_blank"
