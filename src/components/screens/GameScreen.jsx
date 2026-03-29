@@ -166,21 +166,37 @@ export default function GameScreen({ state, actions }) {
           <span className="font-bold">Click empty plot</span> install &nbsp;&middot;&nbsp;
           <span className="font-bold">Click gauge</span> advice
         </p>
-        {(() => {
-          const currentYear = Math.floor((state.quarter - 1) / 4) + 1
-          const usedThisYear = state.lastFundraiserYear >= currentYear
-          const canAfford = state.morale >= 8
-          return (
-            <button
-              onClick={actions.runFundraiser}
-              disabled={!canAfford || usedThisYear}
-              className="font-mono text-xs px-3 py-1.5 rounded border border-green-glow/40 text-green-glow hover:bg-green-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
-              title={usedThisYear ? 'Already used this year' : ''}
-            >
-              {usedThisYear ? 'Fundraiser used (1/year)' : 'Run Fundraiser (−8 morale, +12 budget)'}
-            </button>
-          )
-        })()}
+        <div className="flex items-center gap-2">
+          {(() => {
+            const currentYear = Math.floor((state.quarter - 1) / 4) + 1
+            const usedThisYear = state.lastFundraiserYear >= currentYear
+            const canAfford = state.morale >= 8
+            return (
+              <button
+                onClick={actions.runFundraiser}
+                disabled={!canAfford || usedThisYear}
+                className="font-mono text-xs px-3 py-1.5 rounded border border-green-glow/40 text-green-glow hover:bg-green-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+                title={usedThisYear ? 'Already used this year' : ''}
+              >
+                {usedThisYear ? 'Fundraiser used (1/yr)' : 'Fundraiser (−8 morale, +12 budget)'}
+              </button>
+            )
+          })()}
+          {(() => {
+            const cooldown = state.quarter - (state.lastPizzaPartyQuarter || 0) < 2
+            const canAfford = state.budget >= 8
+            return (
+              <button
+                onClick={actions.pizzaParty}
+                disabled={!canAfford || cooldown}
+                className="font-mono text-xs px-3 py-1.5 rounded border border-amber-glow/40 text-amber-glow hover:bg-amber-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+                title={cooldown ? 'Available every other quarter' : ''}
+              >
+                {cooldown ? 'Pizza party (cooldown)' : 'Pizza Party (−8 budget, +10 morale)'}
+              </button>
+            )
+          })()}
+        </div>
       </div>
 
       <ControlPanel

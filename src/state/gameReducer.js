@@ -185,6 +185,17 @@ export function gameReducer(state, action) {
       }
     }
 
+    case 'PIZZA_PARTY': {
+      if (state.budget < TUNING.pizzaPartyBudgetCost) return state
+      if (state.quarter - state.lastPizzaPartyQuarter < 2) return state
+      return {
+        ...state,
+        morale: clamp(state.morale + TUNING.pizzaPartyMoraleGain),
+        budget: clamp(state.budget - TUNING.pizzaPartyBudgetCost),
+        lastPizzaPartyQuarter: state.quarter,
+      }
+    }
+
     case 'DOWNGRADE_TOOL': {
       const toolId = action.payload
       const tool = state.stack.find(t => t.id === toolId)

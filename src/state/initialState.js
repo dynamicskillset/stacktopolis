@@ -51,6 +51,8 @@ export const TUNING = {
   auditReduction: 8,
   fundraiserMoraleCost: 8,
   fundraiserBudgetGain: 12,
+  pizzaPartyBudgetCost: 8,
+  pizzaPartyMoraleGain: 10,
   riskWarningThreshold: 50,
   riskDangerThreshold: 75,
   // Game clock
@@ -174,6 +176,7 @@ export function createInitialState(difficulty = 'normal') {
 
     // Colleague system
     lastFundraiserYear: 0,
+    lastPizzaPartyQuarter: 0,
     colleagueQueue: [],
     nextColleagueAt: TUNING.firstColleagueDelay,
     scenarioHistory: [],
