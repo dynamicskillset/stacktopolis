@@ -156,22 +156,25 @@ function CityPreview() {
         </circle>
       </g>
 
-      {/* Tiny running person */}
-      <g opacity="0.5">
-        <circle cx="195" cy="84" r="1.5" fill="#1A2332" />
-        <line x1="195" y1="86" x2="195" y2="90" stroke="#1A2332" strokeWidth="0.8" />
-        <line x1="195" y1="90" x2="193" y2="93" stroke="#1A2332" strokeWidth="0.8">
-          <animate attributeName="x2" values="193;197;193" dur="0.3s" repeatCount="indefinite" />
+      {/* Tiny person running across the scene */}
+      <g opacity="0.4">
+        <circle cx="10" cy="84" r="1.5" fill="#1A2332" />
+        <line x1="10" y1="86" x2="10" y2="90" stroke="#1A2332" strokeWidth="0.8" />
+        <line x1="10" y1="90" x2="8" y2="93" stroke="#1A2332" strokeWidth="0.8">
+          <animate attributeName="x2" values="8;12;8" dur="0.3s" repeatCount="indefinite" />
         </line>
-        <animate attributeName="transform" type="translate" values="0,0;30,0;0,0" dur="3s" repeatCount="indefinite" />
+        <line x1="10" y1="90" x2="12" y2="93" stroke="#1A2332" strokeWidth="0.8">
+          <animate attributeName="x2" values="12;8;12" dur="0.3s" repeatCount="indefinite" />
+        </line>
+        <animateTransform attributeName="transform" type="translate" values="-20,0;440,0" dur="12s" repeatCount="indefinite" />
       </g>
 
       {/* Fire truck — sequenced: drive in (0-4s), spray (4-12s), drive off (12-16s), reset (16-20s) */}
       <g>
         {/* Truck movement: offscreen → park → park → drive off → offscreen. 20s loop */}
         <animateTransform attributeName="transform" type="translate"
-          values="-40,0;100,0;100,0;100,0;300,0;-40,0"
-          keyTimes="0;0.2;0.3;0.6;0.75;1"
+          values="-40,0;100,0;100,0;100,0;460,0;-40,0"
+          keyTimes="0;0.2;0.3;0.6;0.8;1"
           dur="20s" repeatCount="indefinite" />
 
         <polygon points="4,86 14,82 24,86 24,92 4,92" fill="#C62828" />
