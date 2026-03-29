@@ -104,17 +104,6 @@ export default function BuildingInspector({ tool, onClose, actions, budget, mora
 
         <div className="border-t border-terminal-border pt-2 mt-1">
           <button
-            onClick={() => { actions.runFundraiser(); onClose() }}
-            disabled={morale < TUNING.fundraiserMoraleCost}
-            className="w-full text-left px-3 py-2 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-green-glow transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <div className="font-mono text-xs font-semibold text-terminal-text">Run Fundraiser</div>
-            <div className="font-mono text-xs text-terminal-muted">
-              Cost: {TUNING.fundraiserMoraleCost} morale. Gains {TUNING.fundraiserBudgetGain} budget.
-            </div>
-          </button>
-
-          <button
             onClick={() => { actions.downgradeTool(tool.id); onClose() }}
             className="w-full text-left px-3 py-2 min-h-[44px] rounded border border-terminal-border bg-terminal-bg hover:border-danger transition-colors mt-2"
           >

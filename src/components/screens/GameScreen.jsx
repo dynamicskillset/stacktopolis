@@ -158,14 +158,21 @@ export default function GameScreen({ state, actions }) {
         </section>
       </main>
 
-      {/* Tips bar — fills empty space above control panel */}
-      <div className="relative z-10 px-4 py-2 text-center border-t border-terminal-border bg-terminal-bg/50">
+      {/* Tips bar + fundraiser action */}
+      <div className="relative z-10 px-4 py-2 flex items-center justify-between border-t border-terminal-border bg-terminal-bg/50">
         <p className="font-mono text-xs text-terminal-muted">
           <span className="font-bold">Space</span> pause &nbsp;&middot;&nbsp;
           <span className="font-bold">Click building</span> inspect &nbsp;&middot;&nbsp;
-          <span className="font-bold">Click empty plot</span> install tool &nbsp;&middot;&nbsp;
-          <span className="font-bold">Click gauge</span> get advice
+          <span className="font-bold">Click empty plot</span> install &nbsp;&middot;&nbsp;
+          <span className="font-bold">Click gauge</span> advice
         </p>
+        <button
+          onClick={actions.runFundraiser}
+          disabled={state.morale < 8}
+          className="font-mono text-xs px-3 py-1.5 rounded border border-green-glow/40 text-green-glow hover:bg-green-glow/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+        >
+          Run Fundraiser (−8 morale, +12 budget)
+        </button>
       </div>
 
       <ControlPanel

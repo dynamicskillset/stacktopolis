@@ -20,6 +20,19 @@ export default function FireEngine() {
       {/* Wheels */}
       <circle cx="11" cy="18" r="2" fill="#2d3748" />
       <circle cx="29" cy="18" r="2" fill="#2d3748" />
+      {/* Water spray — arcing from hose on top */}
+      <path d="M14,3 Q20,-8 30,-5" fill="none" stroke="#2B6AB0" strokeWidth="1" opacity="0.5">
+        <animate attributeName="d" values="M14,3 Q20,-8 30,-5;M14,3 Q22,-10 32,-3;M14,3 Q18,-6 28,-7;M14,3 Q20,-8 30,-5" dur="1.5s" repeatCount="indefinite" />
+      </path>
+      {/* Water droplets */}
+      <circle cx="28" cy="-4" r="1" fill="#2B6AB0" opacity="0.3">
+        <animate attributeName="cy" values="-4;2;8" dur="0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.3;0.2;0" dur="0.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="31" cy="-2" r="0.8" fill="#2B6AB0" opacity="0.25">
+        <animate attributeName="cy" values="-2;4;10" dur="0.9s" begin="0.3s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.25;0.15;0" dur="0.9s" begin="0.3s" repeatCount="indefinite" />
+      </circle>
       {/* Drive in and park */}
       <animateTransform attributeName="transform" type="translate" values="-50,0;200,0" dur="6s" fill="freeze" />
     </svg>
