@@ -30,8 +30,21 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
   }
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 animate-fade-in crt-scanlines bg-terminal-bg">
+    <div className="min-h-screen relative flex flex-col items-center justify-center p-4 animate-fade-in crt-scanlines bg-terminal-bg">
       <Skyline dangerLevel={100} />
+
+      {/* TechFreedom banner — top of page */}
+      <div className="w-full max-w-2xl relative z-10 mb-4 px-4 py-3 rounded-lg bg-risk-surveillance/10 border border-risk-surveillance/30 text-center animate-fade-in">
+        <span className="font-serif text-sm text-terminal-text">If any of this felt uncomfortably familiar, it was meant to. </span>
+        <a
+          href="https://techfreedom.eu"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-sm font-bold text-risk-surveillance underline hover:text-terminal-text transition-colors"
+        >
+          Assess your real tech stack at TechFreedom.eu
+        </a>
+      </div>
 
       <div className="w-full max-w-2xl bg-terminal-surface/95 border border-terminal-border rounded p-8 relative z-10 backdrop-blur-sm">
         {/* Newspaper masthead */}
@@ -148,25 +161,7 @@ export default function GameOverScreen({ state, onPlayAgain, onSubmitScore, scor
           )}
         </div>
 
-        {/* TechFreedom CTA */}
-        <div
-          className="mt-6 p-4 rounded-lg border border-risk-surveillance/30 bg-risk-surveillance/5 text-center animate-slide-up"
-          style={{ animationDelay: '500ms' }}
-        >
-          <p className="font-serif text-sm text-terminal-text leading-relaxed mb-3">
-            If any of this felt uncomfortably familiar, it was meant to.
-          </p>
-          <a
-            href="https://techfreedom.eu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block font-mono text-sm font-bold text-risk-surveillance underline hover:text-terminal-text transition-colors"
-          >
-            Assess your real tech stack at TechFreedom.eu
-          </a>
-        </div>
-
-        <div style={{ animationDelay: '600ms' }} className="animate-slide-up">
+        <div style={{ animationDelay: '500ms' }} className="animate-slide-up">
           <Attribution />
         </div>
       </div>

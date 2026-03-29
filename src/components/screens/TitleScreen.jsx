@@ -155,12 +155,39 @@ function CityPreview() {
 
       {/* Tiny running person */}
       <g opacity="0.5">
-        <circle cx="195" cy="84" r="1.5" fill="#dce3eb" />
-        <line x1="195" y1="86" x2="195" y2="90" stroke="#dce3eb" strokeWidth="0.8" />
-        <line x1="195" y1="90" x2="193" y2="93" stroke="#dce3eb" strokeWidth="0.8">
+        <circle cx="195" cy="84" r="1.5" fill="#1A2332" />
+        <line x1="195" y1="86" x2="195" y2="90" stroke="#1A2332" strokeWidth="0.8" />
+        <line x1="195" y1="90" x2="193" y2="93" stroke="#1A2332" strokeWidth="0.8">
           <animate attributeName="x2" values="193;197;193" dur="0.3s" repeatCount="indefinite" />
         </line>
         <animate attributeName="transform" type="translate" values="0,0;30,0;0,0" dur="3s" repeatCount="indefinite" />
+      </g>
+
+      {/* Fire truck driving toward the burning building */}
+      <g>
+        <polygon points="4,86 14,82 24,86 24,92 4,92" fill="#C62828" />
+        <polygon points="4,86 4,84 14,80 14,82" fill="#991f1f" />
+        <polygon points="14,80 24,84 24,86 14,82" fill="#C62828" />
+        {/* Ladder */}
+        <rect x="8" y="81" width="10" height="1" rx="0.2" fill="#8B7A2F" />
+        {/* Flashing light */}
+        <circle cx="8" cy="81" r="1" fill="#B85400">
+          <animate attributeName="opacity" values="1;0.2;1" dur="0.6s" repeatCount="indefinite" />
+        </circle>
+        {/* Wheels */}
+        <circle cx="8" cy="92" r="1.5" fill="#2d3748" />
+        <circle cx="20" cy="92" r="1.5" fill="#2d3748" />
+        {/* Water spray arc toward building */}
+        <path d="M14,80 Q25,68 38,72" fill="none" stroke="#2B6AB0" strokeWidth="0.8" opacity="0.4">
+          <animate attributeName="d" values="M14,80 Q25,68 38,72;M14,80 Q27,66 40,70;M14,80 Q25,68 38,72" dur="1.2s" repeatCount="indefinite" />
+        </path>
+        {/* Droplets */}
+        <circle cx="36" cy="73" r="0.6" fill="#2B6AB0" opacity="0.3">
+          <animate attributeName="cy" values="73;78;84" dur="0.7s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.3;0.15;0" dur="0.7s" repeatCount="indefinite" />
+        </circle>
+        {/* Drive in from left and park */}
+        <animateTransform attributeName="transform" type="translate" values="-30,0;100,0" dur="4s" fill="freeze" />
       </g>
     </svg>
   )
