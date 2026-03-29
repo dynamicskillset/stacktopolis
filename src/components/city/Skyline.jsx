@@ -1,23 +1,15 @@
 import { useMemo } from 'react'
 
-function getSkyGradient(dangerLevel, isLight) {
-  if (isLight) {
-    if (dangerLevel < 20) return 'linear-gradient(180deg, #c8ddf0 0%, #dce8f2 40%, #e8eff5 100%)'
-    if (dangerLevel < 40) return 'linear-gradient(180deg, #c0d0e0 0%, #d5dde8 40%, #e0e5ea 100%)'
-    if (dangerLevel < 60) return 'linear-gradient(180deg, #d0c0b8 0%, #ddd0c8 40%, #e5dcd5 100%)'
-    if (dangerLevel < 80) return 'linear-gradient(180deg, #d8b8a8 0%, #e0c0b0 40%, #e8c8b8 100%)'
-    return 'linear-gradient(180deg, #d8a8a0 0%, #e0b0a8 40%, #e8b8b0 100%)'
-  }
-  if (dangerLevel < 20) return 'linear-gradient(180deg, #0a1628 0%, #0f1d2d 40%, #162a3a 100%)'
-  if (dangerLevel < 40) return 'linear-gradient(180deg, #0f1525 0%, #1a2030 40%, #1f2a35 100%)'
-  if (dangerLevel < 60) return 'linear-gradient(180deg, #1a1520 0%, #25181e 40%, #2a1a1a 100%)'
-  if (dangerLevel < 80) return 'linear-gradient(180deg, #1f1015 0%, #301518 40%, #3a1515 100%)'
-  return 'linear-gradient(180deg, #250a0a 0%, #3a0f0f 40%, #451212 100%)'
+function getSkyGradient(dangerLevel) {
+  if (dangerLevel < 20) return 'linear-gradient(180deg, #c8ddf0 0%, #dce8f2 40%, #e8eff5 100%)'
+  if (dangerLevel < 40) return 'linear-gradient(180deg, #c0d0e0 0%, #d5dde8 40%, #e0e5ea 100%)'
+  if (dangerLevel < 60) return 'linear-gradient(180deg, #d0c0b8 0%, #ddd0c8 40%, #e5dcd5 100%)'
+  if (dangerLevel < 80) return 'linear-gradient(180deg, #d8b8a8 0%, #e0c0b0 40%, #e8c8b8 100%)'
+  return 'linear-gradient(180deg, #d8a8a0 0%, #e0b0a8 40%, #e8b8b0 100%)'
 }
 
 export default function Skyline({ dangerLevel = 0 }) {
-  const isLight = typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'light'
-  const skyGradient = useMemo(() => getSkyGradient(dangerLevel, isLight), [dangerLevel, isLight])
+  const skyGradient = useMemo(() => getSkyGradient(dangerLevel), [dangerLevel])
   const stormOpacity = Math.min(1, Math.max(0, (dangerLevel - 50) / 50))
 
   return (
@@ -52,13 +44,13 @@ export default function Skyline({ dangerLevel = 0 }) {
         }}
       >
         <svg viewBox="0 0 1200 80" width="2400" height="80" className="opacity-40">
-          <ellipse cx="100" cy="50" rx="80" ry="25" fill="#3a4a5c" />
-          <ellipse cx="160" cy="45" rx="60" ry="20" fill="#3a4a5c" />
-          <ellipse cx="400" cy="55" rx="90" ry="22" fill="#3a4a5c" />
-          <ellipse cx="470" cy="48" rx="50" ry="18" fill="#3a4a5c" />
-          <ellipse cx="700" cy="52" rx="70" ry="24" fill="#3a4a5c" />
-          <ellipse cx="950" cy="48" rx="85" ry="20" fill="#3a4a5c" />
-          <ellipse cx="1020" cy="55" rx="55" ry="22" fill="#3a4a5c" />
+          <ellipse cx="100" cy="50" rx="80" ry="25" fill="#FFFFFF" />
+          <ellipse cx="160" cy="45" rx="60" ry="20" fill="#FFFFFF" />
+          <ellipse cx="400" cy="55" rx="90" ry="22" fill="#FFFFFF" />
+          <ellipse cx="470" cy="48" rx="50" ry="18" fill="#FFFFFF" />
+          <ellipse cx="700" cy="52" rx="70" ry="24" fill="#FFFFFF" />
+          <ellipse cx="950" cy="48" rx="85" ry="20" fill="#FFFFFF" />
+          <ellipse cx="1020" cy="55" rx="55" ry="22" fill="#FFFFFF" />
         </svg>
       </div>
 
@@ -71,8 +63,8 @@ export default function Skyline({ dangerLevel = 0 }) {
       >
         <defs>
           <linearGradient id="skyline-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1e2a38" />
-            <stop offset="100%" stopColor="#111820" />
+            <stop offset="0%" stopColor="#c0c8d0" />
+            <stop offset="100%" stopColor="#a8b0b8" />
           </linearGradient>
         </defs>
         {/* City silhouette */}
@@ -102,7 +94,7 @@ export default function Skyline({ dangerLevel = 0 }) {
             y={80 + (i * 17) % 100}
             width="2"
             height="3"
-            fill="#ffb000"
+            fill="#D4A843"
             opacity={0.2 + (i % 4) * 0.15}
           />
         ))}

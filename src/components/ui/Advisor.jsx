@@ -7,7 +7,7 @@ function CassandraAvatar() {
   return (
     <svg viewBox="-4 -4 56 64" width="72" height="84" className="shrink-0" aria-hidden="true">
       {/* Background circle for visibility */}
-      <circle cx="24" cy="26" r="28" fill="#1a2030" stroke="#ffb000" strokeWidth="0.5" opacity="0.9" />
+      <circle cx="24" cy="26" r="28" fill="#E8E5DD" stroke="#D4A843" strokeWidth="0.5" opacity="0.9" />
       {/* Curly/coily hair — bigger, more textured */}
       <ellipse cx="24" cy="14" rx="15" ry="13" fill="#3a2a1a" />
       <circle cx="11" cy="12" r="5" fill="#3a2a1a" />
@@ -113,7 +113,7 @@ export default function Advisor({ line }) {
     : ''
 
   return (
-    <div className={`w-full bg-terminal-bg/95 border border-amber-glow/30 rounded-lg px-5 py-4 mt-3 flex items-start gap-5 backdrop-blur-sm ${animClass}`} style={{ boxShadow: '0 0 12px rgba(255, 176, 0, 0.1)' }}>
+    <div className={`w-full bg-terminal-surface border border-terminal-border rounded-lg px-5 py-4 mt-3 flex items-start gap-5 backdrop-blur-sm ${animClass}`} style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' }}>
       <div className="shrink-0 flex flex-col items-center gap-1.5">
         <CassandraAvatar />
         <span className="font-mono text-xs font-bold tracking-wider text-amber-glow">

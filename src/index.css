@@ -4,26 +4,26 @@
   --font-mono: "IBM Plex Mono", monospace;
   --font-serif: "Lora", serif;
 
-  /* Dark theme (default) */
-  --color-terminal-bg: #0a0e14;
-  --color-terminal-surface: #111820;
-  --color-terminal-border: #1e2a38;
-  --color-terminal-muted: #94a7bb;
-  --color-terminal-text: #dce3eb;
+  /* TechFreedom light palette */
+  --color-terminal-bg: #F7F5F0;
+  --color-terminal-surface: #FFFFFF;
+  --color-terminal-border: #E0DDD5;
+  --color-terminal-muted: #636B78;
+  --color-terminal-text: #1A2332;
 
-  --color-amber-glow: #ffb000;
-  --color-amber-dim: #7a5500;
-  --color-amber-soft: #3d2b00;
+  --color-amber-glow: #D4A843;
+  --color-amber-dim: #b08a30;
+  --color-amber-soft: #f5edd8;
 
-  --color-green-glow: #00ff88;
-  --color-green-dim: #007a42;
-  --color-green-soft: #003d21;
+  --color-green-glow: #2E7D32;
+  --color-green-dim: #1b5e20;
+  --color-green-soft: #c8e6c9;
 
-  --color-risk-jurisdiction: #ef4444;
-  --color-risk-continuity: #f59e0b;
-  --color-risk-surveillance: #3b82f6;
+  --color-risk-jurisdiction: #C62828;
+  --color-risk-continuity: #EF6C00;
+  --color-risk-surveillance: #2B6AB0;
 
-  --color-danger: #ff2244;
+  --color-danger: #D9534F;
 
   --animate-ticker-scroll: ticker-scroll 240s linear infinite;
   --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
@@ -41,27 +41,9 @@
   --animate-slide-out-down: slide-out-down 0.3s ease-in forwards;
 }
 
-/* Light theme — TechFreedom.eu palette */
-[data-theme="light"] {
-  --color-terminal-bg: #F7F5F0;
-  --color-terminal-surface: #FFFFFF;
-  --color-terminal-border: #E0DDD5;
-  --color-terminal-muted: #636B78;
-  --color-terminal-text: #1A2332;
-  --color-amber-glow: #D4A843;
-  --color-amber-dim: #b08a30;
-  --color-amber-soft: #f5edd8;
-  --color-green-glow: #2E7D32;
-  --color-green-dim: #1b5e20;
-  --color-green-soft: #c8e6c9;
-  --color-risk-jurisdiction: #C62828;
-  --color-risk-continuity: #EF6C00;
-  --color-risk-surveillance: #2B6AB0;
-  --color-danger: #D9534F;
-}
-
-[data-theme="light"] .crt-scanlines::before {
-  opacity: 0.015;
+/* Reduce CRT scanlines for light palette */
+.crt-scanlines::before {
+  opacity: 0.015 !important;
 }
 
 @keyframes ticker-scroll {
