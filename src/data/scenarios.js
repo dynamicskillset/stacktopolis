@@ -13,7 +13,7 @@ export const SCENARIOS = [
     colleagueId: 'nkechi',
     type: 'crisis',
     headline: 'CLOUD Act Subpoena Issued for EU Nonprofit Data',
-    dialogue: "We've received a CLOUD Act subpoena targeting data held by your US providers. Our legal counsel is, shall we say, learning on the job. What's your response?",
+    dialogue: "We've received a CLOUD Act subpoena targeting data held by your offshore providers. Our legal counsel is, shall we say, learning on the job. What's your response?",
     triggerCondition: (state) => state.stack.some(t => t.region === 'us'),
     priority: 4,
     options: [
@@ -52,8 +52,8 @@ export const SCENARIOS = [
     id: 'data-treaty-collapse',
     colleagueId: 'nkechi',
     type: 'crisis',
-    headline: 'US-EU Data Treaty Collapses in Spectacular Fashion',
-    dialogue: "Privacy Shield 4.0 is dead. Eleven months. The ink on the agreement was barely dry. Every US-hosted tool in your stack is now in a legal grey area.",
+    headline: 'International Data Treaty Collapses in Spectacular Fashion',
+    dialogue: "Privacy Shield 4.0 is dead. Eleven months. The ink on the agreement was barely dry. Every offshore-hosted tool in your stack is now in a legal grey area.",
     triggerCondition: (state) => state.stack.some(t => t.region === 'us'),
     priority: 5,
     options: [
@@ -87,7 +87,7 @@ export const SCENARIOS = [
     colleagueId: 'nkechi',
     type: 'warning',
     headline: 'Executive Order Mandates Data Sharing with US Agencies',
-    dialogue: "There's a new executive order requiring US tech companies to share data with federal agencies on request. If you have US tools, your beneficiary data could be on the table.",
+    dialogue: "There's a new executive order requiring offshore tech companies to share data with federal agencies on request. If you have offshore tools, your beneficiary data could be on the table.",
     triggerCondition: (state) => state.stack.some(t => t.region === 'us'),
     priority: 3,
     options: [
@@ -112,13 +112,13 @@ export const SCENARIOS = [
     colleagueId: 'nkechi',
     type: 'opportunity',
     headline: 'EU Digital Sovereignty Act Passes with Teeth',
-    dialogue: "Good news for once. The EU has passed strong digital sovereignty legislation. Your EU-hosted tools are now on firmer legal ground. US-hosted tools... less so.",
+    dialogue: "Good news for once. The EU has passed strong digital sovereignty legislation. Your EU-hosted tools are now on firmer legal ground. offshore-hosted tools... less so.",
     triggerCondition: () => true,
     priority: 2,
     options: [
       {
         label: 'Leverage for migration funding',
-        description: 'Use the regulation to justify moving off US tools',
+        description: 'Use the regulation to justify moving off offshore tools',
         effect: (state) => {
           const euCount = state.stack.filter(t => t.region === 'eu').length
           const usCount = state.stack.filter(t => t.region === 'us').length
@@ -402,7 +402,7 @@ export const SCENARIOS = [
     colleagueId: 'priya',
     type: 'crisis',
     headline: 'Staff Caught Pasting Beneficiary Data into AI',
-    dialogue: "I've found staff using BrainBot to summarise beneficiary case notes. The data is hitting US servers and training their model. What do you want me to do?",
+    dialogue: "I've found staff using BrainBot to summarise beneficiary case notes. The data is hitting offshore servers and training their model. What do you want me to do?",
     triggerCondition: (state) => state.stack.some(t => t.needId === 'ai' && t.region === 'us') || state.surveillance > 30,
     priority: 4,
     options: [
@@ -817,7 +817,7 @@ export const SCENARIOS = [
       },
       {
         label: 'Apply and earmark for migration',
-        description: 'Use the grant to move off US tools',
+        description: 'Use the grant to move off offshore tools',
         effect: () => ({ budget: 15, morale: 8, jurisdiction: -5 }),
         responseText: "Smart. I'll ring-fence the funds for infrastructure changes.",
       },
@@ -886,7 +886,7 @@ export const SCENARIOS = [
     colleagueId: 'nkechi',
     type: 'opportunity',
     headline: 'Corporate Tech Partnership Offered',
-    dialogue: "A US tech company is offering free tool licences in exchange for a case study. Free tools, but they will want access to your usage data for marketing purposes.",
+    dialogue: "An offshore tech company is offering free tool licences in exchange for a case study. Free tools, but they will want access to your usage data for marketing purposes.",
     triggerCondition: (state) => state.stack.some(t => t.region === 'us'),
     priority: 2,
     options: [
@@ -1010,7 +1010,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'email'),
     priority: 3,
     options: [
-      { label: 'MegaMail Pro (US)', description: 'Free, popular, reads your data', effect: () => ({}), toolInstall: { needId: 'email', optionId: 'email-megamail' }, responseText: "Cheap and cheerful. Your data now has a scenic route through Virginia." },
+      { label: 'MegaMail Pro (Offshore)', description: 'Free, popular, reads your data', effect: () => ({}), toolInstall: { needId: 'email', optionId: 'email-megamail' }, responseText: "Cheap and cheerful. Your data now has a scenic route through a hostile jurisdiction." },
       { label: 'EuroPost (EU)', description: 'Encrypted, compliant, pricey', effect: () => ({}), toolInstall: { needId: 'email', optionId: 'email-europost' }, responseText: "European-hosted. Your compliance officer just did a little dance." },
       { label: 'LibreMail (Self)', description: 'Self-hosted, full control', effect: () => ({}), toolInstall: { needId: 'email', optionId: 'email-libremail' }, responseText: "Self-hosted email. You will learn more about SMTP than any human should." },
     ],
@@ -1025,9 +1025,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'video'),
     priority: 3,
     options: [
-      { label: 'VidCall Pro (US)', description: 'Everyone knows it, data tours Virginia', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-zoomcorp' }, responseText: "Done. Your meeting data now takes a scenic tour before anyone says hello." },
+      { label: 'VidCall Pro (Offshore)', description: 'Everyone knows it, data leaves the country', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-zoomcorp' }, responseText: "Done. Your meeting data now takes a scenic tour before anyone says hello." },
       { label: 'MeetFree (Self)', description: 'Self-hosted, breaks at 4 users', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-meetfree' }, responseText: "Works beautifully until the fourth person joins." },
-      { label: 'TeamSync (US)', description: 'Bundled free, bundled surveillance', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-teamsync' }, responseText: "Bundled free with your office suite. Like a loyalty card for a surveillance programme." },
+      { label: 'TeamSync (Offshore)', description: 'Bundled free, bundled surveillance', effect: () => ({}), toolInstall: { needId: 'video', optionId: 'video-teamsync' }, responseText: "Bundled free with your office suite. Like a loyalty card for a surveillance programme." },
     ],
     ignoreEffect: () => ({ morale: -5 }),
   },
@@ -1040,9 +1040,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'storage'),
     priority: 4,
     options: [
-      { label: 'CloudVault (US)', description: 'Infinite storage, infinite indexing', effect: () => ({}), toolInstall: { needId: 'storage', optionId: 'storage-cloudvault' }, responseText: "Infinite storage. Infinite regret when the CLOUD Act requests arrive." },
+      { label: 'CloudVault (Offshore)', description: 'Infinite storage, infinite indexing', effect: () => ({}), toolInstall: { needId: 'storage', optionId: 'storage-cloudvault' }, responseText: "Infinite storage. Infinite regret when the CLOUD Act requests arrive." },
       { label: 'NextDrive (Self)', description: 'Your data stays on your server', effect: () => ({}), toolInstall: { needId: 'storage', optionId: 'storage-nextdrive' }, responseText: "Your data never leaves your server. Neither does your sysadmin." },
-      { label: 'DropStore (US)', description: 'Easy, cheap, questionable privacy', effect: () => ({}), toolInstall: { needId: 'storage', optionId: 'storage-dropstore' }, responseText: "Remember when they promised not to look at your files? Neither do they." },
+      { label: 'DropStore (Offshore)', description: 'Easy, cheap, questionable privacy', effect: () => ({}), toolInstall: { needId: 'storage', optionId: 'storage-dropstore' }, responseText: "Remember when they promised not to look at your files? Neither do they." },
     ],
     ignoreEffect: () => ({ morale: -5, continuity: 5 }),
   },
@@ -1055,9 +1055,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'project'),
     priority: 2,
     options: [
-      { label: 'TaskMaster (US)', description: 'Watch deadlines sail past in real time', effect: () => ({}), toolInstall: { needId: 'project', optionId: 'project-taskmaster' }, responseText: "Finally, you can watch deadlines sail past in high definition." },
+      { label: 'TaskMaster (Offshore)', description: 'Watch deadlines sail past in real time', effect: () => ({}), toolInstall: { needId: 'project', optionId: 'project-taskmaster' }, responseText: "Finally, you can watch deadlines sail past in high definition." },
       { label: 'OpenBoard (EU)', description: 'All the features, character-building setup', effect: () => ({}), toolInstall: { needId: 'project', optionId: 'project-openboard' }, responseText: "All the features you need and a setup process that builds character." },
-      { label: 'CardFlow (US)', description: 'Drag cards until acquired by Atlassian', effect: () => ({}), toolInstall: { needId: 'project', optionId: 'project-cardflow' }, responseText: "Drag cards from 'To Do' to 'Owned by Atlassian now, sorry'." },
+      { label: 'CardFlow (Offshore)', description: 'Drag cards until acquired by Atlassian', effect: () => ({}), toolInstall: { needId: 'project', optionId: 'project-cardflow' }, responseText: "Drag cards from 'To Do' to 'Owned by Atlassian now, sorry'." },
     ],
     ignoreEffect: () => ({ morale: -5 }),
   },
@@ -1070,9 +1070,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'crm'),
     priority: 3,
     options: [
-      { label: 'DonorForce Pro (US)', description: 'Enterprise pricing for 200 people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-salesforce' }, responseText: "Enterprise pricing for your 200-person mailing list. You will need a consultant." },
+      { label: 'DonorForce Pro (Offshore)', description: 'Enterprise pricing for 200 people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-salesforce' }, responseText: "Enterprise pricing for your 200-person mailing list. You will need a consultant." },
       { label: 'CiviData (Self)', description: 'Community-built, understood by four people', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-cividata' }, responseText: "Built by the community. Understood by approximately four people." },
-      { label: 'AirSheet (US)', description: 'A spreadsheet pretending to be a database', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-airsheet' }, responseText: "A spreadsheet that thinks it is a database. Your auditor will think otherwise." },
+      { label: 'AirSheet (Offshore)', description: 'A spreadsheet pretending to be a database', effect: () => ({}), toolInstall: { needId: 'crm', optionId: 'crm-airsheet' }, responseText: "A spreadsheet that thinks it is a database. Your auditor will think otherwise." },
     ],
     ignoreEffect: () => ({ morale: -5, budget: -5 }),
   },
@@ -1085,7 +1085,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'hosting'),
     priority: 3,
     options: [
-      { label: 'MegaHost (US)', description: 'Powers the internet and the CIA', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-amacloud' }, responseText: "Powers half the internet and most of the CIA. But the free tier is generous." },
+      { label: 'MegaHost (Offshore)', description: 'Powers the internet, answers to foreign courts', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-amacloud' }, responseText: "Powers half the internet and answers to foreign intelligence courts. But the free tier is generous." },
       { label: 'EuroServe (EU)', description: 'German engineering and data protection', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-hetznerbox' }, responseText: "German engineering. German data protection. German-language error messages." },
       { label: 'SelfServe (Self)', description: 'A laptop under a desk', effect: () => ({}), toolInstall: { needId: 'hosting', optionId: 'hosting-selfserve' }, responseText: "A repurposed laptop under a desk. It has survived three office moves." },
     ],
@@ -1100,7 +1100,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'messaging'),
     priority: 2,
     options: [
-      { label: 'ChatHive (US)', description: 'Conversations die after 90 days', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-slackchat' }, responseText: "Where conversations go to die after 90 days on the free plan." },
+      { label: 'ChatHive (Offshore)', description: 'Conversations die after 90 days', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-slackchat' }, responseText: "Where conversations go to die after 90 days on the free plan." },
       { label: 'MatterBridge (Self)', description: 'Looks like Slack, maintained on weekends', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-matterbridge' }, responseText: "Looks like Slack but your IT volunteer maintains it on weekends." },
       { label: 'SignalWire (EU)', description: 'So private even you can not find messages', effect: () => ({}), toolInstall: { needId: 'messaging', optionId: 'messaging-signalwire' }, responseText: "So private that even you will struggle to find last week's messages." },
     ],
@@ -1115,9 +1115,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'office'),
     priority: 2,
     options: [
-      { label: 'OfficeSuite 365 (US)', description: '365 days of telemetry', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-officecorp' }, responseText: "Three hundred and sixty-five days a year of telemetry, phoning home." },
+      { label: 'OfficeSuite 365 (Offshore)', description: '365 days of telemetry', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-officecorp' }, responseText: "Three hundred and sixty-five days a year of telemetry, phoning home." },
       { label: 'LibreWrite (Self)', description: 'Identical, staff will complain anyway', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-librewrite' }, responseText: "Functionally identical. Your staff will still complain it 'feels different'." },
-      { label: 'DocuCloud (US)', description: 'Collaborative editing trains their AI', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-docucloud' }, responseText: "Collaborative editing that trains an AI model on your funding applications." },
+      { label: 'DocuCloud (Offshore)', description: 'Collaborative editing trains their AI', effect: () => ({}), toolInstall: { needId: 'office', optionId: 'office-docucloud' }, responseText: "Collaborative editing that trains an AI model on your funding applications." },
     ],
     ignoreEffect: () => ({ morale: -5 }),
   },
@@ -1130,7 +1130,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'analytics'),
     priority: 3,
     options: [
-      { label: 'TrackAll Analytics (US)', description: 'You learn everything, so does California', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-trackall' }, responseText: "You learn everything about your visitors. So does an advertising company." },
+      { label: 'TrackAll Analytics (Offshore)', description: 'You learn everything, so does an advertising company abroad', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-trackall' }, responseText: "You learn everything about your visitors. So does an advertising company." },
       { label: 'ClearMetrics (EU)', description: 'Privacy-respecting, fits one dashboard', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-plausible' }, responseText: "Privacy-respecting analytics. Your data team will be furious." },
       { label: 'SelfMetrics (Self)', description: 'Full control, PHP codebase from the depths', effect: () => ({}), toolInstall: { needId: 'analytics', optionId: 'analytics-selfmetrics' }, responseText: "Full control. And a PHP codebase that has seen things you would not believe." },
     ],
@@ -1145,7 +1145,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'passwords'),
     priority: 4,
     options: [
-      { label: 'PassVault (US)', description: 'Stores passwords, gets breached biannually', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-passvault' }, responseText: "Securely stores all passwords. Gets breached every eighteen months." },
+      { label: 'PassVault (Offshore)', description: 'Stores passwords, gets breached biannually', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-passvault' }, responseText: "Securely stores all passwords. Gets breached every eighteen months." },
       { label: 'BitGuard (EU)', description: 'Open source, audited, actually good', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-bitguard' }, responseText: "Open source, audited. The rare case where self-hosted does not mean self-harming." },
       { label: 'SwissVault (EU)', description: 'Swiss-grade, CEO still uses sticky notes', effect: () => ({}), toolInstall: { needId: 'passwords', optionId: 'passwords-protonlock' }, responseText: "Swiss-grade encryption for passwords your CEO will still write on sticky notes." },
     ],
@@ -1160,9 +1160,9 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'social'),
     priority: 2,
     options: [
-      { label: 'BirdApp (US)', description: 'The town square, on fire', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-birdapp' }, responseText: "The town square, if it were on fire and owned by the richest man alive." },
+      { label: 'BirdApp (Offshore)', description: 'The town square, on fire', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-birdapp' }, responseText: "The town square, if it were on fire and owned by the richest man alive." },
       { label: 'FediVerse (Self)', description: 'Nobody can censor you or find you', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-fediverse' }, responseText: "Nobody can censor you. Also, nobody can find you." },
-      { label: 'OpenFeed (US)', description: 'Decentralised in theory, US in practice', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-skyfeed' }, responseText: "Decentralised in theory. US-hosted in practice. But the vibes are better." },
+      { label: 'OpenFeed (Offshore)', description: 'Decentralised in theory, offshore in practice', effect: () => ({}), toolInstall: { needId: 'social', optionId: 'social-skyfeed' }, responseText: "Decentralised in theory. offshore-hosted in practice. But the vibes are better." },
     ],
     ignoreEffect: () => ({ morale: -3 }),
   },
@@ -1175,7 +1175,7 @@ export const SCENARIOS = [
     triggerCondition: (state) => !state.stack.some(t => t.needId === 'ai'),
     priority: 3,
     options: [
-      { label: 'BrainBot (US)', description: 'Writes grants, feeds training sets', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-chatgenius' }, responseText: "It writes your grant applications and feeds them into a training set." },
+      { label: 'BrainBot (Offshore)', description: 'Writes grants, feeds training sets', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-chatgenius' }, responseText: "It writes your grant applications and feeds them into a training set." },
       { label: 'LocalLLM (Self)', description: 'Private, local, hallucinates with charm', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-localllm' }, responseText: "Runs on your hardware. Respects your privacy. Hallucinates with local charm." },
       { label: 'Ban AI entirely', description: 'A bold stance, until the first deadline', effect: () => ({}), toolInstall: { needId: 'ai', optionId: 'ai-noai' }, responseText: "A bold stance that lasts until the first funding deadline at 11pm on a Sunday." },
     ],

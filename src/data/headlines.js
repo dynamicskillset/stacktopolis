@@ -9,7 +9,7 @@ export const AMBIENT_HEADLINES = [
   'Man Who Read All 47 Pages of Terms and Conditions Hospitalised With Existential Dread',
   'Silicon Valley Startup Pivots from "Disrupting Charity" to "Disrupting the Concept of Charity"',
   'Free Tier Removal Described as "Surprise Premium Upgrade" by Vendor PR Team',
-  'European Court Rules That Putting Data in America Is Like Posting It on a Billboard',
+  'European Court Rules That Sending Data Offshore Is Like Posting It on a Billboard',
   'Survey: 78% of Nonprofits Running Critical Operations on Software Held Together by Prayers',
   'AI Chatbot Hired as Interim CEO Immediately Recommends Replacing All Staff With AI',
   'CLOUD Act Compliance Team Unsure Which Cloud, Which Act, or Which Country They\'re In',

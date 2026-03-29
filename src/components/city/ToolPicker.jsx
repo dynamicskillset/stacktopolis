@@ -9,7 +9,7 @@ const REGION_STYLES = {
   self: 'border-l-risk-surveillance',
 }
 
-const REGION_LABELS = { us: 'US', eu: 'EU', self: 'SELF' }
+const REGION_LABELS = { us: 'OFFSHORE', eu: 'EU', self: 'SELF' }
 const REGION_COLOURS = {
   us: 'bg-red-900/40 text-risk-jurisdiction',
   eu: 'bg-green-900/40 text-green-glow',

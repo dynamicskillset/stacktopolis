@@ -162,7 +162,7 @@ export default function GameScreen({ state, actions }) {
       {/* Help popup */}
       {showHelp && (
         <div
-          className="absolute inset-0 z-50 flex items-end justify-start p-4 pb-24"
+          className="absolute inset-0 z-50 flex items-end justify-end p-4 pb-24"
           onClick={() => setShowHelp(false)}
           role="dialog"
           aria-label="Help and shortcuts"
@@ -188,7 +188,7 @@ export default function GameScreen({ state, actions }) {
       <div className="relative z-10 px-4 py-2 flex items-center justify-center border-t border-terminal-border bg-terminal-bg/50">
         <button
           onClick={() => setShowHelp(prev => !prev)}
-          className="absolute left-3 font-mono text-xs w-7 h-7 rounded-full border border-terminal-border text-terminal-muted hover:text-terminal-text hover:border-terminal-text transition-colors"
+          className="absolute right-3 font-mono text-xs w-7 h-7 rounded-full border border-terminal-border text-terminal-muted hover:text-terminal-text hover:border-terminal-text transition-colors"
           aria-label="Show keyboard shortcuts"
           title="Keyboard shortcuts & help"
         >

@@ -60,7 +60,7 @@ export const TOOL_NEEDS = [
         provider: 'VidCall Pro Inc.',
         region: 'us',
         tagline:
-          'Your meeting data takes a scenic tour through Virginia before anyone says hello.',
+          'Your meeting data takes a scenic tour through a hostile jurisdiction before anyone says hello.',
         jurisdiction: 14,
         continuity: 8,
         surveillance: 15,
@@ -252,7 +252,7 @@ export const TOOL_NEEDS = [
         provider: 'MegaHost Services',
         region: 'us',
         tagline:
-          'Powers half the internet and most of the CIA. But the free tier is quite generous.',
+          'Powers half the internet and answers to foreign intelligence courts. But the free tier is quite generous.',
         jurisdiction: 16,
         continuity: 6,
         surveillance: 10,
@@ -518,7 +518,7 @@ export const TOOL_NEEDS = [
         provider: 'OpenFeed PBC',
         region: 'us',
         tagline:
-          'Decentralised in theory. Hosted in the US in practice. But the vibes are better, honestly.',
+          'Decentralised in theory. Hosted offshore in practice. But the vibes are better, honestly.',
         jurisdiction: 8,
         continuity: 10,
         surveillance: 5,

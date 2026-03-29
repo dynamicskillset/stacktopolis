@@ -3,7 +3,7 @@ import { TUNING } from '../../state/initialState'
 import { toolRiskLevel } from '../../utils/riskLevel'
 import { getIcon } from '../../utils/iconMap'
 
-const REGION_LABELS = { us: 'US-Hosted', eu: 'EU-Hosted', self: 'Self-Hosted' }
+const REGION_LABELS = { us: 'Offshore', eu: 'EU-Hosted', self: 'Self-Hosted' }
 const REGION_STYLES = {
   us: 'text-risk-jurisdiction',
   eu: 'text-green-glow',

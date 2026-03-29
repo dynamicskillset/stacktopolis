@@ -242,10 +242,7 @@ export function gameReducer(state, action) {
     }
 
     case 'RUN_BACKUP': {
-      const toolId = action.payload
-      const tool = state.stack.find(t => t.id === toolId)
-      if (!tool) return state
-
+      if (state.budget < TUNING.backupDrillBudgetCost) return state
       return {
         ...state,
         continuity: clamp(state.continuity - TUNING.backupDrillReduction),

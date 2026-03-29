@@ -187,7 +187,7 @@ export default function TitleScreen({ onStartGame, highScores }) {
             <h1 className="font-mono text-5xl font-bold text-amber-glow tracking-widest mb-1">
               STACKTOPOLIS
             </h1>
-            <span className="font-mono text-xs text-terminal-muted tracking-wider">v3.0.0</span>
+            <span className="font-mono text-xs text-terminal-muted tracking-wider">v3.1.0</span>
           </div>
 
           <p className="font-serif text-lg text-terminal-muted italic mb-4">

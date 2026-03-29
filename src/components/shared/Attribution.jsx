@@ -1,6 +1,6 @@
 export default function Attribution({ onAbout }) {
   return (
-    <footer className="text-xs text-terminal-muted font-mono py-3 text-center space-y-3">
+    <footer className="text-xs text-terminal-muted font-mono py-2 text-center space-y-2 relative -mt-4">
       <div>
         Based on the{' '}
         <a

@@ -22,13 +22,13 @@ export const ADVISOR_LINES = {
   ],
 
   toolSelectUs: [
-    'Another US tool. At this rate, the NSA will send you a thank-you card.',
-    'Bold choice. Your data now has a layover in Virginia before it does anything useful.',
+    'Another offshore tool. At this rate, foreign intelligence agencies will send you a thank-you card.',
+    'Bold choice. Your data now has a layover in a hostile jurisdiction before it does anything useful.',
     'The CLOUD Act thanks you for your generous contribution.',
     'I see you went with the one that phones home like a homesick teenager.',
     'Cheap and cheerful, until the subpoena arrives. Then just cheap.',
     'Your data protection officer just aged five years in five seconds.',
-    'Nothing says "digital sovereignty" quite like routing everything through Maryland.',
+    'Nothing says "digital sovereignty" quite like routing everything through a foreign data centre.',
     'Well, at least it was a conscious decision. That puts you ahead of most.',
   ],
 
@@ -56,7 +56,7 @@ export const ADVISOR_LINES = {
     'Risk climbing nicely. And by "nicely" I mean "towards regulatory oblivion".',
     'We\'re firmly in "sweating at the audit" territory now.',
     'At this rate, your next board meeting will need a trigger warning.',
-    'The risk is high enough to see from space. Specifically, from a US satellite.',
+    'The risk is high enough to see from space. Specifically, from a foreign surveillance satellite.',
     'You\'re one bad quarter away from the ICO knowing your name.',
     'I\'ve seen healthier risk profiles on organisations that don\'t exist any more.',
   ],
@@ -105,8 +105,8 @@ export const ADVISOR_LINES = {
   ],
 
   manageJurisdiction: [
-    'Jurisdiction risk is your biggest problem. Migrating a US tool would help. If you can afford it.',
-    'That jurisdiction exposure is getting uncomfortable. Consider swapping a US provider.',
+    'Jurisdiction risk is your biggest problem. Migrating an offshore tool would help. If you can afford it.',
+    'That jurisdiction exposure is getting uncomfortable. Consider swapping an offshore provider.',
     'Your data is spread across more jurisdictions than a spy novel. Time to consolidate.',
     'Jurisdiction risk this high means one subpoena away from a very bad day.',
   ],
@@ -140,8 +140,8 @@ export const ADVISOR_LINES = {
 
   // Metric advice — triggered when player clicks a gauge
   adviceJurisdiction: [
-    'Jurisdiction risk too high? Click a US building and choose Migrate to Safest. Or build with EU and self-hosted tools instead. Nkechi sometimes brings regulation scenarios that help too.',
-    'Every US tool adds jurisdiction risk drift. Migrate the worst offenders first, then fill empty plots with EU providers. It costs budget, but it buys you time.',
+    'Jurisdiction risk too high? Click an offshore building and choose Migrate to Safest. Or build with EU and self-hosted tools instead. Nkechi sometimes brings regulation scenarios that help too.',
+    'Every offshore tool adds jurisdiction risk drift. Migrate the worst offenders first, then fill empty plots with EU providers. It costs budget, but it buys you time.',
   ],
   adviceContinuity: [
     'Continuity risk climbing? Click any building and run a Backup Drill for 10 budget. Also avoid putting too many tools with the same provider: lock-in makes outages catastrophic.',
@@ -149,10 +149,10 @@ export const ADVISOR_LINES = {
   ],
   adviceSurveillance: [
     'Surveillance risk creeping up? Click any building and Audit Data Practices for 8 morale. Self-hosted tools have zero surveillance drift. Priya brings scenarios that help if you choose well.',
-    'Surveillance risk rising? US tools generate passive drift every tick. Replace them with self-hosted options for zero surveillance, or EU tools for lower exposure. Audits buy immediate relief.',
+    'Surveillance risk rising? Offshore tools generate passive drift every tick. Replace them with self-hosted options for zero surveillance, or EU tools for lower exposure. Audits buy immediate relief.',
   ],
   adviceBudget: [
-    'Budget tight? It regenerates by 5 each quarter automatically. Nkechi sometimes brings grant opportunities worth 15 to 20 budget. US tools are cheap but risky. Your call.',
+    'Budget tight? It regenerates by 5 each quarter automatically. Nkechi sometimes brings grant opportunities worth 15 to 20 budget. Offshore tools are cheap but risky. Your call.',
     'Budget pressure? Survive and it recovers on its own. Do not ignore colleagues: the morale penalty from ignoring them compounds the problem. Accept grants when Nkechi offers them.',
   ],
   adviceMorale: [

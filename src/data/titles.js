@@ -12,7 +12,7 @@ export const TITLES = [
     id: 'pragmatist',
     label: 'Principled Pragmatist',
     description:
-      'You kept the lights on, mostly avoided US jurisdiction, and only lost sleep on alternate Tuesdays. Not perfect, but nobody got subpoenaed.',
+      'You kept the lights on, mostly avoided hostile jurisdictions, and only lost sleep on alternate Tuesdays. Not perfect, but nobody got subpoenaed.',
     minQuarters: 15,
     maxRiskSpread: 25,
     minIndependence: 0.5,
