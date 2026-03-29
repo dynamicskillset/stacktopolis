@@ -73,26 +73,33 @@ function BuildingTile({ tool, categoryId, onClick, isSelected, onClickEmpty }) {
         className={`flex flex-col items-center justify-end opacity-70 ${interactiveClass}`}
         aria-label={`Empty plot: ${CATEGORY_LABELS[categoryId]}${onClickEmpty ? '. Click to install a tool.' : ''}`}
       >
-        <svg viewBox="0 0 110 55" width="100" height="50" role="img" aria-hidden="true">
+        <svg viewBox="0 0 110 70" width="100" height="63" role="img" aria-hidden="true">
           {/* Ground plot */}
           <polygon
-            points="55,2 108,28 55,54 2,28"
-            fill="var(--color-terminal-surface, #0d1218)"
-            stroke="#1e2a38"
+            points="55,16 108,42 55,68 2,42"
+            fill="var(--color-terminal-surface, #FFFFFF)"
+            stroke="#E0DDD5"
             strokeWidth="1"
             strokeDasharray="4,3"
           />
-          {/* Foundation outline */}
-          <polygon
-            points="55,12 88,28 55,44 22,28"
-            fill="none"
-            stroke="#1e2a38"
-            strokeWidth="0.5"
-            strokeDasharray="2,4"
-            opacity="0.5"
-          />
+          {/* Weeds and debris — varies by slot */}
+          {/* Weed tufts */}
+          <g opacity="0.3">
+            <path d="M30,38 Q32,32 34,38" fill="none" stroke="#5a7a5a" strokeWidth="0.8" />
+            <path d="M32,38 Q33,30 35,38" fill="none" stroke="#5a7a5a" strokeWidth="0.6" />
+            <path d="M75,38 Q77,33 79,38" fill="none" stroke="#5a7a5a" strokeWidth="0.7" />
+            <path d="M50,50 Q51,45 53,50" fill="none" stroke="#5a7a5a" strokeWidth="0.6" />
+            <path d="M60,46 Q62,41 64,46" fill="none" stroke="#5a7a5a" strokeWidth="0.7" />
+          </g>
+          {/* Cracked foundation / rubble */}
+          <g opacity="0.2">
+            <line x1="40" y1="35" x2="48" y2="40" stroke="#636B78" strokeWidth="0.5" />
+            <line x1="62" y1="37" x2="68" y2="42" stroke="#636B78" strokeWidth="0.4" />
+            <rect x="45" y="42" width="3" height="2" rx="0.3" fill="#636B78" transform="rotate(15,46,43)" />
+            <rect x="65" y="40" width="2" height="2" rx="0.3" fill="#636B78" transform="rotate(-10,66,41)" />
+          </g>
           {/* Available label */}
-          <text x="55" y="30" textAnchor="middle" fill="#94a7bb" fontFamily="monospace" fontSize="8" opacity="0.9">
+          <text x="55" y="44" textAnchor="middle" fill="#636B78" fontFamily="monospace" fontSize="7" opacity="0.7">
             AVAILABLE
           </text>
         </svg>
