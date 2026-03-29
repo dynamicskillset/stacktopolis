@@ -3,10 +3,14 @@ import GaugeDial from './GaugeDial'
 import DigitalReadout from './DigitalReadout'
 import SpeedControl from '../ui/SpeedControl'
 
+import { TUNING } from '../../state/initialState'
+
 export default function ControlPanel({
-  jurisdiction, continuity, surveillance, budget, morale, quarter,
+  jurisdiction, continuity, surveillance, budget, morale, quarter, gameTime,
   speed, isPaused, onSetSpeed, onTogglePause, onClickMetric,
 }) {
+  const ticksIntoQuarter = gameTime % TUNING.ticksPerQuarter
+  const quarterProgress = ticksIntoQuarter / TUNING.ticksPerQuarter // 0→1
   const maxRisk = Math.max(jurisdiction, continuity, surveillance)
 
   return (
@@ -31,13 +35,26 @@ export default function ControlPanel({
           <DigitalReadout value={morale} label="Morale" colour="green" icon={Heart} onClick={() => onClickMetric('morale')} />
 
           <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center px-3 py-2 rounded bg-terminal-surface border border-terminal-border">
-              <span
-                className={`font-mono text-2xl font-bold tracking-wider transition-colors duration-500 ${maxRisk >= 75 ? 'text-danger' : 'text-amber-glow'}`}
-                aria-label={`Quarter ${quarter}`}
-              >
-                Q{String(quarter).padStart(2, '0')}
-              </span>
+            <div className="relative" style={{ width: 56, height: 56 }}>
+              <svg width="56" height="56" viewBox="0 0 56 56" role="meter" aria-valuenow={Math.round((1 - quarterProgress) * 100)} aria-valuemin={0} aria-valuemax={100} aria-label={`Quarter ${quarter}, ${Math.round((1 - quarterProgress) * 100)}% remaining`}>
+                {/* Track */}
+                <circle cx="28" cy="28" r="24" fill="none" className="stroke-terminal-border" strokeWidth="3" />
+                {/* Remaining arc — depletes clockwise */}
+                <circle
+                  cx="28" cy="28" r="24"
+                  fill="none"
+                  stroke={maxRisk >= 75 ? 'var(--color-danger)' : 'var(--color-amber-glow)'}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeDasharray={`${(1 - quarterProgress) * 150.8} 150.8`}
+                  transform="rotate(-90 28 28)"
+                  style={{ transition: 'stroke-dasharray 0.3s ease' }}
+                />
+                {/* Quarter number */}
+                <text x="28" y="32" textAnchor="middle" className="fill-terminal-text" fontFamily="'IBM Plex Mono', monospace" fontWeight="bold" fontSize="16">
+                  {quarter}
+                </text>
+              </svg>
             </div>
             <span className="font-mono text-xs uppercase tracking-widest text-terminal-muted" aria-hidden="true">
               Quarter

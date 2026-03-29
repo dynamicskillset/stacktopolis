@@ -241,6 +241,7 @@ export default function GameScreen({ state, actions }) {
         budget={state.budget}
         morale={state.morale}
         quarter={state.quarter}
+        gameTime={state.gameTime}
         speed={state.speed}
         isPaused={state.isPaused}
         onSetSpeed={actions.setSpeed}
